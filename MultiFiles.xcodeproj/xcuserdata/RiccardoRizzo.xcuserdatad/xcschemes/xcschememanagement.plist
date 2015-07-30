@@ -9,9 +9,19 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>MultiFilesExtension.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>933E7D7D1B1CA2B100BBF225</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>93C934CF1B01F99B00E0C896</key>
 		<dict>
 			<key>primary</key>

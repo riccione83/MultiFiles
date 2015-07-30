@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "-[ViewController previewDocument:]:ViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.downloadedFile">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ViewController uploadFile]:ViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[ViewController createUploadBar]:ViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "progressView.frame.size.width">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ViewController collectionView:cellForItemAtIndexPath:]:ViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "indexPath.row">
+            </PersistentString>
+            <PersistentString
+               value = "self.dataSourceForSearchResult">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ViewController searchSizeFromArray:search:]:ViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[ViewController documentInteractionControllerDidEndPreview:]:ViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.downloadedFile">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "__34-[ShareViewController viewDidLoad]_block_invoke_2:ShareViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.extensionContext">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ViewController connection:didSendBodyData:totalBytesWritten:totalBytesExpectedToWrite:]:ViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "progressBar.progress">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ViewController refreshUserData]:ViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "files.count">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[AppDelegate application:openURL:sourceApplication:annotation:]:AppDelegate.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "mainViewController">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
