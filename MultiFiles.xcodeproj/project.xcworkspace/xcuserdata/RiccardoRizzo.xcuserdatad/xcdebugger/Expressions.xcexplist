@@ -11,7 +11,20 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[ViewController uploadFile]:ViewController.m">
+         contextName = "-[AppDelegate application:openURL:sourceApplication:annotation:]:AppDelegate.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "mainViewController">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ViewController uploadFile:]:ViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[[request URL] host]">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "-[ViewController createUploadBar]:ViewController.m">
@@ -36,18 +49,18 @@
          contextName = "-[ViewController searchSizeFromArray:search:]:ViewController.m">
       </ContextState>
       <ContextState
-         contextName = "-[ViewController documentInteractionControllerDidEndPreview:]:ViewController.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.downloadedFile">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "__34-[ShareViewController viewDidLoad]_block_invoke_2:ShareViewController.m">
          <PersistentStrings>
             <PersistentString
                value = "self.extensionContext">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ViewController documentInteractionControllerDidEndPreview:]:ViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.downloadedFile">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -68,12 +81,7 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[AppDelegate application:openURL:sourceApplication:annotation:]:AppDelegate.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "mainViewController">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "-[ViewController uploadFile]:ViewController.m">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

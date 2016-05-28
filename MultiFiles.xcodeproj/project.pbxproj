@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		82BA016E547F0F4FC2DEE610 /* Pods_MultiFiles.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 264F4E97C2853979E293DE78 /* Pods_MultiFiles.framework */; };
 		930161631B1F0492006BC91D /* bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 930161611B1F0492006BC91D /* bg.jpg */; };
 		930161641B1F0492006BC91D /* cloud.png in Resources */ = {isa = PBXBuildFile; fileRef = 930161621B1F0492006BC91D /* cloud.png */; };
 		930161691B1F04D1006BC91D /* MainiPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 930161671B1F04D1006BC91D /* MainiPad.storyboard */; };
@@ -15,6 +16,8 @@
 		933E7D891B1CA2B100BBF225 /* MultiFilesExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 933E7D7E1B1CA2B100BBF225 /* MultiFilesExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		9370E5881B1F0B330097D1D6 /* files.png in Resources */ = {isa = PBXBuildFile; fileRef = 9370E5861B1F0B330097D1D6 /* files.png */; };
 		9370E5891B1F0B330097D1D6 /* images.png in Resources */ = {isa = PBXBuildFile; fileRef = 9370E5871B1F0B330097D1D6 /* images.png */; };
+		937292431CF984C100FCBCD5 /* Multifiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937292421CF984C100FCBCD5 /* Multifiles.swift */; };
+		93AA7A941CF998D40017BDB4 /* Multifiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AA7A931CF998D40017BDB4 /* Multifiles.swift */; };
 		93B242F81B30669300067D2E /* StarRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B242F71B30669300067D2E /* StarRatingView.m */; };
 		93C118C01B2B1B9C007D6755 /* half_selected_star.png in Resources */ = {isa = PBXBuildFile; fileRef = 93C118BD1B2B1B9C007D6755 /* half_selected_star.png */; };
 		93C118C11B2B1B9C007D6755 /* not_selected_star.png in Resources */ = {isa = PBXBuildFile; fileRef = 93C118BE1B2B1B9C007D6755 /* not_selected_star.png */; };
@@ -30,6 +33,7 @@
 		93CD89111B09D9AC00E5B085 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93CD890E1B09D9AC00E5B085 /* FBSDKLoginKit.framework */; };
 		93CD89121B09D9AC00E5B085 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93CD890F1B09D9AC00E5B085 /* FBSDKShareKit.framework */; };
 		93D9ECDA1B06001500E6F5B3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93D9ECD91B06001500E6F5B3 /* QuartzCore.framework */; };
+		F48A2C0B1B4260C44BA1D183 /* Pods_MultiFilesExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E4BF28A02A6801BE1E11AF /* Pods_MultiFilesExtension.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +68,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1562F1E9A2CA2DD249748125 /* Pods-MultiFiles.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MultiFiles.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MultiFiles/Pods-MultiFiles.debug.xcconfig"; sourceTree = "<group>"; };
+		264F4E97C2853979E293DE78 /* Pods_MultiFiles.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MultiFiles.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		55569E7999FF198E05607BBA /* Pods-MultiFilesExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MultiFilesExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MultiFilesExtension/Pods-MultiFilesExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		8FBB2BFBEF49E3C28A7B4E48 /* Pods-MultiFilesExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MultiFilesExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-MultiFilesExtension/Pods-MultiFilesExtension.release.xcconfig"; sourceTree = "<group>"; };
 		930161611B1F0492006BC91D /* bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = bg.jpg; path = Img/bg.jpg; sourceTree = "<group>"; };
 		930161621B1F0492006BC91D /* cloud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cloud.png; path = Img/cloud.png; sourceTree = "<group>"; };
 		930161681B1F04D1006BC91D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainiPad.storyboard; sourceTree = "<group>"; };
@@ -76,6 +84,10 @@
 		933E7D8F1B1CAB7100BBF225 /* MultiFilesExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = MultiFilesExtension.entitlements; sourceTree = "<group>"; };
 		9370E5861B1F0B330097D1D6 /* files.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = files.png; path = Img/files.png; sourceTree = "<group>"; };
 		9370E5871B1F0B330097D1D6 /* images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = images.png; path = Img/images.png; sourceTree = "<group>"; };
+		937292411CF984C000FCBCD5 /* MultiFiles-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MultiFiles-Bridging-Header.h"; sourceTree = "<group>"; };
+		937292421CF984C100FCBCD5 /* Multifiles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Multifiles.swift; path = Class/Multifiles.swift; sourceTree = "<group>"; };
+		93AA7A921CF998D40017BDB4 /* MultiFilesExtension-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MultiFilesExtension-Bridging-Header.h"; sourceTree = "<group>"; };
+		93AA7A931CF998D40017BDB4 /* Multifiles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Multifiles.swift; path = Class/Multifiles.swift; sourceTree = "<group>"; };
 		93B242F61B30669300067D2E /* StarRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StarRatingView.h; sourceTree = "<group>"; };
 		93B242F71B30669300067D2E /* StarRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StarRatingView.m; sourceTree = "<group>"; };
 		93C118BD1B2B1B9C007D6755 /* half_selected_star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = half_selected_star.png; path = Img/half_selected_star.png; sourceTree = "<group>"; };
@@ -98,6 +110,8 @@
 		93CD890E1B09D9AC00E5B085 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		93CD890F1B09D9AC00E5B085 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
 		93D9ECD91B06001500E6F5B3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		A3ED6D64014278DE142A5084 /* Pods-MultiFiles.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MultiFiles.release.xcconfig"; path = "Pods/Target Support Files/Pods-MultiFiles/Pods-MultiFiles.release.xcconfig"; sourceTree = "<group>"; };
+		D6E4BF28A02A6801BE1E11AF /* Pods_MultiFilesExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MultiFilesExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +119,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F48A2C0B1B4260C44BA1D183 /* Pods_MultiFilesExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,6 +131,7 @@
 				93D9ECDA1B06001500E6F5B3 /* QuartzCore.framework in Frameworks */,
 				93CD89101B09D9AC00E5B085 /* FBSDKCoreKit.framework in Frameworks */,
 				93CD89111B09D9AC00E5B085 /* FBSDKLoginKit.framework in Frameworks */,
+				82BA016E547F0F4FC2DEE610 /* Pods_MultiFiles.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,6 +148,7 @@
 		933E7D7F1B1CA2B100BBF225 /* MultiFilesExtension */ = {
 			isa = PBXGroup;
 			children = (
+				93AA7A911CF998B40017BDB4 /* Class */,
 				933E7D8F1B1CAB7100BBF225 /* MultiFilesExtension.entitlements */,
 				933E7D821B1CA2B100BBF225 /* ShareViewController.h */,
 				933E7D831B1CA2B100BBF225 /* ShareViewController.m */,
@@ -149,6 +166,24 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		937292401CF9849400FCBCD5 /* Class */ = {
+			isa = PBXGroup;
+			children = (
+				937292421CF984C100FCBCD5 /* Multifiles.swift */,
+				937292411CF984C000FCBCD5 /* MultiFiles-Bridging-Header.h */,
+			);
+			name = Class;
+			sourceTree = "<group>";
+		};
+		93AA7A911CF998B40017BDB4 /* Class */ = {
+			isa = PBXGroup;
+			children = (
+				93AA7A931CF998D40017BDB4 /* Multifiles.swift */,
+				93AA7A921CF998D40017BDB4 /* MultiFilesExtension-Bridging-Header.h */,
+			);
+			name = Class;
+			sourceTree = "<group>";
+		};
 		93C934C71B01F99B00E0C896 = {
 			isa = PBXGroup;
 			children = (
@@ -160,6 +195,8 @@
 				93C934EC1B01F99B00E0C896 /* MultiFilesTests */,
 				933E7D7F1B1CA2B100BBF225 /* MultiFilesExtension */,
 				93C934D11B01F99B00E0C896 /* Products */,
+				CCC6F958B8B33B1DB0281583 /* Pods */,
+				E941D0E451F0E2A9794F71E5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -176,6 +213,7 @@
 		93C934D21B01F99B00E0C896 /* MultiFiles */ = {
 			isa = PBXGroup;
 			children = (
+				937292401CF9849400FCBCD5 /* Class */,
 				933E7D8E1B1CA89600BBF225 /* MultiFiles.entitlements */,
 				93D9ECD21B05FCE600E6F5B3 /* Img */,
 				93C934D71B01F99B00E0C896 /* AppDelegate.h */,
@@ -233,6 +271,26 @@
 			name = Img;
 			sourceTree = "<group>";
 		};
+		CCC6F958B8B33B1DB0281583 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1562F1E9A2CA2DD249748125 /* Pods-MultiFiles.debug.xcconfig */,
+				A3ED6D64014278DE142A5084 /* Pods-MultiFiles.release.xcconfig */,
+				55569E7999FF198E05607BBA /* Pods-MultiFilesExtension.debug.xcconfig */,
+				8FBB2BFBEF49E3C28A7B4E48 /* Pods-MultiFilesExtension.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		E941D0E451F0E2A9794F71E5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				264F4E97C2853979E293DE78 /* Pods_MultiFiles.framework */,
+				D6E4BF28A02A6801BE1E11AF /* Pods_MultiFilesExtension.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -240,9 +298,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 933E7D8C1B1CA2B100BBF225 /* Build configuration list for PBXNativeTarget "MultiFilesExtension" */;
 			buildPhases = (
+				641809B9D9B74F76ED5B2EE7 /* Check Pods Manifest.lock */,
 				933E7D7A1B1CA2B100BBF225 /* Sources */,
 				933E7D7B1B1CA2B100BBF225 /* Frameworks */,
 				933E7D7C1B1CA2B100BBF225 /* Resources */,
+				DE50BAD76EFD396EDF104CAA /* Embed Pods Frameworks */,
+				9443931E9FFFF7A970D61AC1 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -257,10 +318,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 93C934F31B01F99B00E0C896 /* Build configuration list for PBXNativeTarget "MultiFiles" */;
 			buildPhases = (
+				96F1D267E689B3F7C2F7D422 /* Check Pods Manifest.lock */,
 				93C934CC1B01F99B00E0C896 /* Sources */,
 				93C934CD1B01F99B00E0C896 /* Frameworks */,
 				93C934CE1B01F99B00E0C896 /* Resources */,
 				933E7D8D1B1CA2B100BBF225 /* Embed App Extensions */,
+				206428F5037D01179241FE9B /* Embed Pods Frameworks */,
+				F0B74E4FECE98CEBBE577196 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -296,6 +360,7 @@
 		93C934C81B01F99B00E0C896 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "Riccardo Rizzo";
 				TargetAttributes = {
@@ -379,12 +444,106 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		206428F5037D01179241FE9B /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MultiFiles/Pods-MultiFiles-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		641809B9D9B74F76ED5B2EE7 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		9443931E9FFFF7A970D61AC1 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MultiFilesExtension/Pods-MultiFilesExtension-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		96F1D267E689B3F7C2F7D422 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		DE50BAD76EFD396EDF104CAA /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MultiFilesExtension/Pods-MultiFilesExtension-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F0B74E4FECE98CEBBE577196 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MultiFiles/Pods-MultiFiles-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		933E7D7A1B1CA2B100BBF225 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				933E7D841B1CA2B100BBF225 /* ShareViewController.m in Sources */,
+				93AA7A941CF998D40017BDB4 /* Multifiles.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,6 +553,7 @@
 			files = (
 				93C934DC1B01F99B00E0C896 /* ViewController.m in Sources */,
 				93B242F81B30669300067D2E /* StarRatingView.m in Sources */,
+				937292431CF984C100FCBCD5 /* Multifiles.swift in Sources */,
 				93C934D91B01F99B00E0C896 /* AppDelegate.m in Sources */,
 				93C934D61B01F99B00E0C896 /* main.m in Sources */,
 			);
@@ -452,33 +612,46 @@
 /* Begin XCBuildConfiguration section */
 		933E7D8A1B1CA2B100BBF225 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 55569E7999FF198E05607BBA /* Pods-MultiFilesExtension.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MultiFilesExtension/MultiFilesExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = MultiFilesExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = riccardorizzo.files.MultiFilesExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "MultiFilesExtension/MultiFilesExtension-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		933E7D8B1B1CA2B100BBF225 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8FBB2BFBEF49E3C28A7B4E48 /* Pods-MultiFilesExtension.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MultiFilesExtension/MultiFilesExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = MultiFilesExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = riccardorizzo.files.MultiFilesExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "MultiFilesExtension/MultiFilesExtension-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -566,38 +739,53 @@
 		};
 		93C934F41B01F99B00E0C896 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1562F1E9A2CA2DD249748125 /* Pods-MultiFiles.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MultiFiles/MultiFiles.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/RiccardoRizzo/Documents/FacebookSDK,
 				);
 				INFOPLIST_FILE = MultiFiles/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = riccardorizzo.files;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "MultiFiles/MultiFiles-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		93C934F51B01F99B00E0C896 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A3ED6D64014278DE142A5084 /* Pods-MultiFiles.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MultiFiles/MultiFiles.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/RiccardoRizzo/Documents/FacebookSDK,
 				);
 				INFOPLIST_FILE = MultiFiles/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = riccardorizzo.files;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "MultiFiles/MultiFiles-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

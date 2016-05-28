@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <Social/Social.h>
+#import "MultifilesExtension-Swift.h"
 
-@interface ShareViewController : UIViewController <NSURLConnectionDelegate, NSURLConnectionDataDelegate> {
+@interface ShareViewController : UIViewController <NSURLConnectionDelegate, NSURLConnectionDataDelegate, UpdateUploadBarDelegate> {
 
     NSString* USER_ID;
     UIProgressView *progressBar;

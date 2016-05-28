@@ -8,12 +8,19 @@
 
 #import "ViewController.h"
 
+@import Security;
+
 @interface ViewController ()
 
 @end
 
-//static NSString * const websiteName = @"http://localhost:8888";
-static NSString * const websiteName = @"http://www.riccardorizzo.eu/dev";
+static NSString * const websiteName = @"https://multifiles.heroku.com/API";
+static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/multifiles/";
+
+@interface NSURLRequest (DummyInterface)
++ (BOOL)allowsAnyHTTPSCertificateForHost:(NSString*)host;
++ (void)setAllowsAnyHTTPSCertificate:(BOOL)allow forHost:(NSString*)host;
+@end
 
 @implementation ViewController
 
@@ -568,14 +575,19 @@ static NSString * const websiteName = @"http://www.riccardorizzo.eu/dev";
     else
         url_ = [self.dataSourceForSearchResult objectAtIndex:indexPath.row];
     
+    NSString *fileUrl = [NSString stringWithFormat:@"%@%@/%@",awsWebBaseName,USER_ID,url_];
     
-    NSRange rOriginal = [url_ rangeOfString: @"."];
+    
+/*    NSRange rOriginal = [url_ rangeOfString: @"."];
     if (NSNotFound != rOriginal.location) {
         url_ = [url_
                 stringByReplacingCharactersInRange: rOriginal
                 withString:                         websiteName];
     }
-    url_ = [url_
+ */
+    
+    
+    url_ = [fileUrl
             stringByReplacingOccurrencesOfString: @" "
             withString: @"%20"];
     NSLog(@"%@",url_);
@@ -651,6 +663,8 @@ static NSString * const websiteName = @"http://www.riccardorizzo.eu/dev";
             
             NSError *error = [[NSError alloc] init];
             NSHTTPURLResponse *response = nil;
+            
+            [NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
             NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
             
             NSLog(@"Response code: %ld", (long)[response statusCode]);
@@ -698,6 +712,8 @@ static NSString * const websiteName = @"http://www.riccardorizzo.eu/dev";
             
             NSError *error = [[NSError alloc] init];
             NSHTTPURLResponse *response = nil;
+            
+            [NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
             NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
             
             NSLog(@"Response code: %ld", (long)[response statusCode]);
@@ -726,30 +742,13 @@ static NSString * const websiteName = @"http://www.riccardorizzo.eu/dev";
     }
 }
 
-/*
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    return [fileSectionTitles objectAtIndex:section];
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    // Return the number of sections.
-    return [fileSectionTitles count];
-}
-
-- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
-{
-    return [fileSectionTitles indexOfObject:title];
-}
-
--(NSArray*)sectionIndexTitlesForTableView:(UITableView *)tableView {
-    return IndexTitles;
-}
- */
-
 -(void)refreshUserData {
-  //  IndexTitles = @[@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z"];
+    
+    MultifilesHelper *multifiles = [[MultifilesHelper alloc] init];
+    [multifiles login:@"riccione83" password:@"laura007"];
+    
+  //  [multifiles upload];
+    
     
     @try {
         if(USER_ID != nil && !self.searchBarActive)
@@ -761,10 +760,10 @@ static NSString * const websiteName = @"http://www.riccardorizzo.eu/dev";
             FileID = [NSMutableArray new];
             FileRating = [NSMutableArray new];
             
-            NSString *post =[[NSString alloc] initWithFormat:@"json=1"];
+            NSString *post =[[NSString alloc] initWithFormat:@"JSON=1"];
             NSLog(@"PostData: %@",post);
             
-            NSString *web_base = [NSString stringWithFormat:@"%@%@",websiteName,@"/user.php"];
+            NSString *web_base = [NSString stringWithFormat:@"%@%@",websiteName,@"/user.php?JSON=1"];
             
             NSURL *url=[NSURL URLWithString:web_base];
             
@@ -782,6 +781,8 @@ static NSString * const websiteName = @"http://www.riccardorizzo.eu/dev";
             
             NSError *error = [[NSError alloc] init];
             NSHTTPURLResponse *response = nil;
+            
+            [NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
             NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
             
             NSLog(@"Response code: %ld", (long)[response statusCode]);
@@ -847,6 +848,7 @@ static NSString * const websiteName = @"http://www.riccardorizzo.eu/dev";
 }
 
 -(void) downloadFileForCurrentUser:(NSString *)fileName {
+    
         NSString *documentsDirectory =NSTemporaryDirectory(); //[paths objectAtIndex:0];
         NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:[fileName lastPathComponent]];
     
@@ -881,8 +883,6 @@ static NSString * const websiteName = @"http://www.riccardorizzo.eu/dev";
                      {
 
                          NSData *urlData = [NSData  dataWithData:data];
-                         //NSString *documentsDirectory =NSTemporaryDirectory(); //[paths objectAtIndex:0];
-                         //NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:[fileName lastPathComponent]];
                          [urlData writeToFile:dataPath atomically:YES];
                          [self previewDocument:[NSURL fileURLWithPath:dataPath]];
                      }];
@@ -915,11 +915,9 @@ static NSString * const websiteName = @"http://www.riccardorizzo.eu/dev";
             NSString *post =[[NSString alloc] initWithFormat:@"user_name=%@&user_password_new=%@&user_password_repeat=%@&user_email=%@&JSON=1",userName,password1,passwordRepeat,userEmail];
             NSLog(@"PostData: %@",post);
             
-            NSString *web_base = [NSString stringWithFormat:@"%@%@",websiteName,@"/register.php"];
+            NSString *web_base = [NSString stringWithFormat:@"%@%@%@",websiteName,@"/register.php?",post];
             
             NSURL *url=[NSURL URLWithString:web_base];
-            
-            //    NSURL *url=[NSURL URLWithString:@"http://localhost:8888/register.php"];
             
             NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
             
@@ -937,6 +935,8 @@ static NSString * const websiteName = @"http://www.riccardorizzo.eu/dev";
             
             NSError *error = [[NSError alloc] init];
             NSHTTPURLResponse *response = nil;
+            
+            [NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
             NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
             
             NSLog(@"Response code: %ld", (long)[response statusCode]);
@@ -1028,6 +1028,17 @@ static NSString * const websiteName = @"http://www.riccardorizzo.eu/dev";
         [self deleteUploadBar:true];
 }
 
+-(void) updateProgressBar:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
+    NSLog(@"%ld/%ld bytes written",(long)totalBytesWritten,(long)totalBytesExpectedToWrite);
+    double val =( (double)totalBytesWritten/(double)totalBytesExpectedToWrite );
+    progressBar.progress = val;
+    NSLog(@"%f percento",(progressBar.progress*100));
+    labelProgress.text = [NSString stringWithFormat:@"Uploading %.2f%% ...",(progressBar.progress*100)];
+    if(totalBytesExpectedToWrite == totalBytesWritten)
+        [self deleteUploadBar:true];
+}
+
+
 -(void)deleteUploadBar:(BOOL)refreshData
 {
     [[self.view viewWithTag:12] removeFromSuperview];
@@ -1082,7 +1093,13 @@ static NSString * const websiteName = @"http://www.riccardorizzo.eu/dev";
 }
 
 -(void) uploadFile:(NSURL *)filePath; {
-    NSString* theFileName = [filePath lastPathComponent];
+    
+    MultifilesHelper *helper = [[MultifilesHelper alloc] init];
+    helper.delegate = self;
+    [helper upload: filePath];
+    
+    
+  /*  NSString* theFileName = [filePath lastPathComponent];
     
     NSError *error = nil;
     
@@ -1100,12 +1117,7 @@ static NSString * const websiteName = @"http://www.riccardorizzo.eu/dev";
         
         NSString *filenames = [NSString stringWithFormat:@"1"];      //set name here
         NSLog(@"%@", filenames);
-        NSString *urlString =[NSString stringWithFormat:@"%@/upload.php",websiteName];
-        
-        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-        
-        [request setURL:[NSURL URLWithString:urlString]];
-        [request setHTTPMethod:@"POST"];
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL: [NSURL URLWithString: @"https://multifiles.herokuapp.com/upload.php?"]];
         
         NSString *boundary = @"---------------------------14737809831466499882746641449";
         
@@ -1113,43 +1125,36 @@ static NSString * const websiteName = @"http://www.riccardorizzo.eu/dev";
         [request addValue:contentType forHTTPHeaderField: @"Content-Type"];
         
         NSMutableData *body = [NSMutableData data];
-        
-       /* [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"JSON\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[filenames dataUsingEncoding:NSUTF8StringEncoding]];
-     */
         [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        
         NSString *fileDataName = [NSString stringWithFormat:@"Content-Disposition: form-data; name=\"file\"; filename=\"%@\"\r\n",theFileName];
         [body appendData:[fileDataName dataUsingEncoding:NSUTF8StringEncoding]];
         
         [body appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[NSData dataWithData:imageData]];
-        
         [body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
         // setting the body of the post to the reqeust
+        [request setHTTPMethod:@"POST"];
         [request setHTTPBody:body];
         
         isDownload = NO;
-        
         uploadConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
         
         if(uploadConnection) {
         // now lets make the connection to the web
-        //NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
         NSOperationQueue *queueL = [[NSOperationQueue alloc] init];
-       // NSData *returnData;
+        [NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:@"https://multifiles.herokuapp.com/upload.php"];
             
         [NSURLConnection sendAsynchronousRequest:request queue:queueL completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
         {
           //  returnData = [[NSData alloc] initWithData:data];
         }];
         
-     //   NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
-     //   NSLog(@"%@",returnString);
         NSLog(@"finish");
         }
     }
     }
+   */
 }
 
 -(BOOL) renameFile:(NSString*)oldFile renameTo:(NSString*)newFile {
@@ -1164,7 +1169,7 @@ static NSString * const websiteName = @"http://www.riccardorizzo.eu/dev";
             NSString *post =[[NSString alloc] initWithFormat:@"file_name=%@&new_file_name=%@&JSON=1",oldFile,newFile];
             NSLog(@"PostData: %@",post);
             
-            NSString *web_base = [NSString stringWithFormat:@"%@%@",websiteName,@"/rename.php"];
+            NSString *web_base = [NSString stringWithFormat:@"%@%@%@",websiteName,@"/rename.php?",post];
             
             NSURL *url=[NSURL URLWithString:web_base];
             
@@ -1184,6 +1189,8 @@ static NSString * const websiteName = @"http://www.riccardorizzo.eu/dev";
             
             NSError *error = [[NSError alloc] init];
             NSHTTPURLResponse *response = nil;
+        
+            [NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
             NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
             
             NSLog(@"Response code: %ld", (long)[response statusCode]);
@@ -1230,7 +1237,6 @@ static NSString * const websiteName = @"http://www.riccardorizzo.eu/dev";
     return NO;
 }
 
-
 -(BOOL) userLogin:(NSString*)userName withPassword:(NSString*)userPassword {
     NSInteger success = 0;
     @try {
@@ -1251,7 +1257,7 @@ static NSString * const websiteName = @"http://www.riccardorizzo.eu/dev";
             NSString *post =[[NSString alloc] initWithFormat:@"user_name=%@&user_password=%@&JSON=1",userName,userPassword];
             NSLog(@"PostData: %@",post);
             
-            NSString *web_base = [NSString stringWithFormat:@"%@%@",websiteName,@"/login.php"];
+            NSString *web_base = [NSString stringWithFormat:@"%@%@%@",websiteName,@"/login.php?",post];
             
             NSURL *url=[NSURL URLWithString:web_base];
             
@@ -1260,7 +1266,7 @@ static NSString * const websiteName = @"http://www.riccardorizzo.eu/dev";
             NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
             
             NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
-            
+
             NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
             [request setURL:url];
             [request setHTTPMethod:@"POST"];
@@ -1269,10 +1275,10 @@ static NSString * const websiteName = @"http://www.riccardorizzo.eu/dev";
             [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
             [request setHTTPBody:postData];
             
-            //[NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
-            
             NSError *error = [[NSError alloc] init];
             NSHTTPURLResponse *response = nil;
+            
+            [NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
             NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
             
             NSLog(@"Response code: %ld", (long)[response statusCode]);
@@ -1336,7 +1342,7 @@ static NSString * const websiteName = @"http://www.riccardorizzo.eu/dev";
             NSString *post =[[NSString alloc] initWithFormat:@"getusedspace=true&user_id=%@",userID];
             NSLog(@"PostData: %@",post);
             
-            NSString *web_base = [NSString stringWithFormat:@"%@%@",websiteName,@"/utils.php"];
+            NSString *web_base = [NSString stringWithFormat:@"%@%@%@",websiteName,@"/utils.php?",post];
             
             NSURL *url=[NSURL URLWithString:web_base];
             
@@ -1356,6 +1362,8 @@ static NSString * const websiteName = @"http://www.riccardorizzo.eu/dev";
             
             NSError *error = [[NSError alloc] init];
             NSHTTPURLResponse *response = nil;
+        
+            [NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
             NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
             
             NSLog(@"Response code: %ld", (long)[response statusCode]);
@@ -1404,6 +1412,49 @@ static NSString * const websiteName = @"http://www.riccardorizzo.eu/dev";
 }
 
 
+- (BOOL)connection:(NSURLConnection *)connection canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace {
+    return [protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
+    if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
+        //        if ([trustedHosts containsObject:challenge.protectionSpace.host])
+        
+        OSStatus                err;
+        NSURLProtectionSpace *  protectionSpace;
+        SecTrustRef             trust;
+        SecTrustResultType      trustResult;
+        BOOL                    trusted;
+        
+        protectionSpace = [challenge protectionSpace];
+        assert(protectionSpace != nil);
+        
+        trust = [protectionSpace serverTrust];
+        assert(trust != NULL);
+        err = SecTrustEvaluate(trust, &trustResult);
+        trusted = (err == noErr) && ((trustResult == kSecTrustResultProceed) || (trustResult == kSecTrustResultUnspecified));
+        
+        // If that fails, apply our certificates as anchors and see if that helps.
+        //
+        // It's perfectly acceptable to apply all of our certificates to the SecTrust
+        // object, and let the SecTrust object sort out the mess.  Of course, this assumes
+        // that the user trusts all certificates equally in all situations, which is implicit
+        // in our user interface; you could provide a more sophisticated user interface
+        // to allow the user to trust certain certificates for certain sites and so on).
+        
+        if ( ! trusted ) {
+          //  err = SecTrustSetAnchorCertificates(trust, (CFArrayRef) [Credentials sharedCredentials].certificates);
+          //  if (err == noErr) {
+          //      err = SecTrustEvaluate(trust, &trustResult);
+           // }
+            trusted = (err == noErr) && ((trustResult == kSecTrustResultProceed) || (trustResult == kSecTrustResultUnspecified));
+        }
+        if(trusted)
+            [challenge.sender useCredential:[NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust] forAuthenticationChallenge:challenge];
+    }
+    
+    [challenge.sender continueWithoutCredentialForAuthenticationChallenge:challenge];
+}
 
 #pragma mark - search
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope{
