@@ -17,6 +17,7 @@
 static NSString * const websiteName = @"https://multifiles.heroku.com/API";
 static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/multifiles/";
 
+
 @interface NSURLRequest (DummyInterface)
 + (BOOL)allowsAnyHTTPSCertificateForHost:(NSString*)host;
 + (void)setAllowsAnyHTTPSCertificate:(BOOL)allow forHost:(NSString*)host;
@@ -27,7 +28,6 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
 @synthesize images;
 @synthesize fileCollection;
 @synthesize loginButton;
-
 
 -(void)setup {
    loginView.hidden = NO;
@@ -58,7 +58,6 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
 }
 
 - (void)previewDocument:(NSURL*)URL {
-     //  NSURL *URL = [[NSBundle mainBundle] URLForResource:@"video" withExtension:@"avi"];
     [self deleteUploadBar:false];
     
     if (URL) {
@@ -80,6 +79,7 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
     if([self login])
         [self uploadFile:url];
 }
+
 #pragma mark End DocumentController
 
 -(void)addSearchBar{
@@ -213,13 +213,18 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
     
         if(UserName!= nil && password!= nil)
         {
+            MultifilesHelper *helper = [[MultifilesHelper alloc] init];
+            helper.delegate = self;
+            //[helper login:UserName password:password];
+            [helper showLoadingHUD];
             [self userLogin:UserName withPassword:password];
+            [helper hideLoadingHUD];
             return YES;
         }
     return NO;
 }
 
-/***************************
+/*****************************
  * login
  * this check if there are some login data saved
  * and perform a login if is true
@@ -312,6 +317,9 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
     if(alertView.tag==1) {
         if(buttonIndex==1) {
             NSString *file = [files objectAtIndex:cellSelected.row];
+            
+            file = [NSString stringWithFormat:@"%@/%@",USER_ID,file ];
+            
             [self deleteFile:file];
         }
         [self refreshUserData];
@@ -695,7 +703,12 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
 }
 
 -(void)deleteFile:(NSString*)filePath {
-    @try {
+
+    MultifilesHelper *helper = [[MultifilesHelper alloc] init];
+    helper.delegate = self;
+    [helper deleteFile:filePath];
+    
+ /*   @try {
         if(USER_ID != nil)
         {
             NSString *web_base = [NSString stringWithFormat:@"%@%@%@%@",websiteName,@"/upload.php",@"?delete_file=1&JSON=1&file_name=",filePath];
@@ -739,13 +752,16 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
     @catch (NSException * e) {
         NSLog(@"Exception: %@", e);
         [self alertStatus:@"Sign in Failed." :@"Error!" :0];
-    }
+    }*/
+    
+    
+    
 }
 
 -(void)refreshUserData {
     
-    MultifilesHelper *multifiles = [[MultifilesHelper alloc] init];
-    [multifiles login:@"riccione83" password:@"laura007"];
+   // MultifilesHelper *multifiles = [[MultifilesHelper alloc] init];
+  //  [multifiles login:@"riccione83" password:@"laura007"];
     
   //  [multifiles upload];
     
@@ -1029,13 +1045,29 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
 }
 
 -(void) updateProgressBar:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
-    NSLog(@"%ld/%ld bytes written",(long)totalBytesWritten,(long)totalBytesExpectedToWrite);
+  
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        NSLog(@"%ld/%ld bytes written",(long)totalBytesWritten,(long)totalBytesExpectedToWrite);
+        double val =( (double)totalBytesWritten/(double)totalBytesExpectedToWrite );
+        progressBar.progress = val;
+        NSLog(@"%f percento",(progressBar.progress*100));
+        labelProgress.text = [NSString stringWithFormat:@"Uploading %.2f%% ...",(progressBar.progress*100)];
+        if(totalBytesExpectedToWrite == totalBytesWritten)
+            [self deleteUploadBar:true];
+        
+        
+    });
+
+/*    NSLog(@"%ld/%ld bytes written",(long)totalBytesWritten,(long)totalBytesExpectedToWrite);
     double val =( (double)totalBytesWritten/(double)totalBytesExpectedToWrite );
     progressBar.progress = val;
     NSLog(@"%f percento",(progressBar.progress*100));
     labelProgress.text = [NSString stringWithFormat:@"Uploading %.2f%% ...",(progressBar.progress*100)];
     if(totalBytesExpectedToWrite == totalBytesWritten)
         [self deleteUploadBar:true];
+ */
 }
 
 
@@ -1092,69 +1124,15 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
     [self deleteUploadBar:true];
 }
 
--(void) uploadFile:(NSURL *)filePath; {
+-(UIView *)getMainView {
+    return self.view;
+}
+
+-(void) uploadFile:(NSURL *)filePath {
     
     MultifilesHelper *helper = [[MultifilesHelper alloc] init];
     helper.delegate = self;
     [helper upload: filePath];
-    
-    
-  /*  NSString* theFileName = [filePath lastPathComponent];
-    
-    NSError *error = nil;
-    
-    if(filePath!=nil)
-    {
-    NSData *imageData = [NSData dataWithContentsOfFile:(NSString*)filePath options:NSDataReadingMappedAlways error:&error];
-    
-    if (imageData == nil)
-    {
-        NSLog(@"Failed to read file, error %@", error);
-    }
-    else
-    {
-        [self createUploadBar];
-        
-        NSString *filenames = [NSString stringWithFormat:@"1"];      //set name here
-        NSLog(@"%@", filenames);
-        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL: [NSURL URLWithString: @"https://multifiles.herokuapp.com/upload.php?"]];
-        
-        NSString *boundary = @"---------------------------14737809831466499882746641449";
-        
-        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@",boundary];
-        [request addValue:contentType forHTTPHeaderField: @"Content-Type"];
-        
-        NSMutableData *body = [NSMutableData data];
-        [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        NSString *fileDataName = [NSString stringWithFormat:@"Content-Disposition: form-data; name=\"file\"; filename=\"%@\"\r\n",theFileName];
-        [body appendData:[fileDataName dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        [body appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[NSData dataWithData:imageData]];
-        [body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        // setting the body of the post to the reqeust
-        [request setHTTPMethod:@"POST"];
-        [request setHTTPBody:body];
-        
-        isDownload = NO;
-        uploadConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-        
-        if(uploadConnection) {
-        // now lets make the connection to the web
-        NSOperationQueue *queueL = [[NSOperationQueue alloc] init];
-        [NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:@"https://multifiles.herokuapp.com/upload.php"];
-            
-        [NSURLConnection sendAsynchronousRequest:request queue:queueL completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
-        {
-          //  returnData = [[NSData alloc] initWithData:data];
-        }];
-        
-        NSLog(@"finish");
-        }
-    }
-    }
-   */
 }
 
 -(BOOL) renameFile:(NSString*)oldFile renameTo:(NSString*)newFile {
@@ -1238,6 +1216,12 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
 }
 
 -(BOOL) userLogin:(NSString*)userName withPassword:(NSString*)userPassword {
+    
+    MultifilesHelper *helper = [[MultifilesHelper alloc] init];
+    helper.delegate = self;
+    
+    [helper showLoadingHUD];
+    
     NSInteger success = 0;
     @try {
         
@@ -1260,8 +1244,6 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
             NSString *web_base = [NSString stringWithFormat:@"%@%@%@",websiteName,@"/login.php?",post];
             
             NSURL *url=[NSURL URLWithString:web_base];
-            
-            //NSURL *url=[NSURL URLWithString:@"http://localhost:8888/login.php"];
             
             NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
             
@@ -1321,7 +1303,6 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
                 }
                 
             } else {
-                //if (error) NSLog(@"Error: %@", error);
                 [self alertStatus:@"Connection Failed" :@"Sign in Failed!" :0];
             }
         }
@@ -1333,6 +1314,9 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
     
     [activityIndicator stopAnimating];
     [activityIndicator removeFromSuperview];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [helper hideLoadingHUD];
+    });
     return NO;
 }
 

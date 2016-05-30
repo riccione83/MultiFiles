@@ -8,24 +8,56 @@
 
 import UIKit
 import Alamofire
+import MBProgressHUD
 
 @objc protocol UpdateUploadBarDelegate {
+    func getMainView() -> UIView
     func createUploadBar()
     func updateProgressBar(bytesWritten:NSInteger,totalBytesWritten:NSInteger, totalBytesExpectedToWrite:NSInteger)
+    func deleteUploadBar(refreshData:Bool)
+    func refreshUserData()
 }
 
 @objc class MultifilesHelper: NSObject {
     
     let websiteName = "http://multifiles.herokuapp.com/API/login.php"
+    let deleteFileAPI = "http://multifiles.herokuapp.com/API/upload.php"
     let uploadURL = "http://multifiles.herokuapp.com/API/upload.php"
     
     var delegate:UpdateUploadBarDelegate? = nil
     
+    func showLoadingHUD() {
+        let hud = MBProgressHUD.showHUDAddedTo(self.delegate!.getMainView(), animated: true)
+        hud.labelText = "Please wait..."
+    }
+    
+    func hideLoadingHUD() {
+        MBProgressHUD.hideAllHUDsForView(self.delegate!.getMainView(), animated: true)
+    }
+    
+    func deleteFile(filePath:String) {
+        let parameters = ["delete_file": "1",
+                          "file_name": filePath]
+        
+        self.showLoadingHUD()
+        
+        Alamofire.request(.POST, deleteFileAPI, parameters: parameters)
+            .responseJSON { response in
+                if let JSON = response.result.value {
+                    print("JSON: \(JSON)")
+                    
+                }
+                self.hideLoadingHUD()
+                self.delegate?.refreshUserData()
+        }
+    }
     
     func login(userName:String, password:String) {
         
         let parameters = ["user_name": userName,
                           "user_password": password]
+        
+        self.showLoadingHUD()
         
         Alamofire.request(.POST, websiteName, parameters: parameters)
             .responseJSON { response in
@@ -38,7 +70,7 @@ import Alamofire
                     print("JSON: \(JSON)")
                 }
                 
-                //self.upload()
+                self.hideLoadingHUD()
         }
     }
     
@@ -46,9 +78,6 @@ import Alamofire
         
         let theFileName = filePath.lastPathComponent
         let imageData:NSData = NSData(contentsOfURL: filePath)!// .dataWithContentsOfMappedFile("\(filePath)")
-        
-        //       let image = UIImage(named: "protaction.jpg")
-        //        let imageData = UIImagePNGRepresentation(image!)
         
         self.delegate?.createUploadBar()
         
@@ -60,18 +89,21 @@ import Alamofire
             },
             encodingCompletion: { encodingResult in
                 switch encodingResult {
+                    
                 case .Success(let upload, _, _):
                     upload.responseJSON { response in
                         debugPrint(response)
+                        self.delegate?.deleteUploadBar(true)
                     }
-                upload.progress { _, totalBytesRead, totalBytesExpectedToRead in
+                    upload.progress { _, totalBytesRead, totalBytesExpectedToRead in
                         let progress = Float(totalBytesRead)/Float(totalBytesExpectedToRead)
-                    self.delegate?.updateProgressBar(0, totalBytesWritten: NSInteger(totalBytesRead), totalBytesExpectedToWrite: NSInteger(totalBytesExpectedToRead))
+                        self.delegate?.updateProgressBar(0, totalBytesWritten: NSInteger(totalBytesRead), totalBytesExpectedToWrite: NSInteger(totalBytesExpectedToRead))
                         print("Uploading: \(progress)%")
                         // progress block
                     }
                 case .Failure(let encodingError):
                     print(encodingError)
+                    self.delegate?.deleteUploadBar(true)
                 }
             }
         )

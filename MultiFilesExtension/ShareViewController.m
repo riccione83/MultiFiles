@@ -96,15 +96,22 @@ static NSString * const websiteName = @"http://multifiles.heroku.com/API";
 }
 
 -(void) updateProgressBar:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
-    NSLog(@"%ld/%ld bytes written",(long)totalBytesWritten,(long)totalBytesExpectedToWrite);
-    double val =( (double)totalBytesWritten/(double)totalBytesExpectedToWrite );
-    progressBar.progress = val;
-    NSLog(@"%f percento",(progressBar.progress*100));
-    labelProgress.text = [NSString stringWithFormat:@"Uploading %.2f%% ...",(progressBar.progress*100)];
-    if(totalBytesExpectedToWrite == totalBytesWritten)
-        [self deleteUploadBar:true];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        NSLog(@"%ld/%ld bytes written",(long)totalBytesWritten,(long)totalBytesExpectedToWrite);
+        double val =( (double)totalBytesWritten/(double)totalBytesExpectedToWrite );
+        progressBar.progress = val;
+        NSLog(@"%f percento",(progressBar.progress*100));
+        labelProgress.text = [NSString stringWithFormat:@"Uploading %.2f%% ...",(progressBar.progress*100)];
+        if(totalBytesExpectedToWrite == totalBytesWritten)
+            [self deleteUploadBar:true];
+    });
 }
 
+-(UIView *)getMainView {
+    return self.view;
+}
 
 -(void)deleteUploadBar:(BOOL)refreshData
 {

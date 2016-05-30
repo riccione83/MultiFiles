@@ -148,11 +148,10 @@
 		933E7D7F1B1CA2B100BBF225 /* MultiFilesExtension */ = {
 			isa = PBXGroup;
 			children = (
+				9391DBFC1CFC365100C79FEC /* Storyboard */,
+				9391DBFB1CFC364600C79FEC /* View */,
 				93AA7A911CF998B40017BDB4 /* Class */,
 				933E7D8F1B1CAB7100BBF225 /* MultiFilesExtension.entitlements */,
-				933E7D821B1CA2B100BBF225 /* ShareViewController.h */,
-				933E7D831B1CA2B100BBF225 /* ShareViewController.m */,
-				933E7D851B1CA2B100BBF225 /* MainInterface.storyboard */,
 				933E7D801B1CA2B100BBF225 /* Supporting Files */,
 			);
 			path = MultiFilesExtension;
@@ -161,6 +160,7 @@
 		933E7D801B1CA2B100BBF225 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				93AA7A921CF998D40017BDB4 /* MultiFilesExtension-Bridging-Header.h */,
 				933E7D811B1CA2B100BBF225 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -169,17 +169,64 @@
 		937292401CF9849400FCBCD5 /* Class */ = {
 			isa = PBXGroup;
 			children = (
+				93B242F61B30669300067D2E /* StarRatingView.h */,
+				93B242F71B30669300067D2E /* StarRatingView.m */,
 				937292421CF984C100FCBCD5 /* Multifiles.swift */,
-				937292411CF984C000FCBCD5 /* MultiFiles-Bridging-Header.h */,
 			);
 			name = Class;
+			sourceTree = "<group>";
+		};
+		9391DBF91CFC360900C79FEC /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				93C934E21B01F99B00E0C896 /* LaunchScreen.xib */,
+				930161671B1F04D1006BC91D /* MainiPad.storyboard */,
+				93C934DD1B01F99B00E0C896 /* Main.storyboard */,
+			);
+			name = Storyboard;
+			sourceTree = "<group>";
+		};
+		9391DBFA1CFC362E00C79FEC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				93C934DA1B01F99B00E0C896 /* ViewController.h */,
+				93C934DB1B01F99B00E0C896 /* ViewController.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		9391DBFB1CFC364600C79FEC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				933E7D821B1CA2B100BBF225 /* ShareViewController.h */,
+				933E7D831B1CA2B100BBF225 /* ShareViewController.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		9391DBFC1CFC365100C79FEC /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				933E7D851B1CA2B100BBF225 /* MainInterface.storyboard */,
+			);
+			name = Storyboard;
+			sourceTree = "<group>";
+		};
+		9391DBFD1CFC366B00C79FEC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				93CD890D1B09D9AC00E5B085 /* FBSDKCoreKit.framework */,
+				93CD890E1B09D9AC00E5B085 /* FBSDKLoginKit.framework */,
+				93CD890F1B09D9AC00E5B085 /* FBSDKShareKit.framework */,
+				93D9ECD91B06001500E6F5B3 /* QuartzCore.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		93AA7A911CF998B40017BDB4 /* Class */ = {
 			isa = PBXGroup;
 			children = (
 				93AA7A931CF998D40017BDB4 /* Multifiles.swift */,
-				93AA7A921CF998D40017BDB4 /* MultiFilesExtension-Bridging-Header.h */,
 			);
 			name = Class;
 			sourceTree = "<group>";
@@ -187,10 +234,7 @@
 		93C934C71B01F99B00E0C896 = {
 			isa = PBXGroup;
 			children = (
-				93CD890D1B09D9AC00E5B085 /* FBSDKCoreKit.framework */,
-				93CD890E1B09D9AC00E5B085 /* FBSDKLoginKit.framework */,
-				93CD890F1B09D9AC00E5B085 /* FBSDKShareKit.framework */,
-				93D9ECD91B06001500E6F5B3 /* QuartzCore.framework */,
+				9391DBFD1CFC366B00C79FEC /* Frameworks */,
 				93C934D21B01F99B00E0C896 /* MultiFiles */,
 				93C934EC1B01F99B00E0C896 /* MultiFilesTests */,
 				933E7D7F1B1CA2B100BBF225 /* MultiFilesExtension */,
@@ -213,19 +257,14 @@
 		93C934D21B01F99B00E0C896 /* MultiFiles */ = {
 			isa = PBXGroup;
 			children = (
+				9391DBFA1CFC362E00C79FEC /* View */,
+				9391DBF91CFC360900C79FEC /* Storyboard */,
 				937292401CF9849400FCBCD5 /* Class */,
 				933E7D8E1B1CA89600BBF225 /* MultiFiles.entitlements */,
 				93D9ECD21B05FCE600E6F5B3 /* Img */,
 				93C934D71B01F99B00E0C896 /* AppDelegate.h */,
 				93C934D81B01F99B00E0C896 /* AppDelegate.m */,
-				93C934DA1B01F99B00E0C896 /* ViewController.h */,
-				93C934DB1B01F99B00E0C896 /* ViewController.m */,
-				93B242F61B30669300067D2E /* StarRatingView.h */,
-				93B242F71B30669300067D2E /* StarRatingView.m */,
-				930161671B1F04D1006BC91D /* MainiPad.storyboard */,
-				93C934DD1B01F99B00E0C896 /* Main.storyboard */,
 				93C934E01B01F99B00E0C896 /* Images.xcassets */,
-				93C934E21B01F99B00E0C896 /* LaunchScreen.xib */,
 				93C934D31B01F99B00E0C896 /* Supporting Files */,
 			);
 			path = MultiFiles;
@@ -234,6 +273,7 @@
 		93C934D31B01F99B00E0C896 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				937292411CF984C000FCBCD5 /* MultiFiles-Bridging-Header.h */,
 				93C934D41B01F99B00E0C896 /* Info.plist */,
 				93C934D51B01F99B00E0C896 /* main.m */,
 			);
