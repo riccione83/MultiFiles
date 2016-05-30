@@ -81,7 +81,7 @@
 
 -(void)refreshUserData;
 -(void)handleDocumentOpenURL:(NSURL *)url;
--(BOOL)login;
+-(void)login;
 -(void)rateFile:(NSIndexPath*)index withRating:(NSInteger)rating;
 
 @end

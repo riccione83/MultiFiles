@@ -9,6 +9,7 @@
 #import "ViewController.h"
 
 @import Security;
+@import SwiftyJSON;
 
 @interface ViewController ()
 
@@ -76,7 +77,7 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
 
 - (void)handleDocumentOpenURL:(NSURL *)url {
     NSLog(@"Starting to upload: %@",url);
-    if([self login])
+    if(USER_ID != nil && ![USER_ID  isEqual: @""])
         [self uploadFile:url];
 }
 
@@ -144,7 +145,7 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
              {
                  NSLog(@"fetched user:%@", result);
                  //NSDictionary *fbJsonData = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves error:&error];
-                 NSDictionary *fbJsonData = [NSDictionary dictionaryWithDictionary:result];
+                // NSDictionary *fbJsonData = [NSDictionary dictionaryWithDictionary:result];
                 /*//Only for debug
                  NSArray *jsonArray = (NSArray *) result;
                  NSLog(@"%@",jsonArray);
@@ -156,12 +157,13 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
                  [FBSDKAccessToken setCurrentAccessToken:nil];
                  [FBSDKProfile setCurrentProfile:nil];
                  
-                 if(![self userLogin:[fbJsonData valueForKey:@"email"] withPassword:[fbJsonData valueForKey:@"id"]])
+               /*  if(![self userLogin:[fbJsonData valueForKey:@"email"] withPassword:[fbJsonData valueForKey:@"id"]])
                  {
                      [self registerNewUser:[fbJsonData valueForKey:@"email"] withPassword:[fbJsonData valueForKey:@"id"] withPasswordRepeat:[fbJsonData valueForKey:@"id"] withEMail:[fbJsonData valueForKey:@"email"]];
                      [self userLogin:[fbJsonData valueForKey:@"email"] withPassword:[fbJsonData valueForKey:@"id"]];
                      
                  }
+                */
              }
          }];
     }
@@ -200,28 +202,15 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
  * and perform a login if is true
  * Type: Login
  *****************************/
--(BOOL)login {
+-(void)login {
     
     NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.riccardorizzo.multifiles"];
     
     NSString *UserName = [defaults stringForKey:@"user_name"];
     NSString *password = [defaults stringForKey:@"password"];
     
-       /* NSString *UserName = [[NSUserDefaults standardUserDefaults] stringForKey:@"user_name"];
-        NSString *password = [[NSUserDefaults standardUserDefaults] stringForKey:@"password"];
-        */
-    
-        if(UserName!= nil && password!= nil)
-        {
-            MultifilesHelper *helper = [[MultifilesHelper alloc] init];
-            helper.delegate = self;
-            //[helper login:UserName password:password];
-            [helper showLoadingHUD];
-            [self userLogin:UserName withPassword:password];
-            [helper hideLoadingHUD];
-            return YES;
-        }
-    return NO;
+    if(UserName != nil)
+        [self userLogin:UserName withPassword:password];
 }
 
 /*****************************
@@ -561,8 +550,6 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
                          completion:nil];
     }
     
-//    [self rateFile:indexPath withRating:[[FileRating objectAtIndex:indexPath.row] integerValue]];
-    
     cell.layer.cornerRadius = 0;
     cell.layer.shadowOpacity = 0.0;
     cell.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
@@ -584,16 +571,6 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
         url_ = [self.dataSourceForSearchResult objectAtIndex:indexPath.row];
     
     NSString *fileUrl = [NSString stringWithFormat:@"%@%@/%@",awsWebBaseName,USER_ID,url_];
-    
-    
-/*    NSRange rOriginal = [url_ rangeOfString: @"."];
-    if (NSNotFound != rOriginal.location) {
-        url_ = [url_
-                stringByReplacingCharactersInRange: rOriginal
-                withString:                         websiteName];
-    }
- */
-    
     
     url_ = [fileUrl
             stringByReplacingOccurrencesOfString: @" "
@@ -654,51 +631,16 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
 }
 
 -(void)setRateForFile:(NSString*)fileID withRateOf:(NSString*)rate {
-    @try {
-        if(USER_ID != nil)
-        {
-            NSString *web_base = [NSString stringWithFormat:@"%@%@?file_id=%@&set_rate=%@",websiteName,@"/rate.php",fileID,rate];
-          /*  web_base = [web_base
-                        stringByReplacingOccurrencesOfString: @" "
-                        withString: @"%20"];
-            */
-            NSURL *url=[NSURL URLWithString:web_base];
-            NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-            [request setURL:url];
-            [request setHTTPMethod:@"POST"];
-            [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-            [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    MultifilesHelper *helper = [[MultifilesHelper alloc] init];
+    helper.delegate = self;
+    
+    if(USER_ID != nil) {
+    
+    [helper setRateForFile:fileID rating:rate completition:^(BOOL success) {
+        /*if(success) {
             
-            NSError *error = [[NSError alloc] init];
-            NSHTTPURLResponse *response = nil;
-            
-            [NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
-            NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-            
-            NSLog(@"Response code: %ld", (long)[response statusCode]);
-            
-            if ([response statusCode] >= 200 && [response statusCode] < 300)
-            {
-                NSString *responseData = [[NSString alloc]initWithData:urlData encoding:NSUTF8StringEncoding];
-                NSLog(@"Response ==> %@", responseData);
-                
-                NSError *error = nil;
-                NSDictionary *jsonData = [NSJSONSerialization
-                                          JSONObjectWithData:urlData
-                                          options:NSJSONReadingMutableContainers
-                                          error:&error];
-                NSString *error_str = [jsonData objectForKey:@"error"];
-                if(error_str)
-                {
-                    [self alertStatus:@"Error" :error_str :0];
-                }
-                
-            }
-        }
-    }
-    @catch (NSException * e) {
-        NSLog(@"Exception: %@", e);
-        [self alertStatus:@"Sign in Failed." :@"Error!" :0];
+        }*/
+    }];
     }
 }
 
@@ -706,67 +648,17 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
 
     MultifilesHelper *helper = [[MultifilesHelper alloc] init];
     helper.delegate = self;
-    [helper deleteFile:filePath];
-    
- /*   @try {
-        if(USER_ID != nil)
-        {
-            NSString *web_base = [NSString stringWithFormat:@"%@%@%@%@",websiteName,@"/upload.php",@"?delete_file=1&JSON=1&file_name=",filePath];
-            web_base = [web_base
-                    stringByReplacingOccurrencesOfString: @" "
-                    withString: @"%20"];
-            
-            NSURL *url=[NSURL URLWithString:web_base];
-            NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-            [request setURL:url];
-            [request setHTTPMethod:@"POST"];
-            [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-            [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-            
-            NSError *error = [[NSError alloc] init];
-            NSHTTPURLResponse *response = nil;
-            
-            [NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
-            NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-            
-            NSLog(@"Response code: %ld", (long)[response statusCode]);
-            
-            if ([response statusCode] >= 200 && [response statusCode] < 300)
-            {
-                NSString *responseData = [[NSString alloc]initWithData:urlData encoding:NSUTF8StringEncoding];
-                NSLog(@"Response ==> %@", responseData);
-                
-                NSError *error = nil;
-                NSDictionary *jsonData = [NSJSONSerialization
-                                          JSONObjectWithData:urlData
-                                          options:NSJSONReadingMutableContainers
-                                          error:&error];
-                NSLog(@"%@",jsonData);
-                [self refreshUserData];
-                
-            } else {
-                [self alertStatus:@"Connection Failed" :@"Sign in Failed!" :0];
-            }
-        }
-    }
-    @catch (NSException * e) {
-        NSLog(@"Exception: %@", e);
-        [self alertStatus:@"Sign in Failed." :@"Error!" :0];
-    }*/
-    
-    
-    
+    [helper deleteFile:filePath completition:^(BOOL success) {
+        if(success)
+           [self refreshUserData];
+    }];
 }
 
 -(void)refreshUserData {
     
-   // MultifilesHelper *multifiles = [[MultifilesHelper alloc] init];
-  //  [multifiles login:@"riccione83" password:@"laura007"];
+    MultifilesHelper *helper = [[MultifilesHelper alloc] init];
+    helper.delegate = self;
     
-  //  [multifiles upload];
-    
-    
-    @try {
         if(USER_ID != nil && !self.searchBarActive)
         {
             images = [NSMutableArray new];
@@ -776,45 +668,11 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
             FileID = [NSMutableArray new];
             FileRating = [NSMutableArray new];
             
-            NSString *post =[[NSString alloc] initWithFormat:@"JSON=1"];
-            NSLog(@"PostData: %@",post);
-            
-            NSString *web_base = [NSString stringWithFormat:@"%@%@",websiteName,@"/user.php?JSON=1"];
-            
-            NSURL *url=[NSURL URLWithString:web_base];
-            
-            NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-            
-            NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
-            
-            NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-            [request setURL:url];
-            [request setHTTPMethod:@"POST"];
-            [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
-            [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-            [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-            [request setHTTPBody:postData];
-            
-            NSError *error = [[NSError alloc] init];
-            NSHTTPURLResponse *response = nil;
-            
-            [NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
-            NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-            
-            NSLog(@"Response code: %ld", (long)[response statusCode]);
-            
-            if ([response statusCode] >= 200 && [response statusCode] < 300)
-            {
-                NSString *responseData = [[NSString alloc]initWithData:urlData encoding:NSUTF8StringEncoding];
-                NSLog(@"Response ==> %@", responseData);
+            [helper getFileListForUser:^(BOOL success, id _Nullable jsonDataRcv) {
                 
-                NSError *error = nil;
-                NSDictionary *jsonData = [NSJSONSerialization
-                                          JSONObjectWithData:urlData
-                                          options:NSJSONReadingMutableContainers
-                                          error:&error];
-                
-                for (NSDictionary *dict in jsonData) {
+                if(success) {
+        
+                for (NSDictionary *dict in jsonDataRcv) {
                     [files addObject:[dict valueForKey:@"CurrFileName"]];
                     [file_acreateat addObject:[dict valueForKey:@"CreatedAt"]];
                     [file_size addObject:[dict valueForKey:@"FileSize"]];
@@ -827,17 +685,12 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
                     [refreshControl endRefreshing];
                     [fileCollection reloadData];
                 }
+                }
                 
-            } else {
-                [self alertStatus:@"Connection Failed" :@"Sign in Failed!" :0];
-            }
+            }];
         }
-    }
-    @catch (NSException * e) {
-        NSLog(@"Exception: %@", e);
-        [self alertStatus:@"Sign in Failed." :@"Error!" :0];
-    }
 }
+
 
 - (IBAction)getFileForUser:(id)sender {
     [self refreshUserData];
@@ -919,8 +772,24 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
  JSON = 1 => For mobile request
  ******************/
 
--(BOOL) registerNewUser:(NSString*)userName withPassword:(NSString*)password1 withPasswordRepeat:(NSString*)passwordRepeat withEMail:(NSString*)userEmail {
-    @try {
+-(void) registerNewUser:(NSString*)userName withPassword:(NSString*)password1 withPasswordRepeat:(NSString*)passwordRepeat withEMail:(NSString*)userEmail {
+    
+    MultifilesHelper *helper = [[MultifilesHelper alloc] init];
+    helper.delegate = self;
+    
+    [helper registerNewUser:userName userPassword:password1 userPasswordRepeat:passwordRepeat userEmail:userEmail completition:^(NSString * _Nonnull message, BOOL success) {
+        
+        if(success) {
+            [self alertStatus:message :@"Multifiles" :0];
+        }
+        else {
+            [self alertStatus:message :@"Warning" :0];
+        }
+        
+    }];
+    
+    
+/*    @try {
         
         if([userName isEqualToString:@""] || [password1 isEqualToString:@""] || userName==nil || password1==nil ) {
             
@@ -996,7 +865,7 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
         [self alertStatus:@"Sign in Failed." :@"Error!" :0];
         return NO;
     }
-    
+    */
 }
 
 - (IBAction)register_new_user:(id)sender {
@@ -1019,7 +888,6 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-    //[self.imageData appendData:data];
     self.receivedByte += data.length;
     NSLog(@"%ld/%ld bytes written",(long)self.receivedByte,(long)self.totalBytes);
     
@@ -1033,7 +901,7 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
     // Actual progress is self.receivedBytes / self.totalBytes
 }
 
--(void) connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
+/*-(void) connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
     NSLog(@"%ld/%ld bytes written",(long)totalBytesWritten,(long)totalBytesExpectedToWrite);
     
     double val =( (double)totalBytesWritten/(double)totalBytesExpectedToWrite );
@@ -1042,11 +910,10 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
     labelProgress.text = [NSString stringWithFormat:@"Uploading %.2f%% ...",(progressBar.progress*100)];
     if(totalBytesExpectedToWrite == totalBytesWritten)
         [self deleteUploadBar:true];
-}
+}*/
 
 -(void) updateProgressBar:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
   
-    
     dispatch_async(dispatch_get_main_queue(), ^{
         
         NSLog(@"%ld/%ld bytes written",(long)totalBytesWritten,(long)totalBytesExpectedToWrite);
@@ -1056,18 +923,7 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
         labelProgress.text = [NSString stringWithFormat:@"Uploading %.2f%% ...",(progressBar.progress*100)];
         if(totalBytesExpectedToWrite == totalBytesWritten)
             [self deleteUploadBar:true];
-        
-        
     });
-
-/*    NSLog(@"%ld/%ld bytes written",(long)totalBytesWritten,(long)totalBytesExpectedToWrite);
-    double val =( (double)totalBytesWritten/(double)totalBytesExpectedToWrite );
-    progressBar.progress = val;
-    NSLog(@"%f percento",(progressBar.progress*100));
-    labelProgress.text = [NSString stringWithFormat:@"Uploading %.2f%% ...",(progressBar.progress*100)];
-    if(totalBytesExpectedToWrite == totalBytesWritten)
-        [self deleteUploadBar:true];
- */
 }
 
 
@@ -1135,154 +991,37 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
     [helper upload: filePath];
 }
 
--(BOOL) renameFile:(NSString*)oldFile renameTo:(NSString*)newFile {
-    NSString *success=@"";
-    @try {
-            activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-            [activityIndicator setCenter:CGPointMake(self.view.frame.size.width/2.0, self.view.frame.size.height/2.0)]; // I do this because I'm in landscape mode
-            
-            [self.view addSubview:activityIndicator]; // spinner is not visible until started
-            [activityIndicator startAnimating];
-            //./rename.php?file_name=".$file."&new_file_name='+person
-            NSString *post =[[NSString alloc] initWithFormat:@"file_name=%@&new_file_name=%@&JSON=1",oldFile,newFile];
-            NSLog(@"PostData: %@",post);
-            
-            NSString *web_base = [NSString stringWithFormat:@"%@%@%@",websiteName,@"/rename.php?",post];
-            
-            NSURL *url=[NSURL URLWithString:web_base];
-            
-            NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-            
-            NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
-            
-            NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-            [request setURL:url];
-            [request setHTTPMethod:@"POST"];
-            [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
-            [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-            [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-            [request setHTTPBody:postData];
-            
-            //[NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
-            
-            NSError *error = [[NSError alloc] init];
-            NSHTTPURLResponse *response = nil;
-        
-            [NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
-            NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-            
-            NSLog(@"Response code: %ld", (long)[response statusCode]);
-            
-            if ([response statusCode] >= 200 && [response statusCode] < 300)
-            {
-                NSString *responseData = [[NSString alloc]initWithData:urlData encoding:NSUTF8StringEncoding];
-                NSLog(@"Response ==> %@", responseData);
-                
-                NSError *error = nil;
-                NSDictionary *jsonData = [NSJSONSerialization
-                                          JSONObjectWithData:urlData
-                                          options:NSJSONReadingMutableContainers
-                                          error:&error];
-                
-                success = jsonData[@"message"];
-                NSLog(@"Success: %ld",(long)success);
-                
-                if(success > 0)
-                {
-                    NSLog(@"Rename success");
-                    [activityIndicator stopAnimating];
-                    [activityIndicator removeFromSuperview];
-                    [self refreshUserData];
-                    return YES;
-                    
-                } else {
-                    NSString *error_msg = (NSString *) jsonData[@"error"];
-                    [self alertStatus:error_msg :@"Renaming failed." :0];
-                }
-                
-            } else {
-                //if (error) NSLog(@"Error: %@", error);
-                [self alertStatus:@"Connection Failed" :@"Renaming failed." :0];
-            }
-    }
-    @catch (NSException * e) {
-        NSLog(@"Exception: %@", e);
-        [self alertStatus:@"Error on renaming file." :@"Error!" :0];
-    }
-    
-    [activityIndicator stopAnimating];
-    [activityIndicator removeFromSuperview];
-    return NO;
-}
-
--(BOOL) userLogin:(NSString*)userName withPassword:(NSString*)userPassword {
+-(void) renameFile:(NSString*)oldFile renameTo:(NSString*)newFile {
     
     MultifilesHelper *helper = [[MultifilesHelper alloc] init];
     helper.delegate = self;
-    
-    [helper showLoadingHUD];
-    
-    NSInteger success = 0;
-    @try {
+    [helper renameFile:oldFile newFileName:newFile completition:^(BOOL success) {
         
-        if([userName isEqualToString:@""] || [userPassword isEqualToString:@""] ) {
-            
-            [self alertStatus:@"Please enter Email and Password" :@"Sign in Failed!" :0];
-            return NO;
-            
-        } else {
-            
-            activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-            [activityIndicator setCenter:CGPointMake(self.view.frame.size.width/2.0, self.view.frame.size.height/2.0)]; // I do this because I'm in landscape mode
-            
-            [self.view addSubview:activityIndicator]; // spinner is not visible until started
-            [activityIndicator startAnimating];
-            
-            NSString *post =[[NSString alloc] initWithFormat:@"user_name=%@&user_password=%@&JSON=1",userName,userPassword];
-            NSLog(@"PostData: %@",post);
-            
-            NSString *web_base = [NSString stringWithFormat:@"%@%@%@",websiteName,@"/login.php?",post];
-            
-            NSURL *url=[NSURL URLWithString:web_base];
-            
-            NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-            
-            NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
+        if(success) {
+            NSLog(@"Rename success");
+            [self refreshUserData];
+        }
+    }];
+}
 
-            NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-            [request setURL:url];
-            [request setHTTPMethod:@"POST"];
-            [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
-            [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-            [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-            [request setHTTPBody:postData];
+-(void) userLogin:(NSString*)userName withPassword:(NSString*)userPassword {
+    
+    MultifilesHelper *helper = [[MultifilesHelper alloc] init];
+    helper.delegate = self;
+    [helper showLoadingHUD];
+        
+    if([userName isEqualToString:@""] || [userPassword isEqualToString:@""] ) {
+            [self alertStatus:@"Please enter Email and Password" :@"Sign in Failed!" :0];
             
-            NSError *error = [[NSError alloc] init];
-            NSHTTPURLResponse *response = nil;
+    } else {
             
-            [NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
-            NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-            
-            NSLog(@"Response code: %ld", (long)[response statusCode]);
-            
-            if ([response statusCode] >= 200 && [response statusCode] < 300)
-            {
-                NSString *responseData = [[NSString alloc]initWithData:urlData encoding:NSUTF8StringEncoding];
-                NSLog(@"Response ==> %@", responseData);
-                
-                NSError *error = nil;
-                NSDictionary *jsonData = [NSJSONSerialization
-                                          JSONObjectWithData:urlData
-                                          options:NSJSONReadingMutableContainers
-                                          error:&error];
-                
-                success = [jsonData[@"success"] integerValue];
-                NSLog(@"Success: %ld",(long)success);
-                
-                if(success > 0)
-                {
+        MultifilesHelper *helper = [[MultifilesHelper alloc] init];
+        helper.delegate = self;
+        
+        [helper login:userName password:userPassword completition:^(NSString * UserID, BOOL success) {
+            if(success) {
                     NSLog(@"Login SUCCESS. USER ID: %ld",(long)success);
-                    USER_ID = [NSString stringWithFormat:@"%ld",(long)success];
+                    USER_ID = [NSString stringWithFormat:@"%@",UserID];
                     fileView.hidden = NO;
                     loginView.hidden = YES;
                     loggedIn = YES;
@@ -1291,97 +1030,32 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
                     [self saveUserLoginData:userName withPassword:userPassword];
                     [self refreshUserData];
                     [self getUsedSpace:USER_ID];
-                    
-                    [activityIndicator stopAnimating];
-                    [activityIndicator removeFromSuperview];
-                    
-                    return YES;
-                } else {
-                    
-                    NSString *error_msg = (NSString *) jsonData[@"error"];
-                    [self alertStatus:error_msg :@"Sign in Failed!" :0];
-                }
-                
-            } else {
-                [self alertStatus:@"Connection Failed" :@"Sign in Failed!" :0];
             }
-        }
-    }
-    @catch (NSException * e) {
-        NSLog(@"Exception: %@", e);
-        [self alertStatus:@"Sign in Failed." :@"Error!" :0];
-    }
-    
-    [activityIndicator stopAnimating];
-    [activityIndicator removeFromSuperview];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [helper hideLoadingHUD];
-    });
-    return NO;
-}
+            else {
+                [self alertStatus:UserID :@"Sign in Failed!" :0];
+            }
+        }];
 
--(BOOL) getUsedSpace:(NSString*)userID {
-    NSString *retJson;
-    @try {
-            NSString *post =[[NSString alloc] initWithFormat:@"getusedspace=true&user_id=%@",userID];
-            NSLog(@"PostData: %@",post);
-            
-            NSString *web_base = [NSString stringWithFormat:@"%@%@%@",websiteName,@"/utils.php?",post];
-            
-            NSURL *url=[NSURL URLWithString:web_base];
-            
-            NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-            
-            NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
-            
-            NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-            [request setURL:url];
-            [request setHTTPMethod:@"POST"];
-            [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
-            [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-            [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-            [request setHTTPBody:postData];
-            
-            //[NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
-            
-            NSError *error = [[NSError alloc] init];
-            NSHTTPURLResponse *response = nil;
-        
-            [NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
-            NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-            
-            NSLog(@"Response code: %ld", (long)[response statusCode]);
-            
-            if ([response statusCode] >= 200 && [response statusCode] < 300)
-            {
-                NSString *responseData = [[NSString alloc]initWithData:urlData encoding:NSUTF8StringEncoding];
-                NSLog(@"Response ==> %@", responseData);
-                
-                NSError *error = nil;
-                NSDictionary *jsonData = [NSJSONSerialization
-                                          JSONObjectWithData:urlData
-                                          options:NSJSONReadingMutableContainers
-                                          error:&error];
-                
-                retJson = jsonData[@"used_space"];
-                NSLog(@"You use %@",retJson);
-                
-                if(retJson)
-                {
-                    UsedSpace = [NSString stringWithFormat:@"%@",retJson];
-                    [navTitle setTitle:[NSString stringWithFormat:@"MultiView - Used:%@",UsedSpace]];
-                    return YES;
-                }
-            }
         }
-    @catch (NSException * e) {
-        NSLog(@"Exception: %@", e);
     }
-    return NO;
+
+-(void) getUsedSpace:(NSString*)userID {
+    MultifilesHelper *helper = [[MultifilesHelper alloc] init];
+    helper.delegate = self;
+    [helper getUserSpace:USER_ID completition:^(NSString * _Nonnull spaceUsed, BOOL success) {
+        
+        if(success) {
+            UsedSpace = [NSString stringWithFormat:@"%@",spaceUsed];
+            [navTitle setTitle:[NSString stringWithFormat:@"MultiView - Used:%@",UsedSpace]];
+        }
+        
+    }];
 }
 
 - (IBAction)login:(id)sender {
+    
     [self userLogin:txtUserName.text withPassword:txtUserPassword.text];
+    
 }
 
 - (void) alertStatus:(NSString *)msg :(NSString *)title :(int) tag
@@ -1395,6 +1069,7 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
     [alertView show];
 }
 
+#pragma mark Connection Delegate
 
 - (BOOL)connection:(NSURLConnection *)connection canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace {
     return [protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust];

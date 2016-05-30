@@ -145,6 +145,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		931FCAB61CFC7A65007BC3FD /* Swift */ = {
+			isa = PBXGroup;
+			children = (
+				937292421CF984C100FCBCD5 /* Multifiles.swift */,
+			);
+			name = Swift;
+			sourceTree = "<group>";
+		};
 		933E7D7F1B1CA2B100BBF225 /* MultiFilesExtension */ = {
 			isa = PBXGroup;
 			children = (
@@ -169,9 +177,9 @@
 		937292401CF9849400FCBCD5 /* Class */ = {
 			isa = PBXGroup;
 			children = (
+				931FCAB61CFC7A65007BC3FD /* Swift */,
 				93B242F61B30669300067D2E /* StarRatingView.h */,
 				93B242F71B30669300067D2E /* StarRatingView.m */,
-				937292421CF984C100FCBCD5 /* Multifiles.swift */,
 			);
 			name = Class;
 			sourceTree = "<group>";
