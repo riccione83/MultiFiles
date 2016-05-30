@@ -1,0 +1,6 @@
+framework module Pods_MultiFilesExtension {
+  umbrella header "Pods-MultiFilesExtension-umbrella.h"
+
+  export *
+  module * { export * }
+}
