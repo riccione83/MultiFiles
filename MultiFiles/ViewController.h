@@ -25,6 +25,9 @@
     IBOutlet UITextField *txtNewPassword2;
    // IBOutlet UIWebView *fileWebViewer;
     
+    MultifilesHelper *helper;
+    
+    
     //---- Program variables
     NSString *USER_ID;
     NSString *UsedSpace;

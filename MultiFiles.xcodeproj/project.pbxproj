@@ -28,7 +28,6 @@
 		93C934DF1B01F99B00E0C896 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93C934DD1B01F99B00E0C896 /* Main.storyboard */; };
 		93C934E11B01F99B00E0C896 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93C934E01B01F99B00E0C896 /* Images.xcassets */; };
 		93C934E41B01F99B00E0C896 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93C934E21B01F99B00E0C896 /* LaunchScreen.xib */; };
-		93C934F01B01F99B00E0C896 /* MultiFilesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C934EF1B01F99B00E0C896 /* MultiFilesTests.m */; };
 		93CD89101B09D9AC00E5B085 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93CD890D1B09D9AC00E5B085 /* FBSDKCoreKit.framework */; };
 		93CD89111B09D9AC00E5B085 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93CD890E1B09D9AC00E5B085 /* FBSDKLoginKit.framework */; };
 		93CD89121B09D9AC00E5B085 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93CD890F1B09D9AC00E5B085 /* FBSDKShareKit.framework */; };
@@ -43,13 +42,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 933E7D7D1B1CA2B100BBF225;
 			remoteInfo = MultiFilesExtension;
-		};
-		93C934EA1B01F99B00E0C896 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 93C934C81B01F99B00E0C896 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 93C934CF1B01F99B00E0C896;
-			remoteInfo = MultiFiles;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -103,7 +95,6 @@
 		93C934DE1B01F99B00E0C896 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		93C934E01B01F99B00E0C896 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		93C934E31B01F99B00E0C896 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		93C934E91B01F99B00E0C896 /* MultiFilesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MultiFilesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		93C934EE1B01F99B00E0C896 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		93C934EF1B01F99B00E0C896 /* MultiFilesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MultiFilesTests.m; sourceTree = "<group>"; };
 		93CD890D1B09D9AC00E5B085 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
@@ -132,13 +123,6 @@
 				93CD89101B09D9AC00E5B085 /* FBSDKCoreKit.framework in Frameworks */,
 				93CD89111B09D9AC00E5B085 /* FBSDKLoginKit.framework in Frameworks */,
 				82BA016E547F0F4FC2DEE610 /* Pods_MultiFiles.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		93C934E61B01F99B00E0C896 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,7 +240,6 @@
 			isa = PBXGroup;
 			children = (
 				93C934D01B01F99B00E0C896 /* MultiFiles.app */,
-				93C934E91B01F99B00E0C896 /* MultiFilesTests.xctest */,
 				933E7D7E1B1CA2B100BBF225 /* MultiFilesExtension.appex */,
 			);
 			name = Products;
@@ -384,24 +367,6 @@
 			productReference = 93C934D01B01F99B00E0C896 /* MultiFiles.app */;
 			productType = "com.apple.product-type.application";
 		};
-		93C934E81B01F99B00E0C896 /* MultiFilesTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 93C934F61B01F99B00E0C896 /* Build configuration list for PBXNativeTarget "MultiFilesTests" */;
-			buildPhases = (
-				93C934E51B01F99B00E0C896 /* Sources */,
-				93C934E61B01F99B00E0C896 /* Frameworks */,
-				93C934E71B01F99B00E0C896 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				93C934EB1B01F99B00E0C896 /* PBXTargetDependency */,
-			);
-			name = MultiFilesTests;
-			productName = MultiFilesTests;
-			productReference = 93C934E91B01F99B00E0C896 /* MultiFilesTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -430,10 +395,6 @@
 							};
 						};
 					};
-					93C934E81B01F99B00E0C896 = {
-						CreatedOnToolsVersion = 6.3;
-						TestTargetID = 93C934CF1B01F99B00E0C896;
-					};
 				};
 			};
 			buildConfigurationList = 93C934CB1B01F99B00E0C896 /* Build configuration list for PBXProject "MultiFiles" */;
@@ -450,7 +411,6 @@
 			projectRoot = "";
 			targets = (
 				93C934CF1B01F99B00E0C896 /* MultiFiles */,
-				93C934E81B01F99B00E0C896 /* MultiFilesTests */,
 				933E7D7D1B1CA2B100BBF225 /* MultiFilesExtension */,
 			);
 		};
@@ -480,13 +440,6 @@
 				930161641B1F0492006BC91D /* cloud.png in Resources */,
 				930161691B1F04D1006BC91D /* MainiPad.storyboard in Resources */,
 				93C934E11B01F99B00E0C896 /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		93C934E71B01F99B00E0C896 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -607,14 +560,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		93C934E51B01F99B00E0C896 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				93C934F01B01F99B00E0C896 /* MultiFilesTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -622,11 +567,6 @@
 			isa = PBXTargetDependency;
 			target = 933E7D7D1B1CA2B100BBF225 /* MultiFilesExtension */;
 			targetProxy = 933E7D871B1CA2B100BBF225 /* PBXContainerItemProxy */;
-		};
-		93C934EB1B01F99B00E0C896 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 93C934CF1B01F99B00E0C896 /* MultiFiles */;
-			targetProxy = 93C934EA1B01F99B00E0C896 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -674,7 +614,7 @@
 				INFOPLIST_FILE = MultiFilesExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = riccardorizzo.files.MultiFilesExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.riccardorizzo.files.multifiles.extension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
@@ -695,7 +635,7 @@
 				INFOPLIST_FILE = MultiFilesExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = riccardorizzo.files.MultiFilesExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.riccardorizzo.files.multifiles.extension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
@@ -803,7 +743,7 @@
 				INFOPLIST_FILE = MultiFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = riccardorizzo.files;
+				PRODUCT_BUNDLE_IDENTIFIER = com.riccardorizzo.files.multifiles;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "MultiFiles/MultiFiles-Bridging-Header.h";
@@ -830,45 +770,11 @@
 				INFOPLIST_FILE = MultiFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = riccardorizzo.files;
+				PRODUCT_BUNDLE_IDENTIFIER = com.riccardorizzo.files.multifiles;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "MultiFiles/MultiFiles-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		93C934F71B01F99B00E0C896 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = MultiFilesTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MultiFiles.app/MultiFiles";
-			};
-			name = Debug;
-		};
-		93C934F81B01F99B00E0C896 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = MultiFilesTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MultiFiles.app/MultiFiles";
 			};
 			name = Release;
 		};
@@ -898,15 +804,6 @@
 			buildConfigurations = (
 				93C934F41B01F99B00E0C896 /* Debug */,
 				93C934F51B01F99B00E0C896 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		93C934F61B01F99B00E0C896 /* Build configuration list for PBXNativeTarget "MultiFilesTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				93C934F71B01F99B00E0C896 /* Debug */,
-				93C934F81B01F99B00E0C896 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

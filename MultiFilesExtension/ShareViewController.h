@@ -19,6 +19,8 @@
     NSURL *fileLoaded;
     NSMutableArray *itemsToDownload;
     NSURLConnection *uploadConnection;
+    
+    MultifilesHelper *helper;
 }
 
 @end

@@ -110,8 +110,8 @@ import SwiftyJSON
                         print(message)
                         completition(message: message,success: false)
                     }
-                    else {
-                        completition(message: "", success: true)
+                    else if let message = json["message"].string {
+                        completition(message: message, success: true)
                     }
                     
                 }
@@ -147,14 +147,18 @@ import SwiftyJSON
         }
     }
     
-    func setRateForFile(filePath:String,rating:String, completition:(success:Bool) -> ()) {
+    func setRateForFile(filePath:String,rating:String,userID:String, completition:(success:Bool) -> ()) {
         let parameters = ["file_id": filePath,
-                          "set_rate": rating]
+                          "set_rate": rating,
+                          "user_id": userID]
         
         self.showLoadingHUD()
         
         Alamofire.request(.POST, ratingFileAPI, parameters: parameters)
             .responseJSON { response in
+                
+                print(response.result.value)
+                
                 if let jsonData = response.result.value {
                     
                     print("JSON: \(jsonData)")
@@ -164,7 +168,7 @@ import SwiftyJSON
                         print(message)
                         completition(success: false)
                     }
-                    else if let user_id = json["success"].string {
+                    else if let user_id = json["response"].string {
                         print(user_id)
                         completition(success: true)
                     }

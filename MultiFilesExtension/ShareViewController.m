@@ -20,7 +20,10 @@
 
 @implementation ShareViewController
 
-static NSString * const websiteName = @"http://multifiles.heroku.com/API";
+//Only for deletege compatibility
+-(void)refreshUserData {
+    
+}
 
 - (BOOL)isContentValid {
     // Do validation of contentText and/or NSExtensionContext attachments here
@@ -84,17 +87,6 @@ static NSString * const websiteName = @"http://multifiles.heroku.com/API";
 }
 
 
--(void) connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWrittentotalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
- /*   NSLog(@"%ld/%ld bytes written",(long)totalBytesWritten,(long)totalBytesExpectedToWrite);
-    double val =( (double)totalBytesWritten/(double)totalBytesExpectedToWrite );
-    progressBar.progress = val;
-    NSLog(@"%f percento",(progressBar.progress*100));
-    labelProgress.text = [NSString stringWithFormat:@"Uploading %.2f%% ...",(progressBar.progress*100)];
-    if(totalBytesExpectedToWrite == totalBytesWritten)
-        [self deleteUploadBar:true];
-  */
-}
-
 -(void) updateProgressBar:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -121,7 +113,6 @@ static NSString * const websiteName = @"http://multifiles.heroku.com/API";
     if(itemsToDownload.count == 0)
     {
          [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
-    //    exit(0);
     }
     else
     {
@@ -169,121 +160,10 @@ static NSString * const websiteName = @"http://multifiles.heroku.com/API";
 
 -(void) uploadFile:(NSURL *)filePath; {
 
-    MultifilesHelper *helper = [[MultifilesHelper alloc] init];
-    helper.delegate = self;
     [helper upload:filePath];
 }
 
-
--(BOOL) userLogin:(NSString*)userName withPassword:(NSString*)userPassword {
-    NSInteger success = 0;
-    @try {
-        
-        if([userName isEqualToString:@""] || [userPassword isEqualToString:@""] ) {
-            
-         //   [self alertStatus:@"Please enter Email and Password" :@"Sign in Failed!" :0];
-            return NO;
-            
-        } else {
-            
-           // activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-           // [activityIndicator setCenter:CGPointMake(self.view.frame.size.width/2.0, self.view.frame.size.height/2.0)]; // I do this because I'm in landscape mode
-            
-          //  [self.view addSubview:activityIndicator]; // spinner is not visible until started
-          //  [activityIndicator startAnimating];
-            
-            NSString *post =[[NSString alloc] initWithFormat:@"?user_name=%@&user_password=%@&JSON=1",userName,userPassword];
-            NSLog(@"PostData: %@",post);
-            
-            NSString *web_base = [NSString stringWithFormat:@"%@%@%@",websiteName,@"/login.php",post];
-            
-            NSURL *url=[NSURL URLWithString:web_base];
-            
-            //NSURL *url=[NSURL URLWithString:@"http://localhost:8888/login.php"];
-            
-            NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-            
-            NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
-            
-            NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-            [request setURL:url];
-            [request setHTTPMethod:@"POST"];
-            [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
-            [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-            [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-            [request setHTTPBody:postData];
-            
-            //[NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
-            
-            NSError *error = [[NSError alloc] init];
-            NSHTTPURLResponse *response = nil;
-            
-            [NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:@"http://multifiles.heroku.com/"];
-            NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-            
-            NSLog(@"Response code: %ld", (long)[response statusCode]);
-            
-            if ([response statusCode] >= 200 && [response statusCode] < 300)
-            {
-                NSString *responseData = [[NSString alloc]initWithData:urlData encoding:NSUTF8StringEncoding];
-                NSLog(@"Response ==> %@", responseData);
-                
-                NSError *error = nil;
-                NSDictionary *jsonData = [NSJSONSerialization
-                                          JSONObjectWithData:urlData
-                                          options:NSJSONReadingMutableContainers
-                                          error:&error];
-                
-                success = [jsonData[@"success"] integerValue];
-                NSLog(@"Success: %ld",(long)success);
-                
-                if(success > 0)
-                {
-                    NSLog(@"Login SUCCESS. USER ID: %ld",(long)success);
-                    USER_ID = [NSString stringWithFormat:@"%ld",(long)success];
-                    return YES;
-                } else {
-                    
-                    NSString *error_msg = (NSString *) jsonData[@"error"];
-                    NSLog(@"%@",error_msg);
-              //      [self alertStatus:error_msg :@"Sign in Failed!" :0];
-                }
-                
-            } else {
-                //if (error) NSLog(@"Error: %@", error);
-              //  [self alertStatus:@"Connection Failed" :@"Sign in Failed!" :0];
-            }
-        }
-    }
-    @catch (NSException * e) {
-        NSLog(@"Exception: %@", e);
-  //      [self alertStatus:@"Sign in Failed." :@"Error!" :0];
-    }
-    return NO;
-}
-
-
--(BOOL)login {
-    NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.riccardorizzo.multifiles"];
-    
-    NSString *UserName = [defaults stringForKey:@"user_name"];
-    NSString *password = [defaults stringForKey:@"password"];
-    
-    if(UserName!= nil && password!= nil)
-    {
-        [self userLogin:UserName withPassword:password];
-        return YES;
-    }
-    return NO;
-}
-
-
-//-(void)viewDidAppear:(BOOL)animated {
--(void)viewDidLoad {
-    [super viewDidLoad];
-    UploadInProgress = NO;
-    itemsToDownload = [NSMutableArray new];
-    [self login];
+-(void)getPassedFiles {
     for (NSItemProvider* itemProvider in ((NSExtensionItem*)self.extensionContext.inputItems[0]).attachments )
     {
         if([itemProvider hasItemConformingToTypeIdentifier:@"public.image"])
@@ -301,7 +181,7 @@ static NSString * const websiteName = @"http://multifiles.heroku.com/API";
                          }
                          else
                              [itemsToDownload addObject:(NSURL*)item];
-                        }];
+                     }];
                  }
              }];
         }
@@ -324,8 +204,43 @@ static NSString * const websiteName = @"http://multifiles.heroku.com/API";
                  }
              }];
         }
-
     }
+}
+
+-(void) userLogin:(NSString*)userName withPassword:(NSString*)userPassword {
+    
+        [helper showLoadingHUD];
+    
+        [helper login:userName password:userPassword completition:^(NSString * UserID, BOOL success) {
+            if(success) {
+                NSLog(@"Login SUCCESS. USER ID: %ld",(long)success);
+                USER_ID = [NSString stringWithFormat:@"%@",UserID];
+                [self getPassedFiles];
+            }
+        }];
+}
+
+-(void)login {
+    NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.riccardorizzo.multifiles"];
+    
+    NSString *UserName = [defaults stringForKey:@"user_name"];
+    NSString *password = [defaults stringForKey:@"password"];
+    
+    if(UserName!= nil && password!= nil)
+    {
+        [self userLogin:UserName withPassword:password];
+    }
+}
+
+
+//-(void)viewDidAppear:(BOOL)animated {
+-(void)viewDidLoad {
+    [super viewDidLoad];
+    helper = [[MultifilesHelper alloc] init];
+    helper.delegate = self;
+    UploadInProgress = NO;
+    itemsToDownload = [NSMutableArray new];
+    [self login];
 }
 
 @end
