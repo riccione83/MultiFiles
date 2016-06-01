@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '97EF4AA9996CFA8976642FA5'
-               BlueprintName = 'Pods-MultiFilesExtension'
+               BlueprintIdentifier = '703A76323FCD6B8D809D8277'
+               BlueprintName = 'SWTableViewCell'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'Pods_MultiFilesExtension.framework'>
+               BuildableName = 'SWTableViewCell.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

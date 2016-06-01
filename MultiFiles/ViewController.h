@@ -11,9 +11,12 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import "StarRatingView.h"
 #import "Multifiles-Swift.h"
+@import Security;
+@import SwiftyJSON;
+@import SWTableViewCell;
 
 
-@interface ViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, FBSDKLoginButtonDelegate, FBSDKGraphRequestConnectionDelegate, NSURLConnectionDelegate, NSURLConnectionDataDelegate, UIGestureRecognizerDelegate, UIAlertViewDelegate,UISearchBarDelegate,UIDocumentInteractionControllerDelegate,UIActionSheetDelegate,UIGestureRecognizerDelegate, UpdateUploadBarDelegate> {
+@interface ViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, FBSDKLoginButtonDelegate, FBSDKGraphRequestConnectionDelegate, NSURLConnectionDelegate, NSURLConnectionDataDelegate, UIGestureRecognizerDelegate, UIAlertViewDelegate,UISearchBarDelegate,UIDocumentInteractionControllerDelegate,UIActionSheetDelegate,UIGestureRecognizerDelegate, UpdateUploadBarDelegate,SWTableViewCellDelegate> {
 
     IBOutlet UITextField *txtUserName;
     IBOutlet UITextField *txtUserPassword;

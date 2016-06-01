@@ -8,8 +8,7 @@
 
 #import "ViewController.h"
 
-@import Security;
-@import SwiftyJSON;
+
 
 @interface ViewController ()
 
@@ -209,8 +208,15 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
     NSString *UserName = [defaults stringForKey:@"user_name"];
     NSString *password = [defaults stringForKey:@"password"];
     
-    if(UserName != nil)
+    if(UserName != nil) {
+        [txtUserName setText:UserName];
+        [txtUserPassword setText:password];
         [self userLogin:UserName withPassword:password];
+    }
+    else {
+        [txtUserName setText:@""];
+        [txtUserPassword setText:@""];
+    }
 }
 
 /*****************************
@@ -220,10 +226,11 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
  * Type: UI
  *****************************/
 -(void)showFilePopupMenu {
-    UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"Select Option for file:" delegate:(id)self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:  @"View",
-                            @"Rename",
-                            @"Delete",
-                            @"Rate",
+    UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"Select Option for file:" delegate:(id)self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
+                            @"View",     //0
+                            @"Rate",   //1 -> 3
+                            @"Rename",   //2 -> 1
+                            @"Delete",     //3 -> 2
                             nil];
     popup.tag = 1;
     [popup showFromBarButtonItem:openButton animated:YES];
@@ -257,21 +264,21 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
  * Type: UI
  *****************************/
 - (void)actionSheet:(UIActionSheet *)popup clickedButtonAtIndex:(NSInteger)buttonIndex {
-    
+
     switch (popup.tag) {
         case 1: {
             switch (buttonIndex) {
-                case 0:
+                case 0:         //View
                     [self downloadFileForCurrentUser:selectedFile];
                     break;
-                case 1:
+                case 2:         //Rename
                     [self askForNewFileName:selectedFile];
                    //[self renameFile:selectedFile renameTo:@"Test"];
                     break;
-                case 2:
+                case 3:         //Delete
                     [self askForDeleteFile];
                     break;
-                case 3:
+                case 1:
                     [self showRatingView];
                     break;
                 default:
@@ -403,7 +410,8 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
 }
 
 
-
+/* Logout
+ */
 - (IBAction)fileXBtnClick:(id)sender {
     if(!fileView.hidden) {
          files = [NSMutableArray new];
@@ -415,6 +423,8 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
          [defaults setObject:nil forKey:@"user_name"];  //With Facebook use email as login
          [defaults setObject:nil forKey:@"password"];   //and ID as password
          [defaults synchronize];
+         [txtUserName setText:@""];
+         [txtUserPassword setText:@""];
          loggedIn = NO;
          [self setup];
     }
@@ -479,9 +489,15 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
 }
 
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     static NSString *identifier = @"Cell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+    //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+    
+    SWTableViewCell *cell = (SWTableViewCell*)([tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath]);
+    
+    cell.rightUtilityButtons = [self rightButtons];
+    cell.delegate = self;
     
     UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
     UILabel *recipeLabel = (UILabel*)[cell viewWithTag:101];
@@ -604,7 +620,69 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
     cellSelected = indexPath;
     selectedFile = [self getSelectedFile:indexPath];
     
-    [tableView resignFirstResponder];
+    [self.view endEditing:YES];
+}
+
+
+#pragma mark SWTableView Delegate and addon button
+/*
+ case 0:         //View
+ [self downloadFileForCurrentUser:selectedFile];
+ break;
+ case 2:         //Rename
+ [self askForNewFileName:selectedFile];
+ //[self renameFile:selectedFile renameTo:@"Test"];
+ break;
+ case 3:         //Delete
+ [self askForDeleteFile];
+ break;
+ case 1:
+ [self showRatingView];
+ */
+-(void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
+    if(cell) {
+        NSIndexPath *indexPath = [self.fileCollection indexPathForCell:cell];
+        selectedFile = [self getSelectedFile:indexPath];
+
+    }
+    switch (index) {
+        case 0:         //View
+            [self downloadFileForCurrentUser:selectedFile];
+            break;
+        case 2:         //Rename
+            [self askForNewFileName:selectedFile];
+            //[self renameFile:selectedFile renameTo:@"Test"];
+            break;
+        case 3:         //Delete
+            [self askForDeleteFile];
+            break;
+        case 1:
+            [self showRatingView];
+            break;
+        default:
+            break;
+    }
+    [self.fileCollection reloadData];
+}
+
+- (NSArray *)rightButtons
+{
+    NSMutableArray *rightUtilityButtons = [NSMutableArray new];
+    
+    [rightUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:0.43 green:0.62 blue:0.92 alpha:1.0]
+                                                title:@"View"];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:1.00 green:0.85 blue:0.40 alpha:1.0]
+                                                title:@"Rate"];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:0.42 green:0.66 blue:0.31 alpha:1.0]
+                                                title:@"Rename"];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:1.0f green:0.231f blue:0.188 alpha:1.0f]
+                                                title:@"Delete"];
+    
+    return rightUtilityButtons;
 }
 
 -(void)tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -620,6 +698,9 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
     
 
 }*/
+
+
+#pragma mark other
 
 - (IBAction)closeFileView:(id)sender {
   //  if(!fileWebViewer.hidden) fileWebViewer.hidden = YES;
@@ -784,6 +865,7 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
         if(success) {
             [self alreadyRegister:nil];
             [self alertStatus:message :@"Multifiles" :0];
+            [self saveUserLoginData:userName withPassword:password1];
             [self performSegueWithIdentifier:@"returnToMainViewSegue" sender:self];
         }
         else {
@@ -915,13 +997,12 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
 }
 
 -(void) userLogin:(NSString*)userName withPassword:(NSString*)userPassword {
-    
-    [helper showLoadingHUD];
         
     if([userName isEqualToString:@""] || [userPassword isEqualToString:@""] ) {
             [self alertStatus:@"Please enter Email and Password" :@"Sign in Failed!" :0];
             
     } else {
+        [helper showLoadingHUD];
         [helper login:userName password:userPassword completition:^(NSString * UserID, BOOL success) {
             if(success) {
                     NSLog(@"Login SUCCESS. USER ID: %ld",(long)success);
