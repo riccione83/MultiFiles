@@ -17,6 +17,7 @@
 		9370E5881B1F0B330097D1D6 /* files.png in Resources */ = {isa = PBXBuildFile; fileRef = 9370E5861B1F0B330097D1D6 /* files.png */; };
 		9370E5891B1F0B330097D1D6 /* images.png in Resources */ = {isa = PBXBuildFile; fileRef = 9370E5871B1F0B330097D1D6 /* images.png */; };
 		937292431CF984C100FCBCD5 /* Multifiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937292421CF984C100FCBCD5 /* Multifiles.swift */; };
+		937C192B1D01AF43004AB4C5 /* CloudFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 937C192A1D01AF43004AB4C5 /* CloudFile.m */; };
 		93AA7A941CF998D40017BDB4 /* Multifiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AA7A931CF998D40017BDB4 /* Multifiles.swift */; };
 		93B242F81B30669300067D2E /* StarRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B242F71B30669300067D2E /* StarRatingView.m */; };
 		93C118C01B2B1B9C007D6755 /* half_selected_star.png in Resources */ = {isa = PBXBuildFile; fileRef = 93C118BD1B2B1B9C007D6755 /* half_selected_star.png */; };
@@ -78,6 +79,8 @@
 		9370E5871B1F0B330097D1D6 /* images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = images.png; path = Img/images.png; sourceTree = "<group>"; };
 		937292411CF984C000FCBCD5 /* MultiFiles-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MultiFiles-Bridging-Header.h"; sourceTree = "<group>"; };
 		937292421CF984C100FCBCD5 /* Multifiles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Multifiles.swift; path = Class/Multifiles.swift; sourceTree = "<group>"; };
+		937C19291D01AF43004AB4C5 /* CloudFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudFile.h; sourceTree = "<group>"; };
+		937C192A1D01AF43004AB4C5 /* CloudFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CloudFile.m; sourceTree = "<group>"; };
 		93AA7A921CF998D40017BDB4 /* MultiFilesExtension-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MultiFilesExtension-Bridging-Header.h"; sourceTree = "<group>"; };
 		93AA7A931CF998D40017BDB4 /* Multifiles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Multifiles.swift; path = Class/Multifiles.swift; sourceTree = "<group>"; };
 		93B242F61B30669300067D2E /* StarRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StarRatingView.h; sourceTree = "<group>"; };
@@ -168,6 +171,15 @@
 			name = Class;
 			sourceTree = "<group>";
 		};
+		937C19281D01AF2D004AB4C5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				937C19291D01AF43004AB4C5 /* CloudFile.h */,
+				937C192A1D01AF43004AB4C5 /* CloudFile.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		9391DBF91CFC360900C79FEC /* Storyboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -248,6 +260,7 @@
 		93C934D21B01F99B00E0C896 /* MultiFiles */ = {
 			isa = PBXGroup;
 			children = (
+				937C19281D01AF2D004AB4C5 /* Model */,
 				9391DBFA1CFC362E00C79FEC /* View */,
 				9391DBF91CFC360900C79FEC /* Storyboard */,
 				937292401CF9849400FCBCD5 /* Class */,
@@ -553,6 +566,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				93C934DC1B01F99B00E0C896 /* ViewController.m in Sources */,
+				937C192B1D01AF43004AB4C5 /* CloudFile.m in Sources */,
 				93B242F81B30669300067D2E /* StarRatingView.m in Sources */,
 				937292431CF984C100FCBCD5 /* Multifiles.swift in Sources */,
 				93C934D91B01F99B00E0C896 /* AppDelegate.m in Sources */,

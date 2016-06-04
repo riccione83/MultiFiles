@@ -14,10 +14,6 @@
 
 @end
 
-static NSString * const websiteName = @"https://multifiles.heroku.com/API";
-static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/multifiles/";
-
-
 @interface NSURLRequest (DummyInterface)
 + (BOOL)allowsAnyHTTPSCertificateForHost:(NSString*)host;
 + (void)setAllowsAnyHTTPSCertificate:(BOOL)allow forHost:(NSString*)host;
@@ -29,9 +25,22 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
 @synthesize fileCollection;
 @synthesize loginButton;
 
+static NSString * const websiteName = @"https://multifiles.heroku.com/API";
+static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/multifiles/";
+
+
 -(void)setup {
-   loginView.hidden = NO;
-   fileView.hidden = YES;
+    refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refreshUserData) forControlEvents:UIControlEventValueChanged];
+    [self.fileCollection addSubview:refreshControl];
+    
+    UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
+    lpgr.minimumPressDuration = .5; //seconds
+    lpgr.delegate = self;
+    [fileCollection addGestureRecognizer:lpgr];
+    
+    loginView.hidden = NO;
+    fileView.hidden = YES;
     fileCollection.alwaysBounceVertical=YES;
     if(self.searchBar) {
        [self.searchBar removeFromSuperview];
@@ -75,10 +84,84 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
 }
 
 - (void)handleDocumentOpenURL:(NSURL *)url {
-    NSLog(@"Starting to upload: %@",url);
-    if(USER_ID != nil && ![USER_ID  isEqual: @""])
-        [self uploadFile:url];
+    NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.riccardorizzo.multifiles"];
+    
+    NSString *UserName = [defaults stringForKey:@"user_name"];
+    NSString *password = [defaults stringForKey:@"password"];
+    
+    
+    [helper login:UserName password:password completition:^(NSString * UserID, BOOL success) {
+        if(success) {
+            NSLog(@"Login SUCCESS. USER ID: %ld",(long)success);
+            USER_ID = [NSString stringWithFormat:@"%@",UserID];
+            [self uploadFile:url];
+        }
+        else {
+            [self alertStatus:UserID :@"Sign in Failed!" :0];
+        }
+    }];
+    
 }
+
+#pragma mark Keyboard methods
+
+-(void) textFieldDidEndEditing:(UITextField *)textField {
+    activeField =  NULL;
+}
+
+-(void) textFieldDidBeginEditing:(UITextField *)textField {
+    activeField = textField;
+}
+
+-(void)registerForKeyboardNotifications
+{
+    //Adding notifies on keyboard appearing
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+
+-(void)keyboardWasShown:(NSNotification*)aNotification
+{
+    
+ /*   NSDictionary* info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    CGRect bkgndRect = activeField.superview.frame;
+    bkgndRect.size.height += kbSize.height;
+    [activeField.superview setFrame:bkgndRect];
+    
+    
+    CGRect aRect = self.view.frame;
+    aRect.size.height -= kbSize.height;
+    
+    if (CGRectContainsPoint(aRect, activeField.frame.origin) ) {
+        CGRect f = self.view.frame;
+        f.origin.y = -kbSize.height/2;
+        self.view.frame = f;
+    }*/
+}
+
+-(void) keyboardWillBeHidden:(NSNotification*)aNotification
+{
+  /*  CGRect f = self.view.frame;
+    f.origin.y = 0.0f;
+    self.view.frame = f;
+    */
+}
+
+-(void) touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if(activeField != NULL)
+        [activeField resignFirstResponder];
+}
+
+-(void)deregisterFromKeyboardNotifications
+{
+    //Removing notifies on keyboard appearing
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+}
+
 
 #pragma mark End DocumentController
 
@@ -86,7 +169,7 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
     
     if (!self.searchBar) {
         self.searchBarBoundsY = navigationBar.frame.size.height + [UIApplication sharedApplication].statusBarFrame.size.height - 5;
-        self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0,self.searchBarBoundsY, [UIScreen mainScreen].bounds.size.width, 44)];
+        self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0,self.searchBarBoundsY, [UIScreen mainScreen].bounds.size.width, 46)];
         self.searchBar.searchBarStyle       = UISearchBarStyleMinimal;
         self.searchBar.tintColor            = [UIColor lightGrayColor];
         self.searchBar.barTintColor         = [UIColor whiteColor];
@@ -252,7 +335,6 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     UITextField *textField = [alert textFieldAtIndex:0];
     textField.text = fileName;
-    //textField.placeholder="";
     alert.tag = 102;
     [alert show];
 }
@@ -310,12 +392,13 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
  * Type: UI
  *****************************/
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if(alertView.tag==1) {
-        if(buttonIndex==1) {
-            NSString *file = [files objectAtIndex:cellSelected.row];
+    
+    if(alertView.tag==1) {      //Ask for deleting file
+        if(buttonIndex==1) {        //Yes!
             
+            CloudFile *cFile = [cloudFiles objectAtIndex:cellSelected.row];
+            NSString *file = cFile->fileName; //[files objectAtIndex:cellSelected.row];
             file = [NSString stringWithFormat:@"%@/%@",USER_ID,file ];
-            
             [self deleteFile:file];
         }
         [self refreshUserData];
@@ -387,20 +470,14 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
             NSLog(@"Already login");
         }
 
+    [self registerForKeyboardNotifications];
+    [loginView setUserInteractionEnabled:true];
+    
         fbloginButton.readPermissions = @[@"public_profile", @"email"];
         fbloginButton.delegate = self;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(profileUpdated:) name:FBSDKProfileDidChangeNotification object:nil];
     
         [self setup];
-    
-        refreshControl = [[UIRefreshControl alloc] init];
-        [refreshControl addTarget:self action:@selector(refreshUserData) forControlEvents:UIControlEventValueChanged];
-        [self.fileCollection addSubview:refreshControl];
-    
-        UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
-        lpgr.minimumPressDuration = .5; //seconds
-        lpgr.delegate = self;
-        [fileCollection addGestureRecognizer:lpgr];
   }
 
 
@@ -414,11 +491,15 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
  */
 - (IBAction)fileXBtnClick:(id)sender {
     if(!fileView.hidden) {
-         files = [NSMutableArray new];
+        
+        
+        /* files = [NSMutableArray new];
          file_acreateat = [NSMutableArray new];
          file_size = [NSMutableArray new];
          file_path = [NSMutableArray new];
-         //NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+         */
+         cloudFiles = [NSMutableArray new];
+        
          NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.riccardorizzo.multifiles"];
          [defaults setObject:nil forKey:@"user_name"];  //With Facebook use email as login
          [defaults setObject:nil forKey:@"password"];   //and ID as password
@@ -431,59 +512,30 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSLog(@"%lu",(unsigned long)files.count);
+    NSLog(@"%lu",(unsigned long)cloudFiles.count);
     
     [refreshControl endRefreshing];
     if(!self.searchBarActive)
-        return files.count;
+        return cloudFiles.count; //files.count;
     
     return self.dataSourceForSearchResult.count;
 }
 
 -(void)rateFile:(NSIndexPath*)index withRating:(NSInteger)rating {
     
-    NSString *fileID = [FileID objectAtIndex:index.row];
-    
-   // [FileRating replaceObjectAtIndex:index.row withObject:[NSNumber numberWithInt:(int)rating]];
-    
+    CloudFile *file = (CloudFile *)[cloudFiles objectAtIndex:index.row];
+    NSString *fileID = file->fileID;   //[FileID objectAtIndex:index.row];
     [self setRateForFile:fileID withRateOf:[NSString stringWithFormat:@"%ld",(long)rating]];
-    
- /*   UITableViewCell *cell = [fileCollection cellForRowAtIndexPath:index];
-    
-    
-    for(int i=0;i<5;i++)
-    {
-        UIImageView *imgRate = (UIImageView *)[cell viewWithTag:200+(i+1)];
-        imgRate.image = [UIImage imageNamed:@"not_selected_star.png"];
-    }
-    
-    for(int i=0;i<rating;i++)
-    {
-        UIImageView *imgRate = (UIImageView *)[cell viewWithTag:200+(i+1)];
-        imgRate.image =[UIImage imageNamed:@"selected_star"];
-        CGAffineTransform currentTransform = imgRate.transform;
-        CGAffineTransform newTransform = CGAffineTransformScale(currentTransform, 0, 0);
-        [imgRate setTransform:newTransform];
-        
-        // Animate to new scale of 100% with bounce
-        [UIView animateWithDuration:0.3
-                              delay:0
-             usingSpringWithDamping:0.6
-              initialSpringVelocity:15
-                            options:0
-                         animations:^{
-                             imgRate.transform = CGAffineTransformMakeScale(1, 1);
-                         }
-                         completion:nil];
-    }
-    */
 }
 
 -(void)showRatingView {
+    
     StarRatingView *ratingView = [[StarRatingView alloc] initWithFrame:CGRectMake(10, 10, 300, 100)];
     ratingView.center = self.view.center;
     ratingView.currIndex = cellSelected;
-    [ratingView setInitalRating:[[FileRating objectAtIndex:cellSelected.row] integerValue]];
+    CloudFile *file = [cloudFiles objectAtIndex:cellSelected.row];
+    
+    [ratingView setInitalRating: file->fileRating.integerValue];   //[[FileRating objectAtIndex:cellSelected.row] integerValue]];
     ratingView.delegate = (id)self;
     [self.view addSubview:ratingView];
 }
@@ -492,47 +544,47 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
     
     static NSString *identifier = @"Cell";
     
-    //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
-    
     SWTableViewCell *cell = (SWTableViewCell*)([tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath]);
     
     cell.rightUtilityButtons = [self rightButtons];
     cell.delegate = self;
     
     UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
-    UILabel *recipeLabel = (UILabel*)[cell viewWithTag:101];
-    UILabel *recipeLabelSIze = (UILabel*)[cell viewWithTag:102];
-    UILabel *recipeFileName = (UILabel*)[cell viewWithTag:103];
+    UILabel     *recipeLabel = (UILabel*)[cell viewWithTag:101];
+    UILabel     *recipeLabelSIze = (UILabel*)[cell viewWithTag:102];
+    UILabel     *recipeFileName = (UILabel*)[cell viewWithTag:103];
     
-    if (!self.searchBarActive) {
-        NSString* theFileName = [[files objectAtIndex:indexPath.row] lastPathComponent];
+    CloudFile *file = [cloudFiles objectAtIndex:indexPath.row];
+    
+    if (!self.searchBarActive)
+    {
+        NSString* theFileName = [file->fileName lastPathComponent]; //[[files objectAtIndex:indexPath.row] lastPathComponent];
         recipeFileName.text = theFileName;
-        recipeLabel.text = [NSString stringWithFormat:@"Uploaded on: %@",[file_acreateat objectAtIndex:indexPath.row]];
-        recipeLabelSIze.text = [file_size objectAtIndex:indexPath.row];
+        recipeLabel.text = [NSString stringWithFormat:@"Uploaded on: %@",file->createdAt];    //[file_acreateat objectAtIndex:indexPath.row]];
+        recipeLabelSIze.text = file->fileSize; //[file_size objectAtIndex:indexPath.row];
     }
     else
     {
-        NSString* theFileName = [[self.dataSourceForSearchResult objectAtIndex:indexPath.row] lastPathComponent];
+        CloudFile *filteredFile = [self.dataSourceForSearchResult objectAtIndex:indexPath.row];
+        NSString* theFileName = [filteredFile->fileName lastPathComponent];
         recipeFileName.text = theFileName;
         
-        recipeLabel.text =[NSString stringWithFormat:@"Uploaded on: %@",[file_acreateat objectAtIndex:[self searchSizeFromArray:files search:theFileName]]];
-        recipeLabelSIze.text = [file_size objectAtIndex:[self searchSizeFromArray:files search:theFileName]];
+        CloudFile *cFile = [cloudFiles objectAtIndex:[self searchIndexFromArray:cloudFiles search:theFileName]];   //files
+        
+        recipeLabel.text = [NSString stringWithFormat:@"Uploaded on: %@", cFile->createdAt];
+        //[file_acreateat objectAtIndex:[self searchSizeFromArray:files search:theFileName]]];
+        
+        recipeLabelSIze.text = cFile->fileSize;
+        
+        //[file_size objectAtIndex:[self searchSizeFromArray:files search:theFileName]];
     }
     
     NSString *extension = [recipeFileName.text pathExtension];
-    if([extension isEqualToString:@"jpg"] || [extension isEqualToString:@"JPG"] ||
-       [extension isEqualToString:@"png"]  || [extension isEqualToString:@"PNG"] ||
-       [extension isEqualToString:@"tiff"] || [extension isEqualToString:@"TIFF"] ||
-       [extension isEqualToString:@"bmp"]  || [extension isEqualToString:@"BMP"])
+    if([extension.lowercaseString isEqualToString:@"jpg"] || [extension.lowercaseString isEqualToString:@"png"] || [extension.lowercaseString isEqualToString:@"tiff"] || [extension.lowercaseString isEqualToString:@"bmp"])
     {
         recipeImageView.image = [UIImage imageNamed:@"images.png"];
     }
-    else if([extension isEqualToString:@"doc"] || [extension isEqualToString:@"DOC"] ||
-            [extension isEqualToString:@"docx"]  || [extension isEqualToString:@"DOCX"] ||
-            [extension isEqualToString:@"pdf"] || [extension isEqualToString:@"PDF"] ||
-            [extension isEqualToString:@"txt"]  || [extension isEqualToString:@"TXT"] ||
-            [extension isEqualToString:@"xls"]  || [extension isEqualToString:@"XLS"] ||
-            [extension isEqualToString:@"xslx"]  || [extension isEqualToString:@"XSLX"])
+    else if([extension.lowercaseString isEqualToString:@"doc"] || [extension.lowercaseString isEqualToString:@"docx"] || [extension.lowercaseString isEqualToString:@"pdf"] || [extension.lowercaseString isEqualToString:@"txt"] || [extension.lowercaseString isEqualToString:@"xls"] || [extension.lowercaseString isEqualToString:@"xslx"])
     {
         recipeImageView.image = [UIImage imageNamed:@"files.png"];
     }
@@ -551,7 +603,9 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
     rate4.image = [UIImage imageNamed:@"not_selected_star.png"];
     rate5.image = [UIImage imageNamed:@"not_selected_star.png"];
     
-    for(int i=0;i<[[FileRating objectAtIndex:indexPath.row] integerValue];i++)
+    
+    //for(int i=0;i<[[FileRating objectAtIndex:indexPath.row] integerValue];i++)
+    for(int i=0;i<file->fileRating.integerValue;i++)
     {
         UIImageView *imgRate = (UIImageView *)[cell viewWithTag:200+(i+1)];
         imgRate.image =[UIImage imageNamed:@"selected_star"];
@@ -584,12 +638,16 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
 }
 
 -(NSString*) getSelectedFile:(NSIndexPath*) indexPath {
-    NSString *url_ = @"";
     
+    NSString *url_ = @"";
     if(!self.searchBarActive)
-        url_ = [files objectAtIndex:indexPath.row];
-    else
+    {
+        CloudFile *file = [cloudFiles objectAtIndex:indexPath.row];
+        url_ = file->fileName; //[files objectAtIndex:indexPath.row];
+    }
+    else {
         url_ = [self.dataSourceForSearchResult objectAtIndex:indexPath.row];
+    }
     
     NSString *fileUrl = [NSString stringWithFormat:@"%@%@/%@",awsWebBaseName,USER_ID,url_];
     
@@ -602,8 +660,8 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     if(cellSelected) {
-        //UITableViewCell *datasetCellDeselect =[fileCollection cellForItemAtIndexPath:cellSelected];
         UITableViewCell *datasetCellDeselect = [fileCollection cellForRowAtIndexPath:cellSelected];
         datasetCellDeselect.layer.cornerRadius = 0;
         datasetCellDeselect.layer.shadowOpacity = 0.0;
@@ -612,7 +670,6 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
     }
     
     UITableViewCell *datasetCell = [fileCollection cellForRowAtIndexPath:indexPath];
-  //  datasetCell.backgroundColor = [UIColor blueColor]; // highlight selection
     datasetCell.layer.cornerRadius = 10;
     datasetCell.layer.shadowOpacity = 0.8;
     datasetCell.layer.shadowOffset = CGSizeMake(0.5f, 0.5f);
@@ -625,44 +682,29 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
 
 
 #pragma mark SWTableView Delegate and addon button
-/*
- case 0:         //View
- [self downloadFileForCurrentUser:selectedFile];
- break;
- case 2:         //Rename
- [self askForNewFileName:selectedFile];
- //[self renameFile:selectedFile renameTo:@"Test"];
- break;
- case 3:         //Delete
- [self askForDeleteFile];
- break;
- case 1:
- [self showRatingView];
- */
 -(void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
+    
     if(cell) {
         NSIndexPath *indexPath = [self.fileCollection indexPathForCell:cell];
         selectedFile = [self getSelectedFile:indexPath];
-
+        switch (index) {
+            case 0:         //View
+                [self downloadFileForCurrentUser:selectedFile];
+                break;
+            case 2:         //Rename
+                [self askForNewFileName:selectedFile];
+                break;
+            case 3:         //Delete
+                [self askForDeleteFile];
+                break;
+            case 1:
+                [self showRatingView];
+                break;
+            default:
+                break;
+        }
+        [self.fileCollection reloadData];
     }
-    switch (index) {
-        case 0:         //View
-            [self downloadFileForCurrentUser:selectedFile];
-            break;
-        case 2:         //Rename
-            [self askForNewFileName:selectedFile];
-            //[self renameFile:selectedFile renameTo:@"Test"];
-            break;
-        case 3:         //Delete
-            [self askForDeleteFile];
-            break;
-        case 1:
-            [self showRatingView];
-            break;
-        default:
-            break;
-    }
-    [self.fileCollection reloadData];
 }
 
 - (NSArray *)rightButtons
@@ -686,19 +728,12 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
 }
 
 -(void)tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-    //UICollectionViewCell *datasetCell =[collectionView cellForItemAtIndexPath:indexPath];
     UITableViewCell *datasetCell = [fileCollection cellForRowAtIndexPath:indexPath];
     datasetCell.backgroundColor = [UIColor clearColor]; // Default color
     datasetCell.layer.cornerRadius = 0;
     datasetCell.layer.shadowOpacity = 0.0;
     datasetCell.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
 }
-
-/*-(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-
-}*/
-
 
 #pragma mark other
 
@@ -709,10 +744,12 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
 }
 
 
--(NSInteger)searchSizeFromArray:(NSMutableArray*)array search:(NSString*)text_to_search {
+-(NSInteger)searchIndexFromArray:(NSMutableArray*)array search:(NSString*)text_to_search {
+    
     for(int i=0;i<array.count;i++)
     {
-        if([[[array objectAtIndex:i] lastPathComponent] isEqualToString:text_to_search])
+        CloudFile *cFile = [array objectAtIndex:i];
+        if([[cFile->fileName lastPathComponent] isEqualToString:text_to_search])
             return i;
     }
     return 0;
@@ -732,8 +769,6 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
 
 -(void)deleteFile:(NSString*)filePath {
 
-//    MultifilesHelper *helper = [[MultifilesHelper alloc] init];
-//    helper.delegate = self;
     [helper deleteFile:filePath completition:^(BOOL success) {
         if(success)
            [self refreshUserData];
@@ -742,38 +777,47 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
 
 -(void)refreshUserData {
     
-//    MultifilesHelper *helper = [[MultifilesHelper alloc] init];
-//    helper.delegate = self;
-    
         if(USER_ID != nil && !self.searchBarActive)
         {
             images = [NSMutableArray new];
-            files = [NSMutableArray new];
+            /*files = [NSMutableArray new];
             file_acreateat = [NSMutableArray new];
             file_size = [NSMutableArray new];
             FileID = [NSMutableArray new];
             FileRating = [NSMutableArray new];
+             */
+            cloudFiles = [NSMutableArray new];
             
-            [helper getFileListForUser:^(BOOL success, id _Nullable jsonDataRcv) {
-                
+            [helper getFileListForUser:^(BOOL success, id _Nullable jsonDataRcv)
+            {
                 if(success) {
-        
-                for (NSDictionary *dict in jsonDataRcv) {
-                    [files addObject:[dict valueForKey:@"CurrFileName"]];
-                    [file_acreateat addObject:[dict valueForKey:@"CreatedAt"]];
-                    [file_size addObject:[dict valueForKey:@"FileSize"]];
-                    [FileRating addObject:[dict valueForKey:@"Rating"]];
-                    [FileID addObject:[dict valueForKey:@"FileID"]];
-                }
+                    for (NSDictionary *dict in jsonDataRcv) {
+                        
+                        CloudFile *file = [[CloudFile alloc] init];
+                        file->fileName = [[dict valueForKey:@"CurrFileName"] copy];
+                        file->createdAt = [[dict valueForKey:@"CreatedAt"] copy];
+                        file->fileSize = [[dict valueForKey:@"FileSize"] copy];
+                        file->fileRating = [[dict valueForKey:@"Rating"] copy];
+                        file->fileID = [[dict valueForKey:@"FileID"] copy];
+                        
+                        [cloudFiles addObject:file];
+                        
+                        /*[files addObject:[dict valueForKey:@"CurrFileName"]];
+                        [file_acreateat addObject:[dict valueForKey:@"CreatedAt"]];
+                        [file_size addObject:[dict valueForKey:@"FileSize"]];
+                        [FileRating addObject:[dict valueForKey:@"Rating"]];
+                        [FileID addObject:[dict valueForKey:@"FileID"]];
+                         */
+                    }
                 
-                if(files) {
-                    fileCollection.hidden = NO;
-                    [refreshControl endRefreshing];
-                    [fileCollection reloadData];
+                    if(cloudFiles.count>0) {    //files
+                        fileCollection.hidden = NO;
+                        [refreshControl endRefreshing];
+                        [fileCollection reloadData];
+                    }
                 }
-                }
-                
             }];
+            
         }
 }
 
@@ -1030,7 +1074,7 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
         
         if(success) {
             UsedSpace = [NSString stringWithFormat:@"%@",spaceUsed];
-            [navTitle setTitle:[NSString stringWithFormat:@"MultiView - Used:%@",UsedSpace]];
+            [navTitle setTitle:[NSString stringWithFormat:@"MultiFiles - Used:%@",UsedSpace]];
         }
         
     }];
@@ -1101,8 +1145,12 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
 
 #pragma mark - search
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope{
-    NSPredicate *resultPredicate    = [NSPredicate predicateWithFormat:@"self contains[c] %@", searchText];
-    self.dataSourceForSearchResult  =[NSMutableArray arrayWithArray:[files filteredArrayUsingPredicate:resultPredicate]];
+    //NSPredicate *resultPredicate    = [NSPredicate predicateWithFormat:@"self contains[c] %@", searchText];
+    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"(fileName contains[c] %@)", searchText];
+    
+    //[files filteredArrayUsingPredicate:resultPredicate]
+    
+    self.dataSourceForSearchResult  =[NSMutableArray arrayWithArray:[cloudFiles filteredArrayUsingPredicate:resultPredicate]];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{

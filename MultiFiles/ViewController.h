@@ -11,12 +11,13 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import "StarRatingView.h"
 #import "Multifiles-Swift.h"
+#import "CloudFile.h"
 @import Security;
 @import SwiftyJSON;
 @import SWTableViewCell;
 
 
-@interface ViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, FBSDKLoginButtonDelegate, FBSDKGraphRequestConnectionDelegate, NSURLConnectionDelegate, NSURLConnectionDataDelegate, UIGestureRecognizerDelegate, UIAlertViewDelegate,UISearchBarDelegate,UIDocumentInteractionControllerDelegate,UIActionSheetDelegate,UIGestureRecognizerDelegate, UpdateUploadBarDelegate,SWTableViewCellDelegate> {
+@interface ViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, FBSDKLoginButtonDelegate, FBSDKGraphRequestConnectionDelegate, NSURLConnectionDelegate, NSURLConnectionDataDelegate, UIGestureRecognizerDelegate, UIAlertViewDelegate,UISearchBarDelegate,UIDocumentInteractionControllerDelegate,UIActionSheetDelegate,UIGestureRecognizerDelegate, UpdateUploadBarDelegate,SWTableViewCellDelegate, UITextFieldDelegate> {
 
     IBOutlet UITextField *txtUserName;
     IBOutlet UITextField *txtUserPassword;
@@ -29,7 +30,7 @@
    // IBOutlet UIWebView *fileWebViewer;
     
     MultifilesHelper *helper;
-    
+
     
     //---- Program variables
     NSString *USER_ID;
@@ -46,13 +47,9 @@
     UIActivityIndicatorView *activityIndicator;
     NSIndexPath *cellSelected;
     
-    NSMutableArray *files;
-    NSMutableArray *file_acreateat;
-    NSMutableArray *file_size;
-    NSMutableArray *file_path;
-    NSMutableArray *UserFiles;
-    NSMutableArray *FileRating;
-    NSMutableArray *FileID;
+    NSMutableArray *cloudFiles;
+    UITextField *activeField;
+    
     NSArray *IndexTitles;
     NSArray *fileSectionTitles;
     NSDictionary *filesDictionary;

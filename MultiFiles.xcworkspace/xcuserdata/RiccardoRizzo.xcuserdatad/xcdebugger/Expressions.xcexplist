@@ -10,5 +10,19 @@
             </PersistentString>
          </PersistentStrings>
       </ContextState>
+      <ContextState
+         contextName = "-[ViewController filterContentForSearchText:scope:]:ViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[ViewController tableView:cellForRowAtIndexPath:]:ViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "indexPath.row">
+            </PersistentString>
+            <PersistentString
+               value = "self.dataSourceForSearchResult">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
    </ContextStates>
 </VariablesViewState>
