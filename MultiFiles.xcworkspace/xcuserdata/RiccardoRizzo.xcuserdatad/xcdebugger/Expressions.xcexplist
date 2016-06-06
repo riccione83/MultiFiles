@@ -3,14 +3,6 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "MultifilesHelper.setRateForFile(String, rating : String, completition : (success : Bool) -&gt; ()) -&gt; ():Multifiles.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "ratingFileAPI">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "-[ViewController filterContentForSearchText:scope:]:ViewController.m">
       </ContextState>
       <ContextState
@@ -21,6 +13,25 @@
             </PersistentString>
             <PersistentString
                value = "self.dataSourceForSearchResult">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MultifilesHelper.setRateForFile(String, rating : String, completition : (success : Bool) -&gt; ()) -&gt; ():Multifiles.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "ratingFileAPI">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ViewController keyboardWasShown:]:ViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "activeField.frame.origin.y">
+            </PersistentString>
+            <PersistentString
+               value = "kbSize.height">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

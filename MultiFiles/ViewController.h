@@ -42,6 +42,7 @@
     NSData *temp_data;
     UIProgressView *progressBar;
     BOOL loggedIn;
+    BOOL viewWasScrolled;
     UILabel *labelProgress;
     
     UIActivityIndicatorView *activityIndicator;

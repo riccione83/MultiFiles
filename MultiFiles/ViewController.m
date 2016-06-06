@@ -124,30 +124,35 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
 
 -(void)keyboardWasShown:(NSNotification*)aNotification
 {
+    NSLog(@"Keyboard is active.");
     
- /*   NSDictionary* info = [aNotification userInfo];
-    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    CGRect bkgndRect = activeField.superview.frame;
-    bkgndRect.size.height += kbSize.height;
-    [activeField.superview setFrame:bkgndRect];
-    
-    
-    CGRect aRect = self.view.frame;
-    aRect.size.height -= kbSize.height;
-    
-    if (CGRectContainsPoint(aRect, activeField.frame.origin) ) {
-        CGRect f = self.view.frame;
-        f.origin.y = -kbSize.height/2;
-        self.view.frame = f;
-    }*/
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        
+        CGSize iOSDeviceScreenSize = [[UIScreen mainScreen] bounds].size;
+        
+        //----------------HERE WE SETUP FOR IPHONE 4/4s/iPod----------------------
+        UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+        if(iOSDeviceScreenSize.height == 480 || UIInterfaceOrientationIsLandscape(interfaceOrientation)){
+            NSDictionary* info = [aNotification userInfo];
+            CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+            CGRect aRect = self.view.frame;
+            aRect.size.height -= kbSize.height;
+            CGRect f = self.view.frame;
+            f.origin.y = -kbSize.height/2;
+            self.view.frame = f;
+            viewWasScrolled = true;
+        }
+    }
 }
 
 -(void) keyboardWillBeHidden:(NSNotification*)aNotification
 {
-  /*  CGRect f = self.view.frame;
-    f.origin.y = 0.0f;
-    self.view.frame = f;
-    */
+    if(viewWasScrolled) {
+        CGRect f = self.view.frame;
+        f.origin.y = 0.0f;
+        self.view.frame = f;
+    }
+    viewWasScrolled = false;
 }
 
 -(void) touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -470,6 +475,8 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
             NSLog(@"Already login");
         }
 
+    txtUserName.delegate = self;
+    txtUserPassword.delegate = self;
     [self registerForKeyboardNotifications];
     [loginView setUserInteractionEnabled:true];
     
@@ -491,15 +498,7 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
  */
 - (IBAction)fileXBtnClick:(id)sender {
     if(!fileView.hidden) {
-        
-        
-        /* files = [NSMutableArray new];
-         file_acreateat = [NSMutableArray new];
-         file_size = [NSMutableArray new];
-         file_path = [NSMutableArray new];
-         */
-         cloudFiles = [NSMutableArray new];
-        
+        cloudFiles = [NSMutableArray new];
          NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.riccardorizzo.multifiles"];
          [defaults setObject:nil forKey:@"user_name"];  //With Facebook use email as login
          [defaults setObject:nil forKey:@"password"];   //and ID as password
@@ -508,6 +507,7 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
          [txtUserPassword setText:@""];
          loggedIn = NO;
          [self setup];
+        [self registerForKeyboardNotifications];
     }
 }
 
@@ -1049,6 +1049,7 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
         [helper showLoadingHUD];
         [helper login:userName password:userPassword completition:^(NSString * UserID, BOOL success) {
             if(success) {
+                    [self deregisterFromKeyboardNotifications];
                     NSLog(@"Login SUCCESS. USER ID: %ld",(long)success);
                     USER_ID = [NSString stringWithFormat:@"%@",UserID];
                     fileView.hidden = NO;
