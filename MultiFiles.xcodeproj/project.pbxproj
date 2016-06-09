@@ -7,13 +7,38 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		82BA016E547F0F4FC2DEE610 /* Pods_MultiFiles.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 264F4E97C2853979E293DE78 /* Pods_MultiFiles.framework */; };
 		930161631B1F0492006BC91D /* bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 930161611B1F0492006BC91D /* bg.jpg */; };
 		930161641B1F0492006BC91D /* cloud.png in Resources */ = {isa = PBXBuildFile; fileRef = 930161621B1F0492006BC91D /* cloud.png */; };
 		930161691B1F04D1006BC91D /* MainiPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 930161671B1F04D1006BC91D /* MainiPad.storyboard */; };
 		933E7D841B1CA2B100BBF225 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 933E7D831B1CA2B100BBF225 /* ShareViewController.m */; };
 		933E7D861B1CA2B100BBF225 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 933E7D851B1CA2B100BBF225 /* MainInterface.storyboard */; };
 		933E7D891B1CA2B100BBF225 /* MultiFilesExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 933E7D7E1B1CA2B100BBF225 /* MultiFilesExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		935162861D095C2800470DD6 /* blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 9351626C1D095C2800470DD6 /* blue.png */; };
+		935162871D095C2800470DD6 /* charcoal.png in Resources */ = {isa = PBXBuildFile; fileRef = 9351626D1D095C2800470DD6 /* charcoal.png */; };
+		935162881D095C2800470DD6 /* coffee.png in Resources */ = {isa = PBXBuildFile; fileRef = 9351626E1D095C2800470DD6 /* coffee.png */; };
+		935162891D095C2800470DD6 /* cone.png in Resources */ = {isa = PBXBuildFile; fileRef = 9351626F1D095C2800470DD6 /* cone.png */; };
+		9351628A1D095C2800470DD6 /* headphones.png in Resources */ = {isa = PBXBuildFile; fileRef = 935162701D095C2800470DD6 /* headphones.png */; };
+		9351628B1D095C2800470DD6 /* layers.png in Resources */ = {isa = PBXBuildFile; fileRef = 935162711D095C2800470DD6 /* layers.png */; };
+		9351628C1D095C2800470DD6 /* milky_way.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 935162721D095C2800470DD6 /* milky_way.jpg */; };
+		9351628D1D095C2800470DD6 /* nasalization rg.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 935162731D095C2800470DD6 /* nasalization rg.ttf */; };
+		9351628E1D095C2800470DD6 /* purple.png in Resources */ = {isa = PBXBuildFile; fileRef = 935162741D095C2800470DD6 /* purple.png */; };
+		9351628F1D095C2800470DD6 /* red.png in Resources */ = {isa = PBXBuildFile; fileRef = 935162751D095C2800470DD6 /* red.png */; };
+		935162901D095C2800470DD6 /* sf-outer-limits.upright.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 935162761D095C2800470DD6 /* sf-outer-limits.upright.ttf */; };
+		935162911D095C2800470DD6 /* shark.png in Resources */ = {isa = PBXBuildFile; fileRef = 935162771D095C2800470DD6 /* shark.png */; };
+		935162921D095C2800470DD6 /* space age.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 935162781D095C2800470DD6 /* space age.ttf */; };
+		935162931D095C2800470DD6 /* space1.png in Resources */ = {isa = PBXBuildFile; fileRef = 935162791D095C2800470DD6 /* space1.png */; };
+		935162941D095C2800470DD6 /* space2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9351627A1D095C2800470DD6 /* space2.png */; };
+		935162951D095C2800470DD6 /* space3.png in Resources */ = {isa = PBXBuildFile; fileRef = 9351627B1D095C2800470DD6 /* space3.png */; };
+		935162961D095C2800470DD6 /* space4.png in Resources */ = {isa = PBXBuildFile; fileRef = 9351627C1D095C2800470DD6 /* space4.png */; };
+		935162971D095C2800470DD6 /* street.png in Resources */ = {isa = PBXBuildFile; fileRef = 9351627D1D095C2800470DD6 /* street.png */; };
+		935162981D095C2800470DD6 /* sun.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 9351627E1D095C2800470DD6 /* sun.mp4 */; };
+		935162991D095C2800470DD6 /* testtube.png in Resources */ = {isa = PBXBuildFile; fileRef = 9351627F1D095C2800470DD6 /* testtube.png */; };
+		9351629A1D095C2800470DD6 /* tree.png in Resources */ = {isa = PBXBuildFile; fileRef = 935162801D095C2800470DD6 /* tree.png */; };
+		9351629B1D095C2800470DD6 /* video1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 935162811D095C2800470DD6 /* video1.mp4 */; };
+		9351629C1D095C2800470DD6 /* video2.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 935162821D095C2800470DD6 /* video2.mp4 */; };
+		9351629D1D095C2800470DD6 /* video3.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 935162831D095C2800470DD6 /* video3.mp4 */; };
+		9351629E1D095C2800470DD6 /* yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 935162841D095C2800470DD6 /* yellow.png */; };
+		9351629F1D095C2800470DD6 /* yellowbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 935162851D095C2800470DD6 /* yellowbg.png */; };
 		9370E5881B1F0B330097D1D6 /* files.png in Resources */ = {isa = PBXBuildFile; fileRef = 9370E5861B1F0B330097D1D6 /* files.png */; };
 		9370E5891B1F0B330097D1D6 /* images.png in Resources */ = {isa = PBXBuildFile; fileRef = 9370E5871B1F0B330097D1D6 /* images.png */; };
 		937292431CF984C100FCBCD5 /* Multifiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937292421CF984C100FCBCD5 /* Multifiles.swift */; };
@@ -29,11 +54,13 @@
 		93C934DF1B01F99B00E0C896 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93C934DD1B01F99B00E0C896 /* Main.storyboard */; };
 		93C934E11B01F99B00E0C896 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93C934E01B01F99B00E0C896 /* Images.xcassets */; };
 		93C934E41B01F99B00E0C896 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93C934E21B01F99B00E0C896 /* LaunchScreen.xib */; };
+		93CD16781D0739F800DAD3FB /* ShareFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CD16771D0739F800DAD3FB /* ShareFileViewController.m */; };
 		93CD89101B09D9AC00E5B085 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93CD890D1B09D9AC00E5B085 /* FBSDKCoreKit.framework */; };
 		93CD89111B09D9AC00E5B085 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93CD890E1B09D9AC00E5B085 /* FBSDKLoginKit.framework */; };
 		93CD89121B09D9AC00E5B085 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93CD890F1B09D9AC00E5B085 /* FBSDKShareKit.framework */; };
 		93D9ECDA1B06001500E6F5B3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93D9ECD91B06001500E6F5B3 /* QuartzCore.framework */; };
-		F48A2C0B1B4260C44BA1D183 /* Pods_MultiFilesExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E4BF28A02A6801BE1E11AF /* Pods_MultiFilesExtension.framework */; };
+		B07CB6CBB1A9E29A43EF0675 /* Pods_MultiFilesExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CBDF701E726AAF8D3D0E22 /* Pods_MultiFilesExtension.framework */; };
+		E2187A7743538A9316C77774 /* Pods_MultiFiles.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1C17D7BD6B58C9EDA07F8C1 /* Pods_MultiFiles.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,10 +88,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1562F1E9A2CA2DD249748125 /* Pods-MultiFiles.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MultiFiles.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MultiFiles/Pods-MultiFiles.debug.xcconfig"; sourceTree = "<group>"; };
-		264F4E97C2853979E293DE78 /* Pods_MultiFiles.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MultiFiles.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		55569E7999FF198E05607BBA /* Pods-MultiFilesExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MultiFilesExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MultiFilesExtension/Pods-MultiFilesExtension.debug.xcconfig"; sourceTree = "<group>"; };
-		8FBB2BFBEF49E3C28A7B4E48 /* Pods-MultiFilesExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MultiFilesExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-MultiFilesExtension/Pods-MultiFilesExtension.release.xcconfig"; sourceTree = "<group>"; };
+		027A4D175FC3EFE9C52877FA /* Pods-MultiFilesExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MultiFilesExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MultiFilesExtension/Pods-MultiFilesExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		88F343539767806FD71BF0FE /* Pods-MultiFiles.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MultiFiles.release.xcconfig"; path = "Pods/Target Support Files/Pods-MultiFiles/Pods-MultiFiles.release.xcconfig"; sourceTree = "<group>"; };
 		930161611B1F0492006BC91D /* bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = bg.jpg; path = Img/bg.jpg; sourceTree = "<group>"; };
 		930161621B1F0492006BC91D /* cloud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cloud.png; path = Img/cloud.png; sourceTree = "<group>"; };
 		930161681B1F04D1006BC91D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainiPad.storyboard; sourceTree = "<group>"; };
@@ -75,6 +100,32 @@
 		933E7D851B1CA2B100BBF225 /* MainInterface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
 		933E7D8E1B1CA89600BBF225 /* MultiFiles.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = MultiFiles.entitlements; sourceTree = "<group>"; };
 		933E7D8F1B1CAB7100BBF225 /* MultiFilesExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = MultiFilesExtension.entitlements; sourceTree = "<group>"; };
+		9351626C1D095C2800470DD6 /* blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue.png; sourceTree = "<group>"; };
+		9351626D1D095C2800470DD6 /* charcoal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = charcoal.png; sourceTree = "<group>"; };
+		9351626E1D095C2800470DD6 /* coffee.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coffee.png; sourceTree = "<group>"; };
+		9351626F1D095C2800470DD6 /* cone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cone.png; sourceTree = "<group>"; };
+		935162701D095C2800470DD6 /* headphones.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = headphones.png; sourceTree = "<group>"; };
+		935162711D095C2800470DD6 /* layers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = layers.png; sourceTree = "<group>"; };
+		935162721D095C2800470DD6 /* milky_way.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = milky_way.jpg; sourceTree = "<group>"; };
+		935162731D095C2800470DD6 /* nasalization rg.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "nasalization rg.ttf"; sourceTree = "<group>"; };
+		935162741D095C2800470DD6 /* purple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = purple.png; sourceTree = "<group>"; };
+		935162751D095C2800470DD6 /* red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red.png; sourceTree = "<group>"; };
+		935162761D095C2800470DD6 /* sf-outer-limits.upright.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "sf-outer-limits.upright.ttf"; sourceTree = "<group>"; };
+		935162771D095C2800470DD6 /* shark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shark.png; sourceTree = "<group>"; };
+		935162781D095C2800470DD6 /* space age.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "space age.ttf"; sourceTree = "<group>"; };
+		935162791D095C2800470DD6 /* space1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = space1.png; sourceTree = "<group>"; };
+		9351627A1D095C2800470DD6 /* space2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = space2.png; sourceTree = "<group>"; };
+		9351627B1D095C2800470DD6 /* space3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = space3.png; sourceTree = "<group>"; };
+		9351627C1D095C2800470DD6 /* space4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = space4.png; sourceTree = "<group>"; };
+		9351627D1D095C2800470DD6 /* street.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = street.png; sourceTree = "<group>"; };
+		9351627E1D095C2800470DD6 /* sun.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sun.mp4; sourceTree = "<group>"; };
+		9351627F1D095C2800470DD6 /* testtube.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = testtube.png; sourceTree = "<group>"; };
+		935162801D095C2800470DD6 /* tree.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tree.png; sourceTree = "<group>"; };
+		935162811D095C2800470DD6 /* video1.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video1.mp4; sourceTree = "<group>"; };
+		935162821D095C2800470DD6 /* video2.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video2.mp4; sourceTree = "<group>"; };
+		935162831D095C2800470DD6 /* video3.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video3.mp4; sourceTree = "<group>"; };
+		935162841D095C2800470DD6 /* yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yellow.png; sourceTree = "<group>"; };
+		935162851D095C2800470DD6 /* yellowbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yellowbg.png; sourceTree = "<group>"; };
 		9370E5861B1F0B330097D1D6 /* files.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = files.png; path = Img/files.png; sourceTree = "<group>"; };
 		9370E5871B1F0B330097D1D6 /* images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = images.png; path = Img/images.png; sourceTree = "<group>"; };
 		937292411CF984C000FCBCD5 /* MultiFiles-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MultiFiles-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -100,12 +151,16 @@
 		93C934E31B01F99B00E0C896 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		93C934EE1B01F99B00E0C896 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		93C934EF1B01F99B00E0C896 /* MultiFilesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MultiFilesTests.m; sourceTree = "<group>"; };
+		93CD16761D0739F800DAD3FB /* ShareFileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareFileViewController.h; sourceTree = "<group>"; };
+		93CD16771D0739F800DAD3FB /* ShareFileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareFileViewController.m; sourceTree = "<group>"; };
 		93CD890D1B09D9AC00E5B085 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		93CD890E1B09D9AC00E5B085 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		93CD890F1B09D9AC00E5B085 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
 		93D9ECD91B06001500E6F5B3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		A3ED6D64014278DE142A5084 /* Pods-MultiFiles.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MultiFiles.release.xcconfig"; path = "Pods/Target Support Files/Pods-MultiFiles/Pods-MultiFiles.release.xcconfig"; sourceTree = "<group>"; };
-		D6E4BF28A02A6801BE1E11AF /* Pods_MultiFilesExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MultiFilesExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C1C17D7BD6B58C9EDA07F8C1 /* Pods_MultiFiles.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MultiFiles.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C20199A8DA8A9BD2C0431F9D /* Pods-MultiFiles.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MultiFiles.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MultiFiles/Pods-MultiFiles.debug.xcconfig"; sourceTree = "<group>"; };
+		F7CBDF701E726AAF8D3D0E22 /* Pods_MultiFilesExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MultiFilesExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FDC29C942E2B431289E0E354 /* Pods-MultiFilesExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MultiFilesExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-MultiFilesExtension/Pods-MultiFilesExtension.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,7 +168,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F48A2C0B1B4260C44BA1D183 /* Pods_MultiFilesExtension.framework in Frameworks */,
+				B07CB6CBB1A9E29A43EF0675 /* Pods_MultiFilesExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,13 +180,24 @@
 				93D9ECDA1B06001500E6F5B3 /* QuartzCore.framework in Frameworks */,
 				93CD89101B09D9AC00E5B085 /* FBSDKCoreKit.framework in Frameworks */,
 				93CD89111B09D9AC00E5B085 /* FBSDKLoginKit.framework in Frameworks */,
-				82BA016E547F0F4FC2DEE610 /* Pods_MultiFiles.framework in Frameworks */,
+				E2187A7743538A9316C77774 /* Pods_MultiFiles.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6E8F7FF3F4952F9F0532C107 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C20199A8DA8A9BD2C0431F9D /* Pods-MultiFiles.debug.xcconfig */,
+				88F343539767806FD71BF0FE /* Pods-MultiFiles.release.xcconfig */,
+				027A4D175FC3EFE9C52877FA /* Pods-MultiFilesExtension.debug.xcconfig */,
+				FDC29C942E2B431289E0E354 /* Pods-MultiFilesExtension.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		931FCAB61CFC7A65007BC3FD /* Swift */ = {
 			isa = PBXGroup;
 			children = (
@@ -159,6 +225,40 @@
 				933E7D811B1CA2B100BBF225 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9351626B1D095C2800470DD6 /* Media */ = {
+			isa = PBXGroup;
+			children = (
+				9351626C1D095C2800470DD6 /* blue.png */,
+				9351626D1D095C2800470DD6 /* charcoal.png */,
+				9351626E1D095C2800470DD6 /* coffee.png */,
+				9351626F1D095C2800470DD6 /* cone.png */,
+				935162701D095C2800470DD6 /* headphones.png */,
+				935162711D095C2800470DD6 /* layers.png */,
+				935162721D095C2800470DD6 /* milky_way.jpg */,
+				935162731D095C2800470DD6 /* nasalization rg.ttf */,
+				935162741D095C2800470DD6 /* purple.png */,
+				935162751D095C2800470DD6 /* red.png */,
+				935162761D095C2800470DD6 /* sf-outer-limits.upright.ttf */,
+				935162771D095C2800470DD6 /* shark.png */,
+				935162781D095C2800470DD6 /* space age.ttf */,
+				935162791D095C2800470DD6 /* space1.png */,
+				9351627A1D095C2800470DD6 /* space2.png */,
+				9351627B1D095C2800470DD6 /* space3.png */,
+				9351627C1D095C2800470DD6 /* space4.png */,
+				9351627D1D095C2800470DD6 /* street.png */,
+				9351627E1D095C2800470DD6 /* sun.mp4 */,
+				9351627F1D095C2800470DD6 /* testtube.png */,
+				935162801D095C2800470DD6 /* tree.png */,
+				935162811D095C2800470DD6 /* video1.mp4 */,
+				935162821D095C2800470DD6 /* video2.mp4 */,
+				935162831D095C2800470DD6 /* video3.mp4 */,
+				935162841D095C2800470DD6 /* yellow.png */,
+				935162851D095C2800470DD6 /* yellowbg.png */,
+			);
+			name = Media;
+			path = media;
 			sourceTree = "<group>";
 		};
 		937292401CF9849400FCBCD5 /* Class */ = {
@@ -195,6 +295,8 @@
 			children = (
 				93C934DA1B01F99B00E0C896 /* ViewController.h */,
 				93C934DB1B01F99B00E0C896 /* ViewController.m */,
+				93CD16761D0739F800DAD3FB /* ShareFileViewController.h */,
+				93CD16771D0739F800DAD3FB /* ShareFileViewController.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -223,6 +325,8 @@
 				93CD890E1B09D9AC00E5B085 /* FBSDKLoginKit.framework */,
 				93CD890F1B09D9AC00E5B085 /* FBSDKShareKit.framework */,
 				93D9ECD91B06001500E6F5B3 /* QuartzCore.framework */,
+				C1C17D7BD6B58C9EDA07F8C1 /* Pods_MultiFiles.framework */,
+				F7CBDF701E726AAF8D3D0E22 /* Pods_MultiFilesExtension.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -243,8 +347,7 @@
 				93C934EC1B01F99B00E0C896 /* MultiFilesTests */,
 				933E7D7F1B1CA2B100BBF225 /* MultiFilesExtension */,
 				93C934D11B01F99B00E0C896 /* Products */,
-				CCC6F958B8B33B1DB0281583 /* Pods */,
-				E941D0E451F0E2A9794F71E5 /* Frameworks */,
+				6E8F7FF3F4952F9F0532C107 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -260,6 +363,7 @@
 		93C934D21B01F99B00E0C896 /* MultiFiles */ = {
 			isa = PBXGroup;
 			children = (
+				9351626B1D095C2800470DD6 /* Media */,
 				937C19281D01AF2D004AB4C5 /* Model */,
 				9391DBFA1CFC362E00C79FEC /* View */,
 				9391DBF91CFC360900C79FEC /* Storyboard */,
@@ -315,26 +419,6 @@
 			name = Img;
 			sourceTree = "<group>";
 		};
-		CCC6F958B8B33B1DB0281583 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				1562F1E9A2CA2DD249748125 /* Pods-MultiFiles.debug.xcconfig */,
-				A3ED6D64014278DE142A5084 /* Pods-MultiFiles.release.xcconfig */,
-				55569E7999FF198E05607BBA /* Pods-MultiFilesExtension.debug.xcconfig */,
-				8FBB2BFBEF49E3C28A7B4E48 /* Pods-MultiFilesExtension.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		E941D0E451F0E2A9794F71E5 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				264F4E97C2853979E293DE78 /* Pods_MultiFiles.framework */,
-				D6E4BF28A02A6801BE1E11AF /* Pods_MultiFilesExtension.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -342,12 +426,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 933E7D8C1B1CA2B100BBF225 /* Build configuration list for PBXNativeTarget "MultiFilesExtension" */;
 			buildPhases = (
-				641809B9D9B74F76ED5B2EE7 /* Check Pods Manifest.lock */,
+				231EF61787FD71581E5D5864 /* 📦 Check Pods Manifest.lock */,
 				933E7D7A1B1CA2B100BBF225 /* Sources */,
 				933E7D7B1B1CA2B100BBF225 /* Frameworks */,
 				933E7D7C1B1CA2B100BBF225 /* Resources */,
-				DE50BAD76EFD396EDF104CAA /* Embed Pods Frameworks */,
-				9443931E9FFFF7A970D61AC1 /* Copy Pods Resources */,
+				328F9AFDC8D4919AAB58C8E2 /* 📦 Embed Pods Frameworks */,
+				144DC6854CF0943E8456342B /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -362,13 +446,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 93C934F31B01F99B00E0C896 /* Build configuration list for PBXNativeTarget "MultiFiles" */;
 			buildPhases = (
-				96F1D267E689B3F7C2F7D422 /* Check Pods Manifest.lock */,
+				B7B0591D630D61D287D6404D /* 📦 Check Pods Manifest.lock */,
 				93C934CC1B01F99B00E0C896 /* Sources */,
 				93C934CD1B01F99B00E0C896 /* Frameworks */,
 				93C934CE1B01F99B00E0C896 /* Resources */,
 				933E7D8D1B1CA2B100BBF225 /* Embed App Extensions */,
-				206428F5037D01179241FE9B /* Embed Pods Frameworks */,
-				F0B74E4FECE98CEBBE577196 /* Copy Pods Resources */,
+				BA53FAA410846430A29A1558 /* 📦 Embed Pods Frameworks */,
+				CA2CB382D1A77937B35012B4 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -442,61 +526,57 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9351629C1D095C2800470DD6 /* video2.mp4 in Resources */,
+				9351629E1D095C2800470DD6 /* yellow.png in Resources */,
+				935162931D095C2800470DD6 /* space1.png in Resources */,
+				935162901D095C2800470DD6 /* sf-outer-limits.upright.ttf in Resources */,
+				935162911D095C2800470DD6 /* shark.png in Resources */,
+				9351628A1D095C2800470DD6 /* headphones.png in Resources */,
 				93C118C11B2B1B9C007D6755 /* not_selected_star.png in Resources */,
 				93C118C21B2B1B9C007D6755 /* selected_star.png in Resources */,
+				935162981D095C2800470DD6 /* sun.mp4 in Resources */,
 				930161631B1F0492006BC91D /* bg.jpg in Resources */,
 				93C934DF1B01F99B00E0C896 /* Main.storyboard in Resources */,
 				93C118C01B2B1B9C007D6755 /* half_selected_star.png in Resources */,
 				93C934E41B01F99B00E0C896 /* LaunchScreen.xib in Resources */,
+				9351629A1D095C2800470DD6 /* tree.png in Resources */,
+				9351629D1D095C2800470DD6 /* video3.mp4 in Resources */,
 				9370E5891B1F0B330097D1D6 /* images.png in Resources */,
+				9351628B1D095C2800470DD6 /* layers.png in Resources */,
+				935162991D095C2800470DD6 /* testtube.png in Resources */,
+				935162881D095C2800470DD6 /* coffee.png in Resources */,
+				9351628C1D095C2800470DD6 /* milky_way.jpg in Resources */,
 				9370E5881B1F0B330097D1D6 /* files.png in Resources */,
+				9351628D1D095C2800470DD6 /* nasalization rg.ttf in Resources */,
 				930161641B1F0492006BC91D /* cloud.png in Resources */,
+				9351629F1D095C2800470DD6 /* yellowbg.png in Resources */,
 				930161691B1F04D1006BC91D /* MainiPad.storyboard in Resources */,
+				9351629B1D095C2800470DD6 /* video1.mp4 in Resources */,
+				935162891D095C2800470DD6 /* cone.png in Resources */,
+				935162921D095C2800470DD6 /* space age.ttf in Resources */,
+				935162951D095C2800470DD6 /* space3.png in Resources */,
+				935162971D095C2800470DD6 /* street.png in Resources */,
 				93C934E11B01F99B00E0C896 /* Images.xcassets in Resources */,
+				935162941D095C2800470DD6 /* space2.png in Resources */,
+				9351628E1D095C2800470DD6 /* purple.png in Resources */,
+				9351628F1D095C2800470DD6 /* red.png in Resources */,
+				935162961D095C2800470DD6 /* space4.png in Resources */,
+				935162861D095C2800470DD6 /* blue.png in Resources */,
+				935162871D095C2800470DD6 /* charcoal.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		206428F5037D01179241FE9B /* Embed Pods Frameworks */ = {
+		144DC6854CF0943E8456342B /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MultiFiles/Pods-MultiFiles-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		641809B9D9B74F76ED5B2EE7 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		9443931E9FFFF7A970D61AC1 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -504,14 +584,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MultiFilesExtension/Pods-MultiFilesExtension-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		96F1D267E689B3F7C2F7D422 /* Check Pods Manifest.lock */ = {
+		231EF61787FD71581E5D5864 /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -519,14 +599,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		DE50BAD76EFD396EDF104CAA /* Embed Pods Frameworks */ = {
+		328F9AFDC8D4919AAB58C8E2 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -534,14 +614,44 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MultiFilesExtension/Pods-MultiFilesExtension-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F0B74E4FECE98CEBBE577196 /* Copy Pods Resources */ = {
+		B7B0591D630D61D287D6404D /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		BA53FAA410846430A29A1558 /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MultiFiles/Pods-MultiFiles-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CA2CB382D1A77937B35012B4 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -569,6 +679,7 @@
 				937C192B1D01AF43004AB4C5 /* CloudFile.m in Sources */,
 				93B242F81B30669300067D2E /* StarRatingView.m in Sources */,
 				937292431CF984C100FCBCD5 /* Multifiles.swift in Sources */,
+				93CD16781D0739F800DAD3FB /* ShareFileViewController.m in Sources */,
 				93C934D91B01F99B00E0C896 /* AppDelegate.m in Sources */,
 				93C934D61B01F99B00E0C896 /* main.m in Sources */,
 			);
@@ -614,7 +725,7 @@
 /* Begin XCBuildConfiguration section */
 		933E7D8A1B1CA2B100BBF225 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 55569E7999FF198E05607BBA /* Pods-MultiFilesExtension.debug.xcconfig */;
+			baseConfigurationReference = 027A4D175FC3EFE9C52877FA /* Pods-MultiFilesExtension.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MultiFilesExtension/MultiFilesExtension.entitlements;
@@ -639,7 +750,7 @@
 		};
 		933E7D8B1B1CA2B100BBF225 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8FBB2BFBEF49E3C28A7B4E48 /* Pods-MultiFilesExtension.release.xcconfig */;
+			baseConfigurationReference = FDC29C942E2B431289E0E354 /* Pods-MultiFilesExtension.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MultiFilesExtension/MultiFilesExtension.entitlements;
@@ -741,7 +852,7 @@
 		};
 		93C934F41B01F99B00E0C896 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1562F1E9A2CA2DD249748125 /* Pods-MultiFiles.debug.xcconfig */;
+			baseConfigurationReference = C20199A8DA8A9BD2C0431F9D /* Pods-MultiFiles.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -768,7 +879,7 @@
 		};
 		93C934F51B01F99B00E0C896 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A3ED6D64014278DE142A5084 /* Pods-MultiFiles.release.xcconfig */;
+			baseConfigurationReference = 88F343539767806FD71BF0FE /* Pods-MultiFiles.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

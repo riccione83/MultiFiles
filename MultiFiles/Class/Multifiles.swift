@@ -29,6 +29,7 @@ import SwiftyJSON
     let ratingFileAPI = "http://multifiles.herokuapp.com/API/rate.php"
     let renameFileAPI = "http://multifiles.herokuapp.com/API/rename.php"
     let registerNewUserAPI = "http://multifiles.herokuapp.com/API/register.php"
+    let shareFileAPI = "http://multifiles.herokuapp.com/API/share.php"
     
     var delegate:UpdateUploadBarDelegate? = nil
     
@@ -39,6 +40,30 @@ import SwiftyJSON
     
     func hideLoadingHUD() {
         MBProgressHUD.hideAllHUDsForView(self.delegate!.getMainView(), animated: true)
+    }
+    
+    func shareFile(fileID:String,toEmail:String, completition:(success:Bool) -> () ) {
+        
+        let parameters = ["file_id": fileID,
+                          "share_to_email": toEmail];
+        
+        Alamofire.request(.POST, shareFileAPI, parameters: parameters)
+            .responseJSON { response in
+                
+                if let jsonData = response.result.value {
+                    print("JSON: \(jsonData)")
+                    let json = JSON(jsonData)
+                    
+                    if let message = json["error"].string {
+                        print(message)
+                        completition(success: false)
+                    }
+                    else if let user_id = json["success"].string {
+                        print(user_id)
+                        completition(success: true)
+                    }
+                }
+        }
     }
     
     func getUserSpace(userID:String, completition:(spaceUsed:String,success:Bool) -> () ) {

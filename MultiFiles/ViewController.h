@@ -11,6 +11,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import "StarRatingView.h"
 #import "Multifiles-Swift.h"
+#import "ShareFileViewController.h"
 #import "CloudFile.h"
 @import Security;
 @import SwiftyJSON;

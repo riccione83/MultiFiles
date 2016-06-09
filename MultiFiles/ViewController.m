@@ -471,19 +471,19 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
 - (void)viewDidLoad {
         [super viewDidLoad];
     
-        if([FBSDKAccessToken currentAccessToken]) {  //User is already logged in
+   /*     if([FBSDKAccessToken currentAccessToken]) {  //User is already logged in
             NSLog(@"Already login");
         }
-
+*/
     txtUserName.delegate = self;
     txtUserPassword.delegate = self;
     [self registerForKeyboardNotifications];
     [loginView setUserInteractionEnabled:true];
     
-        fbloginButton.readPermissions = @[@"public_profile", @"email"];
+   /*     fbloginButton.readPermissions = @[@"public_profile", @"email"];
         fbloginButton.delegate = self;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(profileUpdated:) name:FBSDKProfileDidChangeNotification object:nil];
-    
+    */
         [self setup];
   }
 
@@ -547,6 +547,7 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
     SWTableViewCell *cell = (SWTableViewCell*)([tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath]);
     
     cell.rightUtilityButtons = [self rightButtons];
+    cell.leftUtilityButtons = [self leftButtons];
     cell.delegate = self;
     
     UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
@@ -691,11 +692,40 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
             case 0:         //View
                 [self downloadFileForCurrentUser:selectedFile];
                 break;
-            case 2:         //Rename
+            case 1:         //Rename
                 [self askForNewFileName:selectedFile];
                 break;
-            case 3:         //Delete
+            case 2:         //Delete
                 [self askForDeleteFile];
+                break;
+            default:
+                break;
+        }
+        [self.fileCollection reloadData];
+    }
+}
+
+-(void)shareFile:(NSInteger) filePosition{
+    
+    CloudFile *file = [cloudFiles objectAtIndex:filePosition];
+    
+    ShareFileViewController *shareView = [[self storyboard] instantiateViewControllerWithIdentifier:@"sharingFileView"];
+    shareView->fileIDToShare = file->fileID;
+    shareView->fileNameToShare = file->fileName;
+    shareView->mainView = self;
+    [self presentViewController:shareView animated:true completion:^{
+        [self.fileCollection reloadData];
+    }];
+}
+
+-(void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerLeftUtilityButtonWithIndex:(NSInteger)index {
+
+    if(cell) {
+        NSIndexPath *indexPath = [self.fileCollection indexPathForCell:cell];
+        selectedFile = [self getSelectedFile:indexPath];
+        switch (index) {
+            case 0:         //Share
+                [self shareFile:indexPath.row];
                 break;
             case 1:
                 [self showRatingView];
@@ -703,8 +733,22 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
             default:
                 break;
         }
-        [self.fileCollection reloadData];
     }
+}
+
+
+-(NSArray *)leftButtons
+{
+    NSMutableArray *rightUtilityButtons = [NSMutableArray new];
+    
+    [rightUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:0.43 green:0.62 blue:0.92 alpha:1.0]
+                                                title:@"Share"];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:1.00 green:0.85 blue:0.40 alpha:1.0]
+                                                title:@"Rate"];
+    return rightUtilityButtons;
+
 }
 
 - (NSArray *)rightButtons
@@ -714,9 +758,6 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
     [rightUtilityButtons sw_addUtilityButtonWithColor:
      [UIColor colorWithRed:0.43 green:0.62 blue:0.92 alpha:1.0]
                                                 title:@"View"];
-    [rightUtilityButtons sw_addUtilityButtonWithColor:
-     [UIColor colorWithRed:1.00 green:0.85 blue:0.40 alpha:1.0]
-                                                title:@"Rate"];
     [rightUtilityButtons sw_addUtilityButtonWithColor:
      [UIColor colorWithRed:0.42 green:0.66 blue:0.31 alpha:1.0]
                                                 title:@"Rename"];
