@@ -104,21 +104,21 @@ NSString * const kOnboardActionButtonAccessibilityIdentifier = @"OnboardActionBu
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
 
     // Body label
-    self.bodyLabel = [UILabel new];
-    self.bodyLabel.accessibilityIdentifier = kOnboardSubTextAccessibilityIdentifier;
-    self.bodyLabel.text = body;
-    self.bodyLabel.textColor = DEFAULT_TEXT_COLOR;
-    self.bodyLabel.font = [UIFont fontWithName:kDefaultOnboardingFont size:kDefaultBodyFontSize];
-    self.bodyLabel.numberOfLines = 0;
-    self.bodyLabel.textAlignment = NSTextAlignmentCenter;
+    self.bodyTextLabel = [UILabel new];
+    self.bodyTextLabel.accessibilityIdentifier = kOnboardSubTextAccessibilityIdentifier;
+    self.bodyTextLabel.text = body;
+    self.bodyTextLabel.textColor = DEFAULT_TEXT_COLOR;
+    self.bodyTextLabel.font = [UIFont fontWithName:kDefaultOnboardingFont size:kDefaultBodyFontSize];
+    self.bodyTextLabel.numberOfLines = 0;
+    self.bodyTextLabel.textAlignment = NSTextAlignmentCenter;
 
     // Action button
-    self.actionButton = [UIButton new];
-    self.actionButton.accessibilityIdentifier = kOnboardActionButtonAccessibilityIdentifier;
-    self.actionButton.titleLabel.font = [UIFont fontWithName:kDefaultOnboardingFont size:kDefaultButtonFontSize];
-    [self.actionButton setTitle:buttonText forState:UIControlStateNormal];
-    [self.actionButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.actionButton addTarget:self action:@selector(handleButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    self.actionButtonBtn = [UIButton new];
+    self.actionButtonBtn.accessibilityIdentifier = kOnboardActionButtonAccessibilityIdentifier;
+    self.actionButtonBtn.titleLabel.font = [UIFont fontWithName:kDefaultOnboardingFont size:kDefaultButtonFontSize];
+    [self.actionButtonBtn setTitle:buttonText forState:UIControlStateNormal];
+    [self.actionButtonBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.actionButtonBtn addTarget:self action:@selector(handleButtonPressed) forControlEvents:UIControlEventTouchUpInside];
 
     self.buttonActionHandler = actionBlock ?: ^(OnboardingViewController *controller){};
 
@@ -173,8 +173,8 @@ NSString * const kOnboardActionButtonAccessibilityIdentifier = @"OnboardActionBu
 
     [self.view addSubview:self.iconImageView];
     [self.view addSubview:self.titleLabel];
-    [self.view addSubview:self.bodyLabel];
-    [self.view addSubview:self.actionButton];
+    [self.view addSubview:self.bodyTextLabel];
+    [self.view addSubview:self.actionButtonBtn];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -272,11 +272,11 @@ NSString * const kOnboardActionButtonAccessibilityIdentifier = @"OnboardActionBu
 
     CGFloat bodyYOrigin = CGRectGetMaxY(self.titleLabel.frame) + self.underTitlePadding;
 
-    self.bodyLabel.frame = CGRectMake(xPadding, bodyYOrigin, contentWidth, 0);
-    [self.bodyLabel sizeToFit];
-    self.bodyLabel.frame = CGRectMake(xPadding, bodyYOrigin, contentWidth, CGRectGetHeight(self.bodyLabel.frame));
+    self.bodyTextLabel.frame = CGRectMake(xPadding, bodyYOrigin, contentWidth, 0);
+    [self.bodyTextLabel sizeToFit];
+    self.bodyTextLabel.frame = CGRectMake(xPadding, bodyYOrigin, contentWidth, CGRectGetHeight(self.bodyTextLabel.frame));
 
-    self.actionButton.frame = CGRectMake((CGRectGetMaxX(self.view.frame) / 2) - (contentWidth / 2), CGRectGetMaxY(self.view.frame) - self.underPageControlPadding - kMainPageControlHeight - kActionButtonHeight - self.bottomPadding, contentWidth, kActionButtonHeight);
+    self.actionButtonBtn.frame = CGRectMake((CGRectGetMaxX(self.view.frame) / 2) - (contentWidth / 2), CGRectGetMaxY(self.view.frame) - self.underPageControlPadding - kMainPageControlHeight - kActionButtonHeight - self.bottomPadding, contentWidth, kActionButtonHeight);
 }
 
 
@@ -295,8 +295,8 @@ NSString * const kOnboardActionButtonAccessibilityIdentifier = @"OnboardActionBu
 - (void)updateAlphas:(CGFloat)newAlpha {
     self.iconImageView.alpha = newAlpha;
     self.titleLabel.alpha = newAlpha;
-    self.bodyLabel.alpha = newAlpha;
-    self.actionButton.alpha = newAlpha;
+    self.bodyTextLabel.alpha = newAlpha;
+    self.actionButtonBtn.alpha = newAlpha;
 }
 
 

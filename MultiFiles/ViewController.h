@@ -7,18 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <FBSDKLoginKit/FBSDKLoginKit.h>
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
+
 #import "StarRatingView.h"
 #import "Multifiles-Swift.h"
 #import "ShareFileViewController.h"
 #import "CloudFile.h"
+
 @import Security;
 @import SwiftyJSON;
 @import SWTableViewCell;
 
 
-@interface ViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, FBSDKLoginButtonDelegate, FBSDKGraphRequestConnectionDelegate, NSURLConnectionDelegate, NSURLConnectionDataDelegate, UIGestureRecognizerDelegate, UIAlertViewDelegate,UISearchBarDelegate,UIDocumentInteractionControllerDelegate,UIActionSheetDelegate,UIGestureRecognizerDelegate, UpdateUploadBarDelegate,SWTableViewCellDelegate, UITextFieldDelegate> {
+@interface ViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, NSURLConnectionDelegate, NSURLConnectionDataDelegate, UIGestureRecognizerDelegate, UIAlertViewDelegate,UISearchBarDelegate,UIDocumentInteractionControllerDelegate,UIActionSheetDelegate,UIGestureRecognizerDelegate, UpdateUploadBarDelegate,SWTableViewCellDelegate, UITextFieldDelegate> {
 
     IBOutlet UITextField *txtUserName;
     IBOutlet UITextField *txtUserPassword;
@@ -61,7 +61,6 @@
     BOOL isDownload;
     BOOL stopDownload;
     
-    IBOutlet FBSDKLoginButton *fbloginButton;
     IBOutlet UIView *loginView;
     IBOutlet UIView *registerView;
     IBOutlet UIView *fileView;

@@ -48,10 +48,6 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
     }
 }
 
--(void) loginButtonDidLogOut:(FBSDKLoginButton *)loginButton {
-  //None only for delegate completition
-}
-
 - (IBAction)alreadyRegister:(id)sender {
     [self setup];
 }
@@ -213,46 +209,6 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
                 
             default:
                 break;
-    }
-}
-
-
-/***************************
- * Facebook callback function
- * this return the status of Facebook login
- * Type: Facebook SDK
- *****************************/
--(void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error {
-    NSLog(@"%@",result);
-    if ([FBSDKAccessToken currentAccessToken]) {
-        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:nil]
-    
-         startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-             if (!error)
-             {
-                 NSLog(@"fetched user:%@", result);
-                 //NSDictionary *fbJsonData = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves error:&error];
-                // NSDictionary *fbJsonData = [NSDictionary dictionaryWithDictionary:result];
-                /*//Only for debug
-                 NSArray *jsonArray = (NSArray *) result;
-                 NSLog(@"%@",jsonArray);
-                 NSLog(@"Name: %@", [fbJsonData valueForKey:@"first_name"]);
-                 NSLog(@"Surname: %@", [fbJsonData valueForKey:@"last_name"]);
-                 NSLog(@"ID: %@", [fbJsonData valueForKey:@"id"]);
-                 NSLog(@"Email: %@", [fbJsonData valueForKey:@"email"]);*/
-                 
-                 [FBSDKAccessToken setCurrentAccessToken:nil];
-                 [FBSDKProfile setCurrentProfile:nil];
-                 
-               /*  if(![self userLogin:[fbJsonData valueForKey:@"email"] withPassword:[fbJsonData valueForKey:@"id"]])
-                 {
-                     [self registerNewUser:[fbJsonData valueForKey:@"email"] withPassword:[fbJsonData valueForKey:@"id"] withPasswordRepeat:[fbJsonData valueForKey:@"id"] withEMail:[fbJsonData valueForKey:@"email"]];
-                     [self userLogin:[fbJsonData valueForKey:@"email"] withPassword:[fbJsonData valueForKey:@"id"]];
-                     
-                 }
-                */
-             }
-         }];
     }
 }
 
@@ -464,27 +420,17 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
 
 
 -(void)profileUpdated:(NSNotification *) notification{
-    NSLog(@"User name: %@",[FBSDKProfile currentProfile].name);
-    NSLog(@"User ID: %@",[FBSDKProfile currentProfile].userID);
+
 }
 
 - (void)viewDidLoad {
-        [super viewDidLoad];
     
-   /*     if([FBSDKAccessToken currentAccessToken]) {  //User is already logged in
-            NSLog(@"Already login");
-        }
-*/
+    [super viewDidLoad];
     txtUserName.delegate = self;
     txtUserPassword.delegate = self;
     [self registerForKeyboardNotifications];
     [loginView setUserInteractionEnabled:true];
-    
-   /*     fbloginButton.readPermissions = @[@"public_profile", @"email"];
-        fbloginButton.delegate = self;
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(profileUpdated:) name:FBSDKProfileDidChangeNotification object:nil];
-    */
-        [self setup];
+    [self setup];
   }
 
 

@@ -230,6 +230,10 @@
     {
         [self userLogin:UserName withPassword:password];
     }
+    else
+    {
+        [self deleteUploadBar:false];
+    }
 }
 
 

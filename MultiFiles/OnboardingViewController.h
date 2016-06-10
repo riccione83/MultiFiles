@@ -75,7 +75,7 @@
 /**
  * @brief Determines whether or not the page cotrol will be visible.
  */
-@property (nonatomic, strong) UIPageControl *pageControl;
+@property (nonatomic, strong) UIPageControl *pageControlCtrl;
 
 
 /**

@@ -99,9 +99,9 @@ static NSString * const kSkipButtonText = @"Skip";
     self.skipHandler = ^{};
     
     // Create the initial exposed components so they can be customized
-    self.pageControl = [UIPageControl new];
-    self.pageControl.numberOfPages = self.viewControllers.count;
-    self.pageControl.userInteractionEnabled = NO;
+    self.pageControlCtrl = [UIPageControl new];
+    self.pageControlCtrl.numberOfPages = self.viewControllers.count;
+    self.pageControlCtrl.userInteractionEnabled = NO;
 
     self.skipButton = [UIButton new];
     [self.skipButton setTitle:kSkipButtonText forState:UIControlStateNormal];
@@ -210,8 +210,8 @@ static NSString * const kSkipButtonText = @"Skip";
     }
     
     // create and configure the page control
-    self.pageControl.frame = CGRectMake(0, CGRectGetMaxY(self.view.frame) - self.underPageControlPadding - kPageControlHeight, self.view.frame.size.width, kPageControlHeight);
-    [self.view addSubview:self.pageControl];
+    self.pageControlCtrl.frame = CGRectMake(0, CGRectGetMaxY(self.view.frame) - self.underPageControlPadding - kPageControlHeight, self.view.frame.size.width, kPageControlHeight);
+    [self.view addSubview:self.pageControlCtrl];
     
     // if we allow skipping, setup the skip button
     if (self.allowSkipping) {
@@ -350,7 +350,7 @@ static NSString * const kSkipButtonText = @"Skip";
     }
 }
 
-- (void)setBottomPadding:(CGFloat)bottomPadding {
+- (void)setBottomPaddingSize:(CGFloat)bottomPadding {
     for (OnboardingContentViewController *contentVC in self.viewControllers) {
         contentVC.bottomPadding = bottomPadding;
     }
@@ -399,7 +399,7 @@ static NSString * const kSkipButtonText = @"Skip";
     // for the page control dots
     UIViewController *viewController = [pageViewController.viewControllers lastObject];
     NSInteger newIndex = [self.viewControllers indexOfObject:viewController];
-    [self.pageControl setCurrentPage:newIndex];
+    [self.pageControlCtrl setCurrentPage:newIndex];
 }
 
 - (void)moveNextPage {
@@ -407,7 +407,7 @@ static NSString * const kSkipButtonText = @"Skip";
     
     if (indexOfNextPage < self.viewControllers.count) {
         [_pageVC setViewControllers:@[self.viewControllers[indexOfNextPage]] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
-        [self.pageControl setCurrentPage:indexOfNextPage];
+        [self.pageControlCtrl setCurrentPage:indexOfNextPage];
     }
 }
 
@@ -449,11 +449,11 @@ static NSString * const kSkipButtonText = @"Skip";
     // fade the page control to and from the last page
     if (self.fadePageControlOnLastPage) {
         if (transitioningToLastPage) {
-            _pageControl.alpha = percentCompleteInverse;
+            _pageControlCtrl.alpha = percentCompleteInverse;
         }
 
         else if (transitioningFromLastPage) {
-            _pageControl.alpha = percentComplete;
+            _pageControlCtrl.alpha = percentComplete;
         }
     }
 

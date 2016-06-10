@@ -52,13 +52,13 @@ typedef void (^action_callback)(OnboardingViewController *onboardController);
 /**
  * @brief The body label.
  */
-@property (nonatomic, strong) UILabel *bodyLabel;
+@property (nonatomic, strong) UILabel *bodyTextLabel;
 
 
 /**
  * @brief The button used to call the action handler if one was provided.
  */
-@property (nonatomic, strong) UIButton *actionButton;
+@property (nonatomic, strong) UIButton *actionButtonBtn;
 
 
 /**
