@@ -42,6 +42,7 @@
 		9372131D1D0AADB700E51397 /* BlueButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9372131C1D0AADB700E51397 /* BlueButton.m */; };
 		937292431CF984C100FCBCD5 /* Multifiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937292421CF984C100FCBCD5 /* Multifiles.swift */; };
 		937C192B1D01AF43004AB4C5 /* CloudFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 937C192A1D01AF43004AB4C5 /* CloudFile.m */; };
+		937D7E421D0F299100F7BFAB /* ForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 937D7E411D0F299100F7BFAB /* ForgotPasswordViewController.m */; };
 		9386BC621D09801400DA4804 /* little_cloud.png in Resources */ = {isa = PBXBuildFile; fileRef = 9386BC611D09801400DA4804 /* little_cloud.png */; };
 		93AA7A941CF998D40017BDB4 /* Multifiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AA7A931CF998D40017BDB4 /* Multifiles.swift */; };
 		93B242F81B30669300067D2E /* StarRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B242F71B30669300067D2E /* StarRatingView.m */; };
@@ -132,6 +133,8 @@
 		937292421CF984C100FCBCD5 /* Multifiles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Multifiles.swift; path = Class/Multifiles.swift; sourceTree = "<group>"; };
 		937C19291D01AF43004AB4C5 /* CloudFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudFile.h; sourceTree = "<group>"; };
 		937C192A1D01AF43004AB4C5 /* CloudFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CloudFile.m; sourceTree = "<group>"; };
+		937D7E401D0F299100F7BFAB /* ForgotPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgotPasswordViewController.h; sourceTree = "<group>"; };
+		937D7E411D0F299100F7BFAB /* ForgotPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgotPasswordViewController.m; sourceTree = "<group>"; };
 		9386BC611D09801400DA4804 /* little_cloud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = little_cloud.png; path = ../Img/little_cloud.png; sourceTree = "<group>"; };
 		93AA7A921CF998D40017BDB4 /* MultiFilesExtension-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MultiFilesExtension-Bridging-Header.h"; sourceTree = "<group>"; };
 		93AA7A931CF998D40017BDB4 /* Multifiles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Multifiles.swift; path = Class/Multifiles.swift; sourceTree = "<group>"; };
@@ -220,6 +223,8 @@
 				93C934DB1B01F99B00E0C896 /* ViewController.m */,
 				93CD16761D0739F800DAD3FB /* ShareFileViewController.h */,
 				93CD16771D0739F800DAD3FB /* ShareFileViewController.m */,
+				937D7E401D0F299100F7BFAB /* ForgotPasswordViewController.h */,
+				937D7E411D0F299100F7BFAB /* ForgotPasswordViewController.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -722,6 +727,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				937D7E421D0F299100F7BFAB /* ForgotPasswordViewController.m in Sources */,
 				932E19EA1D0B093F008E1E5D /* OnboardingContentViewController.m in Sources */,
 				93C934DC1B01F99B00E0C896 /* ViewController.m in Sources */,
 				937C192B1D01AF43004AB4C5 /* CloudFile.m in Sources */,

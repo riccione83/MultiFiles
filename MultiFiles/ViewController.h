@@ -12,6 +12,7 @@
 #import "Multifiles-Swift.h"
 #import "ShareFileViewController.h"
 #import "CloudFile.h"
+#import "ForgotPasswordViewController.h"
 
 @import Security;
 @import SwiftyJSON;

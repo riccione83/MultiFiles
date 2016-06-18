@@ -664,6 +664,16 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
     }];
 }
 
+- (IBAction)forgotPasswordButtonClick:(id)sender {
+    
+    ForgotPasswordViewController *recovery =  [[self storyboard] instantiateViewControllerWithIdentifier:@"ForgotPasswordView"];
+    recovery->mainView = self;
+    [self presentViewController:recovery animated:true completion:^{
+
+    }];
+}
+
+
 -(void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerLeftUtilityButtonWithIndex:(NSInteger)index {
 
     if(cell) {
