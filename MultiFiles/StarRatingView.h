@@ -10,7 +10,7 @@
 
 @protocol MyDataDelegate
 
--(void)rateFile:(NSIndexPath*)index withRating:(NSInteger)rating;
+-(void)rateFile:(NSInteger)index withRating:(NSInteger)rating;
 
 @end
 
@@ -20,7 +20,7 @@
 }
 
 @property (nonatomic) id<MyDataDelegate> delegate;
-@property (nonatomic) NSIndexPath *currIndex;
+@property (nonatomic) NSInteger currIndex;
 
 
 -(void)setInitalRating:(NSInteger)rating;

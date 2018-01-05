@@ -65,7 +65,9 @@
     else {
         helper = [[MultifilesHelper alloc] init];
         
-        [helper shareFile:fileIDToShare toEmail:txtEmail.text completition:^(BOOL success) {
+        [helper shareFileWithFileID:fileIDToShare toEmail:txtEmail.text completition:^(BOOL success) {
+
+//        [helper shareFile:fileIDToShare toEmail:txtEmail.text completition:^(BOOL success) {
             if(success) {
                 [self alertStatus:@"Link sent successfully." :@"Multifiles" :0 :success];
             }

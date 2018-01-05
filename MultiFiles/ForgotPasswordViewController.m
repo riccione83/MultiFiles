@@ -32,7 +32,8 @@
     
     if(![txtEmailOrUserName.text isEqualToString:@""])
     {
-        [helper requestSecretCode:txtEmailOrUserName.text completition:^(BOOL success) {
+        [helper requestSecretCodeWithUserName:txtEmailOrUserName completition:^(BOOL success) {
+     //   [helper requestSecretCode:txtEmailOrUserName.text completition:^(BOOL success) {
             if(success) {
                 [self alertStatus:@"A new secret code was sent on your email. Please check and insert it below with your new password" :@"New secret" :0];
             }
@@ -58,7 +59,8 @@
     }
     else
     {
-        [helper setNewPasswordWithCode:txtEmailOrUserName.text secret:txtSecretNumber.text newPassword:txtNewPassword.text completition:^(BOOL success) {
+        [helper setNewPasswordWithCodeWithUserName:txtEmailOrUserName.text secret:txtSecretNumber.text newPassword:txtNewPassword.text completition:^(BOOL success) {
+       // [helper setNewPasswordWithCode:txtEmailOrUserName.text secret:txtSecretNumber.text newPassword:txtNewPassword.text completition:^(BOOL success) {
             if(success) {
                 [self dismissViewControllerAnimated:YES completion:^{
                     [self alertMessage:@"Password changed successfully." :@"Password Recovery" :YES];

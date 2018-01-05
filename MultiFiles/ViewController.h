@@ -40,6 +40,7 @@
     dispatch_queue_t queue;
     UIRefreshControl *refreshControl;
     NSString *selectedFile;
+    NSInteger selectedIndex;
     double DownloadFileSize;
     NSData *temp_data;
     UIProgressView *progressBar;
@@ -87,7 +88,7 @@
 -(void)refreshUserData;
 -(void)handleDocumentOpenURL:(NSURL *)url;
 -(void)login;
--(void)rateFile:(NSIndexPath*)index withRating:(NSInteger)rating;
+-(void)rateFile:(NSInteger)index withRating:(NSInteger)rating;
 
 @end
 

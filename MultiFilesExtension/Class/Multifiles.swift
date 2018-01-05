@@ -14,12 +14,12 @@ import SwiftyJSON
 @objc protocol UpdateUploadBarDelegate {
     func getMainView() -> UIView
     func createUploadBar()
-    func updateProgressBar(bytesWritten:NSInteger,totalBytesWritten:NSInteger, totalBytesExpectedToWrite:NSInteger)
+    func updateProgressBar(percentage:Double)
     func deleteUploadBar(refreshData:Bool)
     func refreshUserData()
 }
 
-@objc class MultifilesHelper: NSObject {
+@objc public class MultifilesHelper: NSObject {
     
     let websiteName = "http://multifiles.herokuapp.com/API/login.php"
     let deleteFileAPI = "http://multifiles.herokuapp.com/API/upload.php"
@@ -30,23 +30,25 @@ import SwiftyJSON
     let renameFileAPI = "http://multifiles.herokuapp.com/API/rename.php"
     let registerNewUserAPI = "http://multifiles.herokuapp.com/API/register.php"
     
-    var delegate:UpdateUploadBarDelegate? = nil
+    var delegate:UpdateUploadBarDelegate?
     
     func showLoadingHUD() {
-        let hud = MBProgressHUD.showHUDAddedTo(self.delegate!.getMainView(), animated: true)
-        hud.labelText = "Please wait..."
+        
+        let hud = MBProgressHUD.showAdded(to: self.delegate?.getMainView(), animated: true)
+        hud?.labelText = "Please wait..."
     }
     
     func hideLoadingHUD() {
-        MBProgressHUD.hideAllHUDsForView(self.delegate!.getMainView(), animated: true)
+        MBProgressHUD.hideAllHUDs(for: self.delegate?.getMainView(), animated: true)
     }
     
-    func getUserSpace(userID:String, completition:(spaceUsed:String,success:Bool) -> () ) {
+    func getUserSpace(userID:String, completition:@escaping (_ spaceUsed:String,_ success:Bool) -> () ) {
         
         let parameters = ["user_id": userID,
                           "getusedspace":"true"]
         
-        Alamofire.request(.POST, userUtilsHelperAPI, parameters: parameters)
+        
+        Alamofire.request(userUtilsHelperAPI, method: .post, parameters: parameters)
             .responseJSON { response in
                 
                 if let jsonData = response.result.value {
@@ -55,21 +57,21 @@ import SwiftyJSON
                     
                     if let message = json["error"].string {
                         print(message)
-                        completition(spaceUsed: message,success: false)
+                        completition(message,false)
                     }
                     else if let user_id = json["used_space"].string {
                         print(user_id)
-                        completition(spaceUsed: "\(user_id)",success: true)
+                        completition("\(user_id)",true)
                     }
                 }
         }
     }
     
-    func getFileListForUser(completition:(success:Bool, jsonData:AnyObject?) -> ()) {
+    func getFileListForUser(completition:@escaping (_ success:Bool, _ jsonData:AnyObject?) -> ()) {
         
         self.showLoadingHUD()
         
-        Alamofire.request(.POST, fileListAPI, parameters: [:])
+        Alamofire.request(fileListAPI, method: .post, parameters: [:])
             .responseJSON { response in
                 if let jsonData = response.result.value {
                     
@@ -78,10 +80,10 @@ import SwiftyJSON
                     
                     if let message = json["error"].string {
                         print(message)
-                        completition(success: false,jsonData: nil)
+                        completition(false,nil)
                     }
                     else {
-                        completition(success: true, jsonData: jsonData)
+                        completition(true, jsonData as AnyObject)
                     }
                     
                 }
@@ -90,7 +92,7 @@ import SwiftyJSON
     }
     
     
-    func registerNewUser(userName:String,userPassword:String,userPasswordRepeat:String,userEmail:String, completition:(message:String,success:Bool) -> ()) {
+    func registerNewUser(userName:String,userPassword:String,userPasswordRepeat:String,userEmail:String, completition:@escaping (_ message:String,_ success:Bool) -> ()) {
         
         let parameters = ["user_name": userName,
                           "user_password_new": userPassword,
@@ -99,7 +101,7 @@ import SwiftyJSON
         
         self.showLoadingHUD()
         
-        Alamofire.request(.POST, registerNewUserAPI, parameters: parameters)
+        Alamofire.request(registerNewUserAPI, method: .post, parameters: parameters)
             .responseJSON { response in
                 if let jsonData = response.result.value {
                     
@@ -108,10 +110,10 @@ import SwiftyJSON
                     
                     if let message = json["error"].string {
                         print(message)
-                        completition(message: message,success: false)
+                        completition(message,false)
                     }
                     else {
-                        completition(message: "", success: true)
+                        completition("", true)
                     }
                     
                 }
@@ -120,14 +122,14 @@ import SwiftyJSON
     }
     
     
-    func renameFile(fileName:String,newFileName:String, completition:(success:Bool) -> ()) {
+    func renameFile(fileName:String,newFileName:String, completition:@escaping (_ success:Bool) -> ()) {
         
         let parameters = ["file_name": fileName,
                           "new_file_name": newFileName]
         
         self.showLoadingHUD()
         
-        Alamofire.request(.POST, renameFileAPI, parameters: parameters)
+        Alamofire.request(renameFileAPI, method: .post, parameters: parameters)
             .responseJSON { response in
                 if let jsonData = response.result.value {
                     
@@ -136,10 +138,10 @@ import SwiftyJSON
                     
                     if let message = json["error"].string {
                         print(message)
-                        completition(success: false)
+                        completition(false)
                     }
                     else {
-                        completition(success: true)
+                        completition(true)
                     }
                     
                 }
@@ -147,17 +149,17 @@ import SwiftyJSON
         }
     }
     
-    func setRateForFile(filePath:String,rating:String,userID:String, completition:(success:Bool) -> ()) {
+    func setRateForFile(filePath:String,rating:String,userID:String, completition:@escaping (_ success:Bool) -> ()) {
         let parameters = ["file_id": filePath,
                           "set_rate": rating,
                           "user_id": userID]
         
         self.showLoadingHUD()
         
-        Alamofire.request(.POST, ratingFileAPI, parameters: parameters)
+        Alamofire.request(ratingFileAPI, method: .post, parameters: parameters)
             .responseJSON { response in
                 
-                print(response.result.value)
+                print(response.result.value as Any)
                 
                 if let jsonData = response.result.value {
                     
@@ -166,11 +168,11 @@ import SwiftyJSON
                     
                     if let message = json["error"].string {
                         print(message)
-                        completition(success: false)
+                        completition(false)
                     }
                     else if let user_id = json["response"].string {
                         print(user_id)
-                        completition(success: true)
+                        completition(true)
                     }
                     
                 }
@@ -178,13 +180,13 @@ import SwiftyJSON
         }
     }
     
-    func deleteFile(filePath:String, completition:(success:Bool) -> ()) {
+    func deleteFile(filePath:String, completition:@escaping (_ success:Bool) -> ()) {
         let parameters = ["delete_file": "1",
                           "file_name": filePath]
         
         self.showLoadingHUD()
         
-        Alamofire.request(.POST, deleteFileAPI, parameters: parameters)
+        Alamofire.request(deleteFileAPI, method: .post, parameters: parameters)
             .responseJSON { response in
                 if let jsonData = response.result.value {
                     
@@ -193,11 +195,11 @@ import SwiftyJSON
                     
                     if let message = json["error"].string {
                         print(message)
-                        completition(success: false)
+                        completition(false)
                     }
                     else if let user_id = json["message"].string {
                         print(user_id)
-                        completition(success: true)
+                        completition(true)
                     }
                     
                 }
@@ -205,14 +207,14 @@ import SwiftyJSON
         }
     }
     
-    func login(userName:String, password:String, completition:(user_id:String,success:Bool) -> () ) {
+    func login(userName:String, password:String, completition:@escaping (_ user_id:String,_ success:Bool) -> () ) {
         
         let parameters = ["user_name": userName,
                           "user_password": password]
         
         self.showLoadingHUD()
         
-        Alamofire.request(.POST, websiteName, parameters: parameters)
+        Alamofire.request(websiteName, method: .post, parameters: parameters)
             .responseJSON { response in
                 /*print(response.request)  // original URL request
                  print(response.response) // URL response
@@ -225,11 +227,11 @@ import SwiftyJSON
                     
                     if let message = json["error"].string {
                         print(message)
-                        completition(user_id: message,success: false)
+                        completition(message,false)
                     }
                     else if let user_id = json["success"].int {
                         print(user_id)
-                        completition(user_id: "\(user_id)",success: true)
+                        completition("\(user_id)",true)
                     }
                 }
                 
@@ -237,19 +239,60 @@ import SwiftyJSON
         }
     }
     
+    func setDelegate(delegate: UpdateUploadBarDelegate) {
+        self.delegate = delegate
+    }
+    
     func upload(filePath:NSURL) {
         
         let theFileName = filePath.lastPathComponent
-        let imageData:NSData = NSData(contentsOfURL: filePath)!// .dataWithContentsOfMappedFile("\(filePath)")
+        //let url:URL = URL(fileURLWithPath: filePath.absoluteString!)
+        let imageData:Data = try! Data.init(contentsOf: filePath as URL)  // .dataWithContentsOfMappedFile("\(filePath)")
         
         self.delegate?.createUploadBar()
         
+        let url_ = try! URLRequest(url: URL(string:uploadURL)!, method: .post, headers: nil)
+
+        
         Alamofire.upload(
-            .POST,
+            multipartFormData: { multipartFormData in
+                multipartFormData.append(imageData, withName: "file", fileName: theFileName!, mimeType: "multipart/form-data")
+        },
+         with: url_,
+         
+         encodingCompletion: { (result) in
+            switch result {
+            case .success(let upload, _, _):
+                
+                upload.responseJSON { response in
+                    self.delegate?.deleteUploadBar(refreshData: true)
+                    print(response.result)   // result of response serialization
+                    if let JSON = response.result.value {
+                        print("JSON: \(JSON)")
+                    }
+                }
+                upload.uploadProgress { progress in
+                    
+                    print(progress.fractionCompleted)
+                    
+                    //let progress = Float(progress.fractionCompleted)*100
+                    self.delegate?.updateProgressBar(percentage: progress.fractionCompleted)
+                    print("Uploading: \(progress)%")
+                    // progress block
+ 
+                }
+            case .failure(let encodingError):
+                self.delegate?.deleteUploadBar(refreshData: true)
+                print(encodingError)
+            }
+        })
+    
+   /*     Alamofire.upload(
             uploadURL,
+            .POST,
             multipartFormData: { multipartFormData in
                 multipartFormData.appendBodyPart(data: imageData, name: "file", fileName: theFileName!, mimeType: "multipart/form-data")
-            },
+        },
             encodingCompletion: { encodingResult in
                 switch encodingResult {
                     
@@ -268,8 +311,9 @@ import SwiftyJSON
                     print(encodingError)
                     self.delegate?.deleteUploadBar(true)
                 }
-            }
+        }
         )
+ */
     }
     
 }

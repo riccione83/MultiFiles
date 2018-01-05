@@ -87,17 +87,15 @@
 }
 
 
--(void) updateProgressBar:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
-    
+- (void) updateProgressBarWithPercentage:(double)percentage
+{
     dispatch_async(dispatch_get_main_queue(), ^{
-        
-        NSLog(@"%ld/%ld bytes written",(long)totalBytesWritten,(long)totalBytesExpectedToWrite);
-        double val =( (double)totalBytesWritten/(double)totalBytesExpectedToWrite );
+        double val = percentage;
         progressBar.progress = val;
         NSLog(@"%f percento",(progressBar.progress*100));
         labelProgress.text = [NSString stringWithFormat:@"Uploading %.2f%% ...",(progressBar.progress*100)];
-        if(totalBytesExpectedToWrite == totalBytesWritten)
-            [self deleteUploadBar:true];
+        if(percentage >= 1.0)
+            [self deleteUploadBarWithRefreshData:true];
     });
 }
 
@@ -105,7 +103,7 @@
     return self.view;
 }
 
--(void)deleteUploadBar:(BOOL)refreshData
+-(void)deleteUploadBarWithRefreshData:(BOOL)refreshData
 {
     [[self.view viewWithTag:11] removeFromSuperview];
     [[self.view viewWithTag:10] removeFromSuperview];
@@ -155,12 +153,13 @@
     NSLog(@"Cancel!");
     [uploadConnection cancel];
     [itemsToDownload removeAllObjects];
-    [self deleteUploadBar:true];
+    [self deleteUploadBarWithRefreshData:true];
 }
 
 -(void) uploadFile:(NSURL *)filePath; {
-
-    [helper upload:filePath];
+    [helper setDelegate:self];
+    [helper uploadWithFilePath:filePath];
+//    [helper upload:filePath];
 }
 
 -(void)getPassedFiles {
@@ -208,10 +207,11 @@
 }
 
 -(void) userLogin:(NSString*)userName withPassword:(NSString*)userPassword {
-    
+
         [helper showLoadingHUD];
     
-        [helper login:userName password:userPassword completition:^(NSString * UserID, BOOL success) {
+    [helper loginWithUserName:userName password:userPassword completition:^(NSString * UserID, BOOL success) {
+     //   [helper login:userName password:userPassword completition:^(NSString * UserID, BOOL success) {
             if(success) {
                 NSLog(@"Login SUCCESS. USER ID: %ld",(long)success);
                 USER_ID = [NSString stringWithFormat:@"%@",UserID];
@@ -232,7 +232,7 @@
     }
     else
     {
-        [self deleteUploadBar:false];
+        [self deleteUploadBarWithRefreshData:false];
     }
 }
 

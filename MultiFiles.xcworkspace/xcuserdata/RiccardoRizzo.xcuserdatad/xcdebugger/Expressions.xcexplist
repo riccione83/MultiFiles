@@ -35,5 +35,21 @@
             </PersistentString>
          </PersistentStrings>
       </ContextState>
+      <ContextState
+         contextName = "closure #2 in closure #2 in MultifilesHelper.upload(filePath:):Multifiles.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.delegate">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MultifilesHelper.delegate.getter:Multifiles.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "delegate">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
    </ContextStates>
 </VariablesViewState>

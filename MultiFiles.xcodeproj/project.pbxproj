@@ -325,13 +325,6 @@
 			name = Button;
 			sourceTree = "<group>";
 		};
-		937292401CF9849400FCBCD5 /* Class */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Class;
-			sourceTree = "<group>";
-		};
 		937C19281D01AF2D004AB4C5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -423,7 +416,6 @@
 				937C19281D01AF2D004AB4C5 /* Model */,
 				9391DBFA1CFC362E00C79FEC /* View */,
 				9391DBF91CFC360900C79FEC /* Storyboard */,
-				937292401CF9849400FCBCD5 /* Class */,
 				933E7D8E1B1CA89600BBF225 /* MultiFiles.entitlements */,
 				93C934D71B01F99B00E0C896 /* AppDelegate.h */,
 				93C934D81B01F99B00E0C896 /* AppDelegate.m */,
@@ -467,12 +459,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 933E7D8C1B1CA2B100BBF225 /* Build configuration list for PBXNativeTarget "MultiFilesExtension" */;
 			buildPhases = (
-				231EF61787FD71581E5D5864 /* 📦 Check Pods Manifest.lock */,
+				231EF61787FD71581E5D5864 /* [CP] Check Pods Manifest.lock */,
 				933E7D7A1B1CA2B100BBF225 /* Sources */,
 				933E7D7B1B1CA2B100BBF225 /* Frameworks */,
 				933E7D7C1B1CA2B100BBF225 /* Resources */,
-				328F9AFDC8D4919AAB58C8E2 /* 📦 Embed Pods Frameworks */,
-				144DC6854CF0943E8456342B /* 📦 Copy Pods Resources */,
+				144DC6854CF0943E8456342B /* [CP] Copy Pods Resources */,
 				932E19E31D0AFD00008E1E5D /* ShellScript */,
 			);
 			buildRules = (
@@ -488,13 +479,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 93C934F31B01F99B00E0C896 /* Build configuration list for PBXNativeTarget "MultiFiles" */;
 			buildPhases = (
-				B7B0591D630D61D287D6404D /* 📦 Check Pods Manifest.lock */,
+				B7B0591D630D61D287D6404D /* [CP] Check Pods Manifest.lock */,
 				93C934CC1B01F99B00E0C896 /* Sources */,
 				93C934CD1B01F99B00E0C896 /* Frameworks */,
 				93C934CE1B01F99B00E0C896 /* Resources */,
 				933E7D8D1B1CA2B100BBF225 /* Embed App Extensions */,
-				BA53FAA410846430A29A1558 /* 📦 Embed Pods Frameworks */,
-				CA2CB382D1A77937B35012B4 /* 📦 Copy Pods Resources */,
+				BA53FAA410846430A29A1558 /* [CP] Embed Pods Frameworks */,
+				CA2CB382D1A77937B35012B4 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -513,12 +504,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "Riccardo Rizzo";
 				TargetAttributes = {
 					933E7D7D1B1CA2B100BBF225 = {
 						CreatedOnToolsVersion = 6.3.2;
 						DevelopmentTeam = RKD82WWETR;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -528,6 +520,7 @@
 					93C934CF1B01F99B00E0C896 = {
 						CreatedOnToolsVersion = 6.3;
 						DevelopmentTeam = RKD82WWETR;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -608,14 +601,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		144DC6854CF0943E8456342B /* 📦 Copy Pods Resources */ = {
+		144DC6854CF0943E8456342B /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -623,34 +616,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MultiFilesExtension/Pods-MultiFilesExtension-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		231EF61787FD71581E5D5864 /* 📦 Check Pods Manifest.lock */ = {
+		231EF61787FD71581E5D5864 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		328F9AFDC8D4919AAB58C8E2 /* 📦 Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MultiFilesExtension/Pods-MultiFilesExtension-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		932E19E31D0AFD00008E1E5D /* ShellScript */ = {
@@ -666,29 +644,29 @@
 			shellPath = /bin/sh;
 			shellScript = "cd \"${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\nif [[ -d \"Frameworks\" ]]; then\nrm -fr Frameworks\nfi";
 		};
-		B7B0591D630D61D287D6404D /* 📦 Check Pods Manifest.lock */ = {
+		B7B0591D630D61D287D6404D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		BA53FAA410846430A29A1558 /* 📦 Embed Pods Frameworks */ = {
+		BA53FAA410846430A29A1558 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -696,14 +674,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MultiFiles/Pods-MultiFiles-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CA2CB382D1A77937B35012B4 /* 📦 Copy Pods Resources */ = {
+		CA2CB382D1A77937B35012B4 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -783,11 +761,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 027A4D175FC3EFE9C52877FA /* Pods-MultiFilesExtension.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MultiFilesExtension/MultiFilesExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Riccardo Rizzo (QS65UW4GPG)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Riccardo Rizzo (QS65UW4GPG)";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -798,12 +778,14 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.riccardorizzo.files.multifiles.extension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d6b96de3-8f20-44e2-af4b-f17b7b60086f";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_OBJC_BRIDGING_HEADER = "MultiFilesExtension/MultiFilesExtension-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -811,22 +793,26 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FDC29C942E2B431289E0E354 /* Pods-MultiFilesExtension.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MultiFilesExtension/MultiFilesExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Riccardo Rizzo (QS65UW4GPG)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Riccardo Rizzo (QS65UW4GPG)";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = MultiFilesExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.riccardorizzo.files.multifiles.extension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d6b96de3-8f20-44e2-af4b-f17b7b60086f";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_OBJC_BRIDGING_HEADER = "MultiFilesExtension/MultiFilesExtension-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -838,13 +824,21 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Riccardo Rizzo (RKD82WWETR)";
@@ -884,13 +878,21 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Riccardo Rizzo (RKD82WWETR)";
@@ -910,6 +912,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -919,12 +922,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C20199A8DA8A9BD2C0431F9D /* Pods-MultiFiles.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MultiFiles/MultiFiles.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Riccardo Rizzo (QS65UW4GPG)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Riccardo Rizzo (QS65UW4GPG)";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -935,9 +940,11 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.riccardorizzo.files.multifiles;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "bbab22c1-2774-4c10-a256-8e95507611b5";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "MultiFiles/MultiFiles-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -946,12 +953,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 88F343539767806FD71BF0FE /* Pods-MultiFiles.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MultiFiles/MultiFiles.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Riccardo Rizzo (QS65UW4GPG)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Riccardo Rizzo (QS65UW4GPG)";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -962,8 +971,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.riccardorizzo.files.multifiles;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "bbab22c1-2774-4c10-a256-8e95507611b5";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "MultiFiles/MultiFiles-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
