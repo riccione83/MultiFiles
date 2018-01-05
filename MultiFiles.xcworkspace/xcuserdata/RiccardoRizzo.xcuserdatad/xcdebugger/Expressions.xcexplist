@@ -3,7 +3,42 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "closure #2 in closure #2 in MultifilesHelper.upload(filePath:):Multifiles.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.delegate">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MultifilesHelper.setRateForFile(filePath:rating:userID:completition:):Multifiles.swift">
+      </ContextState>
+      <ContextState
+         contextName = "MultifilesHelper.delegate.getter:Multifiles.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "delegate">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[ViewController filterContentForSearchText:scope:]:ViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "dataSourceForSearchResult">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ViewController keyboardWasShown:]:ViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "activeField.frame.origin.y">
+            </PersistentString>
+            <PersistentString
+               value = "kbSize.height">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "-[ViewController tableView:cellForRowAtIndexPath:]:ViewController.m">
@@ -21,33 +56,6 @@
          <PersistentStrings>
             <PersistentString
                value = "ratingFileAPI">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "-[ViewController keyboardWasShown:]:ViewController.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "activeField.frame.origin.y">
-            </PersistentString>
-            <PersistentString
-               value = "kbSize.height">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "closure #2 in closure #2 in MultifilesHelper.upload(filePath:):Multifiles.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.delegate">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "MultifilesHelper.delegate.getter:Multifiles.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "delegate">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

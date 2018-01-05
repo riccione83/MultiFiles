@@ -306,8 +306,6 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
  * Type: UI
  *****************************/
 - (void)actionSheet:(UIActionSheet *)popup clickedButtonAtIndex:(NSInteger)buttonIndex {
-    
-    
     switch (popup.tag) {
         case 1: {
             switch (buttonIndex) {
@@ -357,7 +355,13 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
     if(alertView.tag==1) {      //Ask for deleting file
         if(buttonIndex==1) {        //Yes!
             
-            CloudFile *cFile = [cloudFiles objectAtIndex:selectedIndex];
+            CloudFile *cFile;
+            
+            if(!self.searchBarActive)
+                cFile = [cloudFiles objectAtIndex:selectedIndex];
+            else
+                cFile = [self.dataSourceForSearchResult objectAtIndex:index];
+            
             NSString *file = cFile->fileName; //[files objectAtIndex:cellSelected.row];
             file = [NSString stringWithFormat:@"%@/%@",USER_ID,file ];
             [self deleteFile:file];
@@ -471,7 +475,13 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
 
 -(void)rateFile:(NSInteger)index withRating:(NSInteger)rating {
     
-    CloudFile *file = (CloudFile *)[cloudFiles objectAtIndex:index];
+    CloudFile *file;
+    
+    if(!self.searchBarActive)
+        file = [cloudFiles objectAtIndex:index];
+    else
+        file = [self.dataSourceForSearchResult objectAtIndex:index];
+    
     NSString *fileID = file->fileID;   //[FileID objectAtIndex:index.row];
     [self setRateForFile:fileID withRateOf:[NSString stringWithFormat:@"%ld",(long)rating]];
 }
@@ -481,7 +491,13 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
     StarRatingView *ratingView = [[StarRatingView alloc] initWithFrame:CGRectMake(10, 10, 300, 100)];
     ratingView.center = self.view.center;
     ratingView.currIndex = selectedIndex;
-    CloudFile *file = [cloudFiles objectAtIndex:selectedIndex];
+    
+    CloudFile *file;
+    
+    if(!self.searchBarActive)
+        file = [cloudFiles objectAtIndex:selectedIndex];
+    else
+        file = [self.dataSourceForSearchResult objectAtIndex:selectedIndex];
     
     [ratingView setInitalRating: file->fileRating.integerValue];   //[[FileRating objectAtIndex:cellSelected.row] integerValue]];
     ratingView.delegate = (id)self;
@@ -525,7 +541,7 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
             //[file_acreateat objectAtIndex:[self searchSizeFromArray:files search:theFileName]]];
             
             recipeLabelSIze.text = cFile->fileSize;
-            
+            file = cFile;
             //[file_size objectAtIndex:[self searchSizeFromArray:files search:theFileName]];
         }
         
@@ -591,16 +607,18 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
 -(NSString*) getSelectedFile:(NSIndexPath*) indexPath {
     
     NSString *url_ = @"";
+    NSString *fileUrl;
+    CloudFile *file;
     if(!self.searchBarActive)
     {
-        CloudFile *file = [cloudFiles objectAtIndex:indexPath.row];
-        url_ = file->fileName; //[files objectAtIndex:indexPath.row];
+        file = [cloudFiles objectAtIndex:indexPath.row];
     }
     else {
-        url_ = [self.dataSourceForSearchResult objectAtIndex:indexPath.row];
+        file = [self.dataSourceForSearchResult objectAtIndex:indexPath.row];
     }
+    url_ = file->fileName;
+    fileUrl = [NSString stringWithFormat:@"%@%@/%@",awsWebBaseName,USER_ID,url_];
     
-    NSString *fileUrl = [NSString stringWithFormat:@"%@%@/%@",awsWebBaseName,USER_ID,url_];
     
     url_ = [fileUrl
             stringByReplacingOccurrencesOfString: @" "
@@ -658,7 +676,12 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
 
 -(void)shareFile:(NSInteger) filePosition{
     
-    CloudFile *file = [cloudFiles objectAtIndex:filePosition];
+    CloudFile *file;
+    
+    if(!self.searchBarActive)
+        file = [cloudFiles objectAtIndex:filePosition];
+    else
+        file = [self.dataSourceForSearchResult objectAtIndex:filePosition];
     
     ShareFileViewController *shareView = [[self storyboard] instantiateViewControllerWithIdentifier:@"sharingFileView"];
     shareView->fileIDToShare = file->fileID;
@@ -682,9 +705,10 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
 -(void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerLeftUtilityButtonWithIndex:(NSInteger)index {
     
     if(cell) {
-        NSIndexPath *indexPath = [self.fileCollection indexPathForCell:cell];
-        selectedFile = [self getSelectedFile:indexPath];
-        selectedIndex = indexPath.row;
+            NSIndexPath *indexPath = [self.fileCollection indexPathForCell:cell];
+            selectedFile = [self getSelectedFile:indexPath];
+            selectedIndex = indexPath.row;
+    
         switch (index) {
             case 0:         //Share
                 [self shareFile:indexPath.row];
@@ -971,7 +995,7 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
 
 -(void)createUploadBar
 {
-    UIView *baseView = [[UIView alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, self.view.frame.size.height)];
+    UIView *baseView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     [baseView setBackgroundColor:[UIColor blackColor]];
     [baseView setAlpha:0.5];
     baseView.tag = 11;
@@ -1163,9 +1187,8 @@ static NSString * const awsWebBaseName = @"https://s3-us-west-2.amazonaws.com/mu
         // search and reload data source
         self.searchBarActive = YES;
         [self filterContentForSearchText:searchText
-                                   scope:[[searchBar scopeButtonTitles]
-                                          objectAtIndex:[searchBar
-                                                         selectedScopeButtonIndex]]];
+              scope:[[searchBar scopeButtonTitles]
+              objectAtIndex:[searchBar selectedScopeButtonIndex]]];
         [fileCollection reloadData];
     }else{
         // if text lenght == 0
